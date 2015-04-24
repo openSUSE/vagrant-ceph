@@ -1,0 +1,114 @@
+---
+ceph-deploy:
+  VagrantBox-openSUSE-13.2:
+    repos:
+      'Main Repository (OSS)': 'http://download.opensuse.org/distribution/13.2/repo/oss/'
+      'Ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_13.2/'
+    packages:
+      - ceph-deploy
+      - vim
+    provisions:
+      admin:
+        - setup_passwordless_login.sh
+vsm:
+  VagrantBox-openSUSE-13.2:
+    repos:
+      'Main Repository (OSS)': 'http://download.opensuse.org/distribution/13.2/repo/oss/'
+    packages:
+      - vim
+    provisions:
+      admin:
+        - setup_passwordless_login.sh
+# Various Ceph configurations
+default:
+  description: "admin, 3 monitors, 6 data nodes"
+  nodes:
+    admin:
+      management: 192.168.1.254
+      public:  172.16.1.254
+      cluster: 172.16.2.254
+    mon1:
+      management: 192.168.1.11
+      public:  172.16.1.11
+      cluster: 172.16.2.11
+    mon2:
+      management: 192.168.1.12
+      public:  172.16.1.12
+      cluster: 172.16.2.12
+    mon3:
+      management: 192.168.1.13
+      public:  172.16.1.13
+      cluster: 172.16.2.13
+    data1:
+      management: 192.168.1.21
+      public:  172.16.1.21
+      cluster: 172.16.2.21
+    data2:
+      management: 192.168.1.22
+      public:  172.16.1.22
+      cluster: 172.16.2.22
+    data3:
+      management: 192.168.1.23
+      public:  172.16.1.23
+      cluster: 172.16.2.23
+    data4:
+      management: 192.168.1.24
+      public:  172.16.1.24
+      cluster: 172.16.2.24
+    data5:
+      management: 192.168.1.25
+      public:  172.16.1.25
+      cluster: 172.16.2.25
+    data6:
+      management: 192.168.1.26
+      public:  172.16.1.26
+      cluster: 172.16.2.26
+  disks:
+    data1:
+      hds: 5
+      ssds: 1
+    data2:
+      hds: 5
+      ssds: 1
+    data3:
+      hds: 5
+      ssds: 1
+    data4:
+      hds: 5
+      ssds: 1
+    data5:
+      hds: 5
+      ssds: 1
+    data6:
+      hds: 5
+      ssds: 1
+small:
+  description: "admin, 1 monitor, 3 data nodes"
+  nodes:
+    admin:
+      management: 192.168.1.254
+      public:  172.16.1.254
+      cluster: 172.16.2.254
+    mon1:
+      management: 192.168.1.11
+      public:  172.16.1.11
+      cluster: 172.16.2.11
+    data1:
+      management: 192.168.1.21
+      public:  172.16.1.21
+      cluster: 172.16.2.21
+    data2:
+      management: 192.168.1.22
+      public:  172.16.1.22
+      cluster: 172.16.2.22
+    data3:
+      management: 192.168.1.23
+      public:  172.16.1.23
+      cluster: 172.16.2.23
+  disks:
+    data1:
+      hds: 2
+    data2:
+      hds: 2
+    data3:
+      hds: 2
