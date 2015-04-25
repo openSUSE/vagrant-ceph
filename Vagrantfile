@@ -7,12 +7,15 @@ require_relative 'lib/hosts.rb'
 require_relative 'lib/provisions.rb'
 
 config_file = 'config.yml'
-
 config = YAML.load_file(config_file)
 
+# Set INSTALLATION to one of 'ceph-deploy', 'vsm'
 INSTALLATION = 'ceph-deploy'
-CONFIGURATION = 'small'
 
+# Set CONFIGURATION to one of 'default', 'small' or 'economical'
+CONFIGURATION = 'default'
+
+# Generates a hosts file
 hosts = Vagrant::Hosts.new(config[CONFIGURATION]['nodes'])
 
 Vagrant.configure("2") do |vconfig|
@@ -23,9 +26,15 @@ Vagrant.configure("2") do |vconfig|
 
   nodes.each do |name|
     vconfig.vm.define name do |node|
+      # Disable default vagrant folder
+      # Note: comment out the following line to have a shared folder but you
+      # will be prompted for the root password of the host machine to configure
+      # your NFS server
       node.vm.synced_folder ".", "/vagrant", disabled: true
 
       node.vm.hostname = name
+
+      # Ceph has three networks
       networks = config[CONFIGURATION]['nodes'][name]
       node.vm.network :private_network, ip: networks['management']
       node.vm.network :private_network, ip: networks['public']
@@ -34,12 +43,15 @@ Vagrant.configure("2") do |vconfig|
       node.vm.provider :libvirt do |l|
         l.host = 'localhost'
         l.username = 'root'
-        l.id_ssh_key_file = 'id_dsa'
+
+        # Use DSA key if available, otherwise, defaults to RSA
+        l.id_ssh_key_file = 'id_dsa' if File.exists?("#{ENV['HOME']}/.ssh/id_dsa")
         #l.password = 'root_password'
         l.connect_via_ssh = true
         l.storage_pool_name = 'default'
         l.cpus = 2
 
+        # Raw disk images to simulate additional drives on data nodes
         unless (config[CONFIGURATION]['disks'].nil?) then
           unless (config[CONFIGURATION]['disks'][name].nil?) then
             disks = config[CONFIGURATION]['disks'][name]
@@ -58,14 +70,18 @@ Vagrant.configure("2") do |vconfig|
 
       end
 
+      # Update /etc/hosts on each node
       hosts.update(node)
 
+      # Add missing repos
       repos = Vagrant::Repos.new(node, config, vconfig.vm.box)
       repos.add
 
+      # Install additional/unique packages
       pkgs = Vagrant::Packages.new(node, config[INSTALLATION][vconfig.vm.box]['packages'])
       pkgs.install
 
+      # Allow passwordless root access between nodes
       keys = Vagrant::Keys.new(node, config[CONFIGURATION]['nodes'].keys)
       if (name == 'admin') then
         keys.authorize

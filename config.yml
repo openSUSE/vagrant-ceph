@@ -1,4 +1,13 @@
 ---
+# This configuration file has two sections.  The first is the ceph installation
+# methods with related repositories and packages.  The second is the various
+# server configurations to simulate different environments.
+#
+# The vagrant box is a JeOS image and has no initial repositories.  Create new
+# entries to use your own repositories or add repositories to the existing lists.
+#
+# Change the INSTALLATION to either 'ceph-deploy' or 'vsm' in the Vagrantfile.
+# Additional vagrant boxes will be added soon.  
 ceph-deploy:
   VagrantBox-openSUSE-13.2:
     repos:
@@ -9,7 +18,7 @@ ceph-deploy:
       - vim
     provisions:
       admin:
-        - setup_passwordless_login.sh
+        - placeholder
 vsm:
   VagrantBox-openSUSE-13.2:
     repos:
@@ -18,10 +27,19 @@ vsm:
       - vim
     provisions:
       admin:
-        - setup_passwordless_login.sh
+        - placeholder
 # Various Ceph configurations
+#
+# The default allows for reasonable exploration of Ceph installations and
+# configurations.  Three monitors allow for a quorum and understanding failover,
+# elections, etc.  Six data nodes with 30 osds and a pretend journal give
+# enough flexibility to try replicas and erasure coding (e.g. k=3, m=2) while
+# downing an osd or an entire node.
+#
+# This requires 5G RAM and ~32G disk space.  Initial vagrant up is ~28 minutes
+# on a quad core.
 default:
-  description: "admin, 3 monitors, 6 data nodes"
+  description: "admin, 3 monitors, 6 data nodes with journals"
   nodes:
     admin:
       management: 192.168.1.254
@@ -82,6 +100,13 @@ default:
     data6:
       hds: 5
       ssds: 1
+# The small configuration is a typical demo setup of a monitor and three data
+# nodes with two osds each.  This can be ideal for varifying that Vagrant and
+# libvirt are behaving.  Simpler installations can be verified and the ceph
+# command line can be explored.
+#
+# This requires 2.5G RAM and ~7G disk space.  Initial vagrant up is ~13 minutes
+# on a quad core.
 small:
   description: "admin, 1 monitor, 3 data nodes"
   nodes:
@@ -112,3 +137,49 @@ small:
       hds: 2
     data3:
       hds: 2
+# The economical configuration represents a cold storage configuration that has
+# no SSD journals.  Additionally, the monitors and admin node do not have an
+# interface on the cluster network to save money on one less 10G interface.
+#
+# This requires 4G RAM and ~17G disk space.  Initial vagrant up is ~17 minutes
+# on a quad core.
+economical:
+  description: "admin, 3 monitors, 4 data nodes"
+  nodes:
+    admin:
+      management: 192.168.1.254
+      public:  172.16.1.254
+    mon1:
+      management: 192.168.1.11
+      public:  172.16.1.11
+    mon2:
+      management: 192.168.1.12
+      public:  172.16.1.12
+    mon3:
+      management: 192.168.1.13
+      public:  172.16.1.13
+    data1:
+      management: 192.168.1.21
+      public:  172.16.1.21
+      cluster: 172.16.2.21
+    data2:
+      management: 192.168.1.22
+      public:  172.16.1.22
+      cluster: 172.16.2.22
+    data3:
+      management: 192.168.1.23
+      public:  172.16.1.23
+      cluster: 172.16.2.23
+    data4:
+      management: 192.168.1.24
+      public:  172.16.1.24
+      cluster: 172.16.2.24
+  disks:
+    data1:
+      hds: 4
+    data2:
+      hds: 4
+    data3:
+      hds: 4
+    data4:
+      hds: 4

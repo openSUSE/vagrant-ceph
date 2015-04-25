@@ -1,7 +1,16 @@
 
+# Namespace for related helper routines
 module Vagrant
+
+  # Generates a host file from the config.yml and propogates to the individual
+  # virtual machines
   class Hosts
 
+    # Creates a hosts file in the current directory.  Populates with reorganized
+    # entries.
+    #
+    #   host_config - hash of hosts containing interfaces mapped to addresses
+    #   selected - default network for short hostname
     def initialize(host_config, selected = 'public')
       @host_config = host_config
       @selected = selected
@@ -17,6 +26,8 @@ module Vagrant
       end
     end
 
+
+    # Produces the header portion of the hosts file
     def static_header(file)
       file.puts <<-END.gsub(/^ {8}/, '')
         #
@@ -46,6 +57,8 @@ module Vagrant
 
     end
 
+    # Creates entries with address and hostname-networkname.  Sorts by
+    # networks.  Adds short hostnames to selected network.
     def reorganize
       networks = {}
       @host_config.keys.each do |hostname|
@@ -60,6 +73,8 @@ module Vagrant
       networks
     end
 
+    # Calls vagrant provisioning to copy the hosts file to the VM.  This is 
+    # done in two steps since the copy is unprivileged.
     def update(node)
       tmp_hosts = "/home/vagrant/hosts"
       node.vm.provision 'file', source: "hosts", destination: "#{tmp_hosts}"
