@@ -1,0 +1,15 @@
+{
+   "versions" : [
+      {
+         "providers" : [
+            {
+               "url" : "https://drive.google.com/file/d/0B1474649NCkYZ0RqVkFudkNJR0U/view?usp=sharing",
+               "name" : "libvirt"
+            }
+         ],
+         "version" : "1.13.2"
+      }
+   ],
+   "description" : "            openSUSE 13.2 vagrant base box        ",
+   "name" : "VagrantBox-openSUSE-13.2"
+}

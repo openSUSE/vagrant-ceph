@@ -8,6 +8,12 @@ The current setup only supports libvirt as a provider.  Install the plugin if ne
 
 `$ vagrant plugin install vagrant-libvirt`
 
+Next, add the vagrant box.
+
+`$ vagrant box add boxes/VagrantBox-openSUSE-13.2.x86_64-1.13.2.libvirt.json`
+
+Note: Until hashicorp allows libvirt providers, I am sharing via Google Drive.
+
 Edit the Vagrant file and change CONFIGURATION to small for an initial test.
 
 `CONFIGURATION='small'`
