@@ -3,6 +3,10 @@
 # methods with related repositories and packages.  The second is the various
 # server configurations to simulate different environments.
 #
+########################################
+# Installation Section
+########################################
+#
 # The vagrant box is a JeOS image and has no initial repositories.  Create new
 # entries to use your own repositories or add repositories to the existing lists.
 #
@@ -28,7 +32,9 @@ vsm:
     provisions:
       admin:
         - placeholder
-# Various Ceph configurations
+########################################
+# Configuration Section
+########################################
 #
 # The default allows for reasonable exploration of Ceph installations and
 # configurations.  Three monitors allow for a quorum and understanding failover,
