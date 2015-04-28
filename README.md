@@ -8,7 +8,7 @@ The current setup only supports libvirt as a provider.  Install the plugin if ne
 
 `$ vagrant plugin install vagrant-libvirt`
 
-Next, add the vagrant box.
+Next, add the vagrant box.  Download the box from [Google Drive](https://drive.google.com/file/d/0B1474649NCkYZ0RqVkFudkNJR0U/view?usp=sharing) and save to the boxes subdirectory.  Then run
 
 `$ vagrant box add boxes/VagrantBox-openSUSE-13.2.x86_64-1.13.2.libvirt.json`
 
@@ -38,3 +38,7 @@ For the sake of completeness and stating the obvious, the private ssh key is onl
 The automation does not install Ceph.  
 
 The default root password is 'vagrant'.
+
+Depending on your hardware, an ssh command may fail on the initialization when a virtual machine did not respond quickly enough.  Run the provisioning again with
+
+`$ vagrant provision`

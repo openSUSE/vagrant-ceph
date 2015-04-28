@@ -3,7 +3,7 @@
       {
          "providers" : [
             {
-               "url" : "https://drive.google.com/file/d/0B1474649NCkYZ0RqVkFudkNJR0U/view?usp=sharing",
+               "url" : "boxes/VagrantBox-openSUSE-13.2.x86_64-1.13.2.libvirt.box",
                "name" : "libvirt"
             }
          ],
