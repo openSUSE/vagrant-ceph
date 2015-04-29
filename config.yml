@@ -12,26 +12,44 @@
 #
 # Change the INSTALLATION to either 'ceph-deploy' or 'vsm' in the Vagrantfile.
 # Additional vagrant boxes will be added soon.  
-ceph-deploy:
-  VagrantBox-openSUSE-13.2:
+VagrantBox-openSUSE-13.2:
+  ceph-deploy:
     repos:
       'Main Repository (OSS)': 'http://download.opensuse.org/distribution/13.2/repo/oss/'
       'Ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_13.2/'
     packages:
-      - ceph-deploy
-      - vim
-    provisions:
+      all:
+        - ceph-deploy
+        - vim
+        - vim-data
+    commands:
       admin:
-        - placeholder
-vsm:
-  VagrantBox-openSUSE-13.2:
+        - true
+  # This installer requires an additional ~400M and ~4 minutes per VM initially.
+  vsm:
     repos:
       'Main Repository (OSS)': 'http://download.opensuse.org/distribution/13.2/repo/oss/'
+      'swiftgist/openSUSE 13.2': 'http://download.opensuse.org/repositories/home:/swiftgist/openSUSE_13.2/'
+      'Ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_13.2/'
+      'Openstack - Juno': 'http://download.opensuse.org/repositories/Cloud:/OpenStack:/Juno/openSUSE_13.2/'
     packages:
-      - vim
-    provisions:
+      all:
+        - vim
+        - vim-data
+        - python-vsmclient
+        - vsm
+        - vsm-dashboard
+        - vsm-deploy
       admin:
-        - placeholder
+        - rabbitmq-server
+        - openstack-keystone
+    files:
+      admin: true
+    commands:
+      admin:
+        - vsm-controller
+        - "grep -rl '^from django.conf.urls.defaults' /usr/share/vsm-dashboard/ | xargs sed 's!^from django.conf.urls.defaults!from django.conf.urls!'"
+
 ########################################
 # Configuration Section
 ########################################
@@ -87,6 +105,8 @@ default:
       management: 192.168.1.26
       public:  172.16.1.26
       cluster: 172.16.2.26
+  memory:
+    admin: 1024
   disks:
     data1:
       hds: 5
@@ -136,6 +156,8 @@ small:
       management: 192.168.1.23
       public:  172.16.1.23
       cluster: 172.16.2.23
+  memory:
+    admin: 1024
   disks:
     data1:
       hds: 2
@@ -180,6 +202,8 @@ economical:
       management: 192.168.1.24
       public:  172.16.1.24
       cluster: 172.16.2.24
+  memory:
+    admin: 1024
   disks:
     data1:
       hds: 4

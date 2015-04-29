@@ -1,4 +1,7 @@
 
+require 'open3'
+##include Archive::Tar
+
 # Namespace for helper routines
 module Vagrant
 
@@ -8,14 +11,13 @@ module Vagrant
     # Builds an array of commands to add each repo.
     #
     #   node - vagrant provider
-    #   config - yaml configuration
-    #   box - vagrant box name
-    def initialize(node, config, box)
+    #   repos - hash of repo names and urls
+    def initialize(node, repos)
       @node = node
       @cmds = []
-      config[INSTALLATION][box]['repos'].keys.each do |repo|
+      repos.keys.each do |repo|
         # Use shell short circuit to determine if repo already exists
-        @cmds << "zypper lr \'#{repo}\' | grep -sq ^Name || zypper ar \'#{config[INSTALLATION][box]['repos'][repo]}\' \'#{repo}\'"
+        @cmds << "zypper lr \'#{repo}\' | grep -sq ^Name || zypper ar \'#{repos[repo]}\' \'#{repo}\'"
       end
     end
 
@@ -32,15 +34,30 @@ module Vagrant
     #
     #   node - vagrant provider
     #   packages - an array of package names
-    def initialize(node, packages)
+    def initialize(node, host, packages)
       @node = node
+      @host = host
       @packages = packages
     end
 
-    # Runs necessary zypper command, automatically trust repo
+    # Install packages for destined for all hosts and this host specifically
     def install
-      cmd = "zypper --gpg-auto-import-keys -n in #{@packages.join(' ')}"
+      install_all
+      install_host
+    end
+
+    # Runs necessary zypper command, automatically trust repo
+    def install_all
+      cmd = "zypper --gpg-auto-import-keys -n in #{@packages['all'].join(' ')}"
       @node.vm.provision 'shell', inline: cmd
+    end
+
+    # Runs necessary zypper command, automatically trust repo
+    def install_host
+      unless (@packages[@host].nil?) then
+        cmd = "zypper --gpg-auto-import-keys -n in #{@packages[@host].join(' ')}"
+        @node.vm.provision 'shell', inline: cmd
+      end
     end
   end
 
@@ -80,6 +97,101 @@ module Vagrant
         @node.vm.provision 'shell', inline: cmd
       end
     end
+  end
+
+  # Copy files from files/install_mode to the virtual machine.  Effectively,
+  # a poor man's patch after package installation to allow quick experimenting
+  # until the real solution is decided
+  class Files
+
+    # Saves arguments
+    #
+    #   node - vm provider
+    #   install_mode - type of installation
+    #   host - hostname
+    #   files - boolean determining if tree should be copied
+    def initialize(node, install_mode, host, files)
+      @node = node
+      @install_mode = install_mode
+      @host = host
+      @files = files
+    end
+
+    # Creates a tar file, uses vagrant's copy command and then extracts
+    # the file on the virtual machine.  Copies both subdirectories of all
+    # and host specific trees.
+    def copy
+      unless (@files.nil?) then
+        [ 'all', @host ].each do |subdir|
+          unless (@files[subdir].nil?) then
+            # check if enabled
+            if (@files[subdir]) then
+              tar_file = tar(subdir)
+              vm_tar_file = "/home/vagrant/#{File.basename(tar_file)}"
+              @node.vm.provision 'file', source: tar_file, 
+                destination: vm_tar_file
+              untar(vm_tar_file)
+            end
+          end
+        end
+      end
+    end
+
+    # Change directory and generate tar file via Minitar
+    #
+    #   subdir - either 'all' or hostname 
+    def tar(subdir)
+      filename = "/tmp/#{@install_mode}-#{subdir}.tar"
+      File.open(filename, "wb") do |tar|
+        dir = "files/#{@install_mode}/#{subdir}"
+        if (File.directory?(dir)) then
+          Dir.chdir(dir) do
+            cmd = "tar cf #{filename} *"
+            Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
+              puts stdout.readlines
+              puts stderr.readlines
+              exit unless wait_thr.value.success?
+            end
+            #Minitar.pack('*', tar)
+          end
+        end
+      end
+      filename
+    end
+
+    # Extract files in the virtual machine
+    #
+    #   tar_file - path to tar file
+    def untar(tar_file)
+      cmd = "tar -C / -xf #{tar_file}"
+      @node.vm.provision 'shell', inline: cmd
+    end
+  end
+
+  # Runs necessary commands
+  class Commands
+
+    # Saves arguments
+    #
+    #   node - vm provider
+    #   host - hostname
+    #   commands - hash of all and hosts to commands
+    def initialize(node, host, commands)
+      @node = node
+      @host = host
+      @commands = commands
+    end
+
+    def run
+      [ 'all', @host].each do |group|
+        unless (@commands[group].nil?) then
+          @commands[group].each do |cmd|
+            @node.vm.provision 'shell', inline: cmd
+          end
+        end
+      end
+    end
+
   end
 
 end
