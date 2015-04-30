@@ -29,7 +29,7 @@ end
 INSTALLATION = 'vsm'
 
 # Set CONFIGURATION to one of 'default', 'small' or 'economical'
-CONFIGURATION = 'default'
+CONFIGURATION = 'small'
 
 # Set BOX to one of 'VagrantBox-openSUSE-13.2'
 BOX = 'VagrantBox-openSUSE-13.2'

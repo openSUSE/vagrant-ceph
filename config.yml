@@ -48,7 +48,7 @@ VagrantBox-openSUSE-13.2:
     commands:
       admin:
         - vsm-controller
-        - "grep -rl '^from django.conf.urls.defaults' /usr/share/vsm-dashboard/ | xargs sed 's!^from django.conf.urls.defaults!from django.conf.urls!'"
+        - "grep -rl '^from django.conf.urls.defaults' /usr/share/vsm-dashboard/ | xargs sed -i 's!^from django.conf.urls.defaults!from django.conf.urls!'"
 
 ########################################
 # Configuration Section
