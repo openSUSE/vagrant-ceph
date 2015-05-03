@@ -1,0 +1,15 @@
+{
+   "name" : "VagrantBox-Tumbleweed",
+   "description" : "            openSUSE Tumbleweed vagrant base box        ",
+   "versions" : [
+      {
+         "version" : "1.13.2",
+         "providers" : [
+            {
+               "url" : "boxes/VagrantBox-Tumbleweed.x86_64-1.13.2.libvirt.box",
+               "name" : "libvirt"
+            }
+         ]
+      }
+   ]
+}

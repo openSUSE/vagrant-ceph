@@ -1,7 +1,8 @@
 ---
-# This configuration file has two sections.  The first is the ceph installation
-# methods with related repositories and packages.  The second is the various
-# server configurations to simulate different environments.
+# This configuration file has two sections.  The first is the Vagrant boxes 
+# subdivided into ceph installation methods with related repositories and 
+# packages.  The second is the various server configurations to simulate 
+# different environments.
 #
 ########################################
 # Installation Section
@@ -11,7 +12,9 @@
 # entries to use your own repositories or add repositories to the existing lists.
 #
 # Change the INSTALLATION to either 'ceph-deploy' or 'vsm' in the Vagrantfile.
-# Additional vagrant boxes will be added soon.  
+########################################
+# OpenSUSE 13.2
+########################################
 VagrantBox-openSUSE-13.2:
   ceph-deploy:
     repos:
@@ -24,7 +27,7 @@ VagrantBox-openSUSE-13.2:
         - vim-data
     commands:
       admin:
-        - true
+        - echo Done
   # This installer requires an additional ~400M and ~4 minutes per VM initially.
   vsm:
     repos:
@@ -32,6 +35,91 @@ VagrantBox-openSUSE-13.2:
       'swiftgist/openSUSE 13.2': 'http://download.opensuse.org/repositories/home:/swiftgist/openSUSE_13.2/'
       'Ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_13.2/'
       'Openstack - Juno': 'http://download.opensuse.org/repositories/Cloud:/OpenStack:/Juno/openSUSE_13.2/'
+    packages:
+      all:
+        - vim
+        - vim-data
+        - python-vsmclient
+        - vsm
+        - vsm-dashboard
+        - vsm-deploy
+      admin:
+        - rabbitmq-server
+        - openstack-keystone
+    files:
+      admin: true
+    commands:
+      admin:
+        - vsm-controller
+        - "grep -rl '^from django.conf.urls.defaults' /usr/share/vsm-dashboard/ | xargs sed -i 's!^from django.conf.urls.defaults!from django.conf.urls!'"
+########################################
+# OpenSUSE Tumbleweed
+########################################
+VagrantBox-Tumbleweed:
+  ceph-deploy:
+    repos:
+      'Main Repository (OSS)': 'http://download.opensuse.org/tumbleweed/repo/oss/'
+      'Ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_Tumbleweed/'
+    packages:
+      all:
+        - ceph-deploy
+        - vim
+        - vim-data
+    commands:
+      admin:
+        - echo Done
+  # This installer requires an additional ~400M and ~4 minutes per VM initially.
+  vsm:
+    repos:
+      'Main Repository (OSS)': 'http://download.opensuse.org/tumbleweed/repo/oss/'
+      'Ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_Tumbleweed/'
+      'swiftgist/openSUSE Tumbleweed': 'http://download.opensuse.org/repositories/home:/swiftgist/openSUSE_Tumbleweed/'
+      'Openstack - Juno': 'http://download.opensuse.org/repositories/Cloud:/OpenStack:/Juno/openSUSE_Factory/'
+    packages:
+      all:
+        - vim
+        - vim-data
+        - python-vsmclient
+        - vsm
+        - vsm-dashboard
+        - vsm-deploy
+      admin:
+        - rabbitmq-server
+        - openstack-keystone
+    files:
+      admin: true
+    commands:
+      admin:
+        - vsm-controller
+        - "grep -rl '^from django.conf.urls.defaults' /usr/share/vsm-dashboard/ | xargs sed -i 's!^from django.conf.urls.defaults!from django.conf.urls!'"
+########################################
+# SLE 12
+########################################
+VagrantBox-SLE12:
+  ceph-deploy:
+    repos:
+      'Main Repository (OSS)': 'http://download.suse.de/ibs/SUSE:/SLE-12:/GA/standard/'
+      'Ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/SLE_12/'
+    packages:
+      all:
+        - ceph-deploy
+        - vim
+        - vim-data
+    commands:
+      admin:
+        - echo Done
+  # This installer requires an additional ~400M and ~4 minutes per VM initially.
+  vsm:
+    repos:
+      'Main Repository (OSS)': 
+        'http://download.suse.de/ibs/SUSE:/SLE-12:/GA/standard/'
+      'Docker Devel': 'http://download.suse.de/ibs/Devel:/Docker/SLE_12/'
+      'Ceph': 
+        'http://download.opensuse.org/repositories/filesystems:/ceph/SLE_12/'
+      'swiftgist/SLE_12': 
+        'http://download.opensuse.org/repositories/home:/swiftgist/SLE_12/'
+      'Openstack - Juno': 
+        'http://download.opensuse.org/repositories/Cloud:/OpenStack:/Juno/SLE_12/'
     packages:
       all:
         - vim

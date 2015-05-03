@@ -80,5 +80,16 @@ module Vagrant
       node.vm.provision 'file', source: "hosts", destination: "#{tmp_hosts}"
       node.vm.provision 'shell', inline: "mv #{tmp_hosts} /etc/hosts"
     end
+
+    def self.check_for_ssh_keys
+      unless (File.exists?("#{ENV['HOME']}/.ssh/id_rsa") or
+              File.exists?("#{ENV['HOME']}/.ssh/id_dsa")) then
+        raise "Libvirt needs access to configure/start virtual machines.  One 
+          method is giving your account root access via ssh key.  Generate a 
+          key pair and add the public key to /root/.ssh/authorized_keys.
+        
+          Run 'ssh-add' to avoid typing the passphrase continually.  "
+      end
+    end
   end
 end

@@ -1,0 +1,15 @@
+{
+   "name" : "VagrantBox-SLE12",
+   "versions" : [
+      {
+         "version" : "1.13.2",
+         "providers" : [
+            {
+               "name" : "libvirt",
+               "url" : "boxes/VagrantBox-SLE12.x86_64-1.13.2.libvirt.box"
+            }
+         ]
+      }
+   ],
+   "description" : "            SUSE Linux Enterprise vagrant base box        "
+}

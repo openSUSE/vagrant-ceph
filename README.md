@@ -8,15 +8,21 @@ The current setup only supports libvirt as a provider.  Install the plugin if ne
 
 `$ vagrant plugin install vagrant-libvirt`
 
-Next, add the vagrant box.  Download the box from [Google Drive](https://drive.google.com/file/d/0B1474649NCkYZ0RqVkFudkNJR0U/view?usp=sharing) and save to the boxes subdirectory.  Then run
+Next, add the vagrant box.  Download the boxes from Google Drive.
+
+[openSUSE 13.2](https://drive.google.com/file/d/0B1474649NCkYZ0RqVkFudkNJR0U/view?usp=sharing) <br>
+[openSUSE Tumbleweed](https://drive.google.com/file/d/0B1474649NCkYSWQzSGRYTWo2d0U/view?usp=sharing) <br>
+[SLE 12](https://drive.google.com/file/d/0B1474649NCkYNkZLZGpoTUtmanc/view?usp=sharing)
+
+and save to the _boxes/_ subdirectory.  Then add a box to your environment.  For instance, add the OpenSUSE 13.2 box with
 
 `$ vagrant box add boxes/VagrantBox-openSUSE-13.2.x86_64-1.13.2.libvirt.json`
 
-Note: Until hashicorp allows libvirt providers, I am sharing via Google Drive.
+Edit the _Vagrantfile_ and set BOX, INSTALLATION and CONFIGURATION.  Use the following for an initial test.
 
-Edit the Vagrant file and change CONFIGURATION to small for an initial test.
-
-`CONFIGURATION='small'`
+`BOX = 'VagrantBox-openSUSE-13.2'` <br>
+`INSTALLATION = 'ceph-deploy'` <br>
+`CONFIGURATION = 'small'` <br>
 
 Start the environment.
 

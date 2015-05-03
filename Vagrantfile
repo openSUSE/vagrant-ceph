@@ -14,25 +14,16 @@ config_file = 'config.yml'
 config = YAML.load_file(config_file)
 
 # Check that the user has an ssh key
-unless (File.exists?("#{ENV['HOME']}/.ssh/id_rsa") or 
-        File.exists?("#{ENV['HOME']}/.ssh/id_dsa")) then
-  raise "Libvirt needs access to configure/start virtual machines.  One method is
-  giving your account root access via ssh key.  Generate a key pair and add the
-  public key to /root/.ssh/authorized_keys.
-  
-  Run 'ssh-add' to avoid typing the passphrase continually.  
-  "
-end
+Vagrant::Hosts::check_for_ssh_keys
 
+# Set BOX to one of 'VagrantBox-openSUSE-13.2', 'VagrantBox-Tumbleweed', 'VagrantBox-SLE12'
+BOX = 'VagrantBox-openSUSE-13.2'
 
 # Set INSTALLATION to one of 'ceph-deploy', 'vsm'
 INSTALLATION = 'vsm'
 
 # Set CONFIGURATION to one of 'default', 'small' or 'economical'
 CONFIGURATION = 'small'
-
-# Set BOX to one of 'VagrantBox-openSUSE-13.2'
-BOX = 'VagrantBox-openSUSE-13.2'
 
 # Set PREFIX for additional sets of VMs in libvirt from a separate directory
 # (e.g. vagrant-ceph is default, vsm is another git clone with PREFIX='v'
