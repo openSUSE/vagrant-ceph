@@ -114,6 +114,8 @@ VagrantBox-SLE12:
       'Main Repository (OSS)': 
         'http://download.suse.de/ibs/SUSE:/SLE-12:/GA/standard/'
       'Docker Devel': 'http://download.suse.de/ibs/Devel:/Docker/SLE_12/'
+      'Python Devel': 
+        'http://download.opensuse.org/repositories/devel:/languages:/python/SLE_12/'
       'Ceph': 
         'http://download.opensuse.org/repositories/filesystems:/ceph/SLE_12/'
       'swiftgist/SLE_12': 
