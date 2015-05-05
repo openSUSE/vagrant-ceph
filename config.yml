@@ -19,7 +19,10 @@ VagrantBox-openSUSE-13.2:
   ceph-deploy:
     repos:
       'Main Repository (OSS)': 'http://download.opensuse.org/distribution/13.2/repo/oss/'
-      'Ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_13.2/'
+      #'Ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_13.2/'
+      'Ceph': 'http://download.suse.de/ibs/Devel:/Storage:/1.0/openSUSE_Factory/'
+      'Devel C Libraries': 
+        'http://download.opensuse.org/repositories/devel:libraries:c_c++/openSUSE_13.2/'
     packages:
       all:
         - ceph-deploy

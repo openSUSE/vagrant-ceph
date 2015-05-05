@@ -3,7 +3,10 @@
       {
          "providers" : [
             {
-               "url" : "boxes/VagrantBox-openSUSE-13.2.x86_64-1.13.2.libvirt.box",
+               "url" : 
+                 "http://w3.suse.de/~ejackson/VagrantBox-openSUSE-13.2.x86_64-1.13.2.libvirt.box",
+               "_local-example_url" : 
+                 "boxes/VagrantBox-openSUSE-13.2.x86_64-1.13.2.libvirt.box",
                "name" : "libvirt"
             }
          ],

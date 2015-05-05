@@ -6,7 +6,8 @@
          "providers" : [
             {
                "name" : "libvirt",
-               "url" : "boxes/VagrantBox-SLE12.x86_64-1.13.2.libvirt.box"
+               "url" : "http://w3.suse.de/~ejackson/VagrantBox-SLE12.x86_64-1.13.2.libvirt.box",
+               "_local_example_url" : "boxes/VagrantBox-SLE12.x86_64-1.13.2.libvirt.box"
             }
          ]
       }

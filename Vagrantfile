@@ -20,7 +20,7 @@ Vagrant::Hosts::check_for_ssh_keys
 BOX = 'VagrantBox-openSUSE-13.2'
 
 # Set INSTALLATION to one of 'ceph-deploy', 'vsm'
-INSTALLATION = 'vsm'
+INSTALLATION = 'ceph-deploy'
 
 # Set CONFIGURATION to one of 'default', 'small' or 'economical'
 CONFIGURATION = 'small'
