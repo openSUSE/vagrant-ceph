@@ -8,13 +8,7 @@ The current setup only supports libvirt as a provider.  Install the plugin if ne
 
 `$ vagrant plugin install vagrant-libvirt`
 
-Next, add the vagrant box.  Download the boxes from Google Drive.
-
-[openSUSE 13.2](https://drive.google.com/file/d/0B1474649NCkYZ0RqVkFudkNJR0U/view?usp=sharing) <br>
-[openSUSE Tumbleweed](https://drive.google.com/file/d/0B1474649NCkYSWQzSGRYTWo2d0U/view?usp=sharing) <br>
-[SLE 12](https://drive.google.com/file/d/0B1474649NCkYNkZLZGpoTUtmanc/view?usp=sharing)
-
-and save to the _boxes/_ subdirectory.  Then add a box to your environment.  For instance, add the OpenSUSE 13.2 box with
+Next, add the vagrant box.  (If the following fails, see <a href="#Downloading">Downloading boxes</a> below)
 
 `$ vagrant box add boxes/VagrantBox-openSUSE-13.2.x86_64-1.13.2.libvirt.json`
 
@@ -37,6 +31,17 @@ Next, log into the admin node and become root.
 `vagrant@admin:~> sudo su -`
 
 You may now begin a ceph installation.  
+
+## <a name="Downloading"></a>Downloading boxes
+If the boxes do not download automatically, download the boxes from Google Drive.
+
+[openSUSE 13.2](https://drive.google.com/file/d/0B1474649NCkYZ0RqVkFudkNJR0U/view?usp=sharing) <br>
+[openSUSE Tumbleweed](https://drive.google.com/file/d/0B1474649NCkYSWQzSGRYTWo2d0U/view?usp=sharing) <br>
+[SLE 12](https://drive.google.com/file/d/0B1474649NCkYNkZLZGpoTUtmanc/view?usp=sharing)
+
+and save to the _boxes/_ subdirectory.  Edit the appropriate _json_ file, remove the url entry and change '\_local-example\_url' to 'url'.  Then run
+
+`$ vagrant box add boxes/VagrantBox-openSUSE-13.2.x86_64-1.13.2.libvirt.json`
 
 ## Caveats
 For the sake of completeness and stating the obvious, the private ssh key is only suitable for demonstrations and should never be used in a real environment.
