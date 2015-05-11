@@ -8,6 +8,12 @@ The current setup only supports libvirt as a provider.  Install the plugin if ne
 
 `$ vagrant plugin install vagrant-libvirt`
 
+Note: fog-1.30.0 seems to remove support for libvirt.  To workaround this issue, run the following as well if needed
+
+`$ vagrant plugin uninstall fog`
+
+`$ vagrant plugin install --plugin-version 1.29.0 fog`
+
 Next, add the vagrant box.  (If the following fails, see <a href="#Downloading">Downloading boxes</a> below)
 
 `$ vagrant box add boxes/VagrantBox-openSUSE-13.2.x86_64-1.13.2.libvirt.json`
