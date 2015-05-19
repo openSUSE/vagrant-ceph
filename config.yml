@@ -54,7 +54,6 @@ VagrantBox-openSUSE-13.2:
     commands:
       admin:
         - vsm-controller
-        - "grep -rl '^from django.conf.urls.defaults' /usr/share/vsm-dashboard/ | xargs sed -i 's!^from django.conf.urls.defaults!from django.conf.urls!'"
 ########################################
 # OpenSUSE Tumbleweed
 ########################################
@@ -94,7 +93,6 @@ VagrantBox-Tumbleweed:
     commands:
       admin:
         - vsm-controller
-        - "grep -rl '^from django.conf.urls.defaults' /usr/share/vsm-dashboard/ | xargs sed -i 's!^from django.conf.urls.defaults!from django.conf.urls!'"
 ########################################
 # SLE 12
 ########################################
@@ -141,7 +139,6 @@ VagrantBox-SLE12:
     commands:
       admin:
         - vsm-controller
-        - "grep -rl '^from django.conf.urls.defaults' /usr/share/vsm-dashboard/ | xargs sed -i 's!^from django.conf.urls.defaults!from django.conf.urls!'"
 
 ########################################
 # Configuration Section

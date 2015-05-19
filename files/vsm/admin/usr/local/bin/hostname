@@ -3,7 +3,8 @@
 if [ "$1" == "-I" ]
 then
   shift
-  options="-i"
+  ip -o -4 addr show | awk -F[\ /] '!/lo / {print $7 }'
+else
+  /bin/hostname $options $*
 fi
 
-/bin/hostname $options $*
