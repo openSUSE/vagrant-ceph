@@ -51,9 +51,15 @@ VagrantBox-openSUSE-13.2:
         - openstack-keystone
     files:
       admin: true
+      data1: true
+      data2: true
+      data3: true
     commands:
       admin:
         - vsm-controller
+        - ssh data1 vsm-storage
+        - ssh data2 vsm-storage
+        - ssh data3 vsm-storage
 ########################################
 # OpenSUSE Tumbleweed
 ########################################

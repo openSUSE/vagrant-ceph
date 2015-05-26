@@ -80,11 +80,7 @@ Vagrant.configure("2") do |vconfig|
 
         # Set cpus to 2, allow specific configurations
         unless (config[CONFIGURATION]['cpu'].nil?) then
-          if (config[CONFIGURATION]['cpu'][name].nil?) then
-            l.cpus = 2
-          else
-            l.cpus = config[CONFIGURATION]['cpu'][name]
-          end
+          l.cpus = config[CONFIGURATION]['cpu'][name] || 2
         end
 
         # Raw disk images to simulate additional drives on data nodes
@@ -93,12 +89,54 @@ Vagrant.configure("2") do |vconfig|
             disks = config[CONFIGURATION]['disks'][name]
             unless (disks['hds'].nil?) then
               (1..disks['hds']).each do |d|
-                l.storage :file, size: '1G', type: 'raw'
+                l.storage :file, size: '1.1G', type: 'raw'
               end
             end
             unless (disks['ssds'].nil?) then
               (1..disks['ssds']).each do |d|
                 l.storage :file, size: '1G', type: 'raw'
+              end
+            end
+          end
+        end
+
+      end
+
+      node.vm.provider :virtualbox do |vb|
+        unless (config[CONFIGURATION]['memory'].nil?) then
+          unless (config[CONFIGURATION]['memory'][name].nil?) then
+            vb.customize [ "modifyvm", :id, "--memory", 
+                           config[CONFIGURATION]['memory'][name] ]
+          end
+        end
+        unless (config[CONFIGURATION]['cpu'].nil?) then
+          vb.cpus = config[CONFIGURATION]['cpu'][name] || 2
+        end
+
+        unless (config[CONFIGURATION]['disks'].nil?) then
+          unless (config[CONFIGURATION]['disks'][name].nil?) then
+            disks = config[CONFIGURATION]['disks'][name]
+            FileUtils.mkdir_p("#{Dir.home}/disks")
+            unless (disks['hds'].nil?) then
+              (1..disks['hds']).each do |d|
+                file = "#{Dir.home}/disks/#{name}-#{d}"
+                vb.customize [ "createhd", "--filename", file, "--size", "1100" ]
+                vb.customize [ "storageattach", :id, "--storagectl", "SATA", 
+                               "--port", d, 
+                               "--device", 0, 
+                               "--type", "hdd", 
+                               "--medium", file + ".vdi" ]
+              end
+            end
+            unless (disks['ssds'].nil?) then
+              (1..disks['ssds']).each do |d|
+                file = "#{Dir.home}/disks/#{name}-#{d}"
+                vb.customize [ "createhd", "--filename", file, "--size", "1000" ]
+                vb.customize [ "storageattach", :id, "--storagectl", "SATA", 
+                               "--port", d, 
+                               "--device", 1, 
+                               "--type", "hdd", 
+                               "--medium", file + ".vdi" ]
               end
             end
           end
