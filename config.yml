@@ -15,7 +15,7 @@
 ########################################
 # OpenSUSE 13.2
 ########################################
-VagrantBox-openSUSE-13.2:
+openSUSE-13.2:
   ceph-deploy:
     repos:
       'Main Repository (OSS)': 'http://download.opensuse.org/distribution/13.2/repo/oss/'
@@ -47,6 +47,7 @@ VagrantBox-openSUSE-13.2:
         - vsm-dashboard
         - vsm-deploy
       admin:
+        - curl
         - rabbitmq-server
         - openstack-keystone
     files:
@@ -60,6 +61,7 @@ VagrantBox-openSUSE-13.2:
         - ssh data1 vsm-storage
         - ssh data2 vsm-storage
         - ssh data3 vsm-storage
+        - reboot
 ########################################
 # OpenSUSE Tumbleweed
 ########################################

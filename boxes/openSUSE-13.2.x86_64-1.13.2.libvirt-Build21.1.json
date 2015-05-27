@@ -1,0 +1,15 @@
+{
+   "versions" : [
+      {
+         "providers" : [
+            {
+               "url" : "http://download.opensuse.org/repositories/home:/swiftgist/boxes/openSUSE-13.2.x86_64-1.13.2.libvirt-Build21.1.box",
+               "name" : "libvirt"
+            }
+         ],
+         "version" : "1.13.2"
+      }
+   ],
+   "name" : "openSUSE-13.2",
+   "description" : "            openSUSE 13.2 vagrant base box        "
+}

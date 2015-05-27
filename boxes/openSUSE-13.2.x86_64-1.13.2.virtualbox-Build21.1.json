@@ -1,0 +1,15 @@
+{
+   "description" : "            openSUSE 13.2 vagrant base box        ",
+   "name" : "openSUSE-13.2",
+   "versions" : [
+      {
+         "version" : "1.13.2",
+         "providers" : [
+            {
+               "url" : "http://download.opensuse.org/repositories/home:/swiftgist/boxes/openSUSE-13.2.x86_64-1.13.2.virtualbox-Build21.1.box",
+               "name" : "virtualbox"
+            }
+         ]
+      }
+   ]
+}
