@@ -65,7 +65,7 @@ openSUSE-13.2:
 ########################################
 # OpenSUSE Tumbleweed
 ########################################
-VagrantBox-Tumbleweed:
+Tumbleweed:
   ceph-deploy:
     repos:
       'Main Repository (OSS)': 'http://download.opensuse.org/tumbleweed/repo/oss/'
@@ -82,7 +82,8 @@ VagrantBox-Tumbleweed:
   vsm:
     repos:
       'Main Repository (OSS)': 'http://download.opensuse.org/tumbleweed/repo/oss/'
-      'Ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_Tumbleweed/'
+      # 'Ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_Tumbleweed/'
+      'Ceph IBS': 'http://download.suse.de/ibs/Devel:/Storage:/2.0:/Staging/openSUSE_Tumbleweed/'
       'swiftgist/openSUSE Tumbleweed': 'http://download.opensuse.org/repositories/home:/swiftgist/openSUSE_Tumbleweed/'
       'Openstack - Juno': 'http://download.opensuse.org/repositories/Cloud:/OpenStack:/Juno/openSUSE_Factory/'
     packages:

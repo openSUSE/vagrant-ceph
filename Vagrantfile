@@ -16,8 +16,7 @@ config = YAML.load_file(config_file)
 # Check that the user has an ssh key
 Vagrant::Hosts::check_for_ssh_keys
 
-# Set BOX to one of 'VagrantBox-openSUSE-13.2', 'VagrantBox-Tumbleweed', 'VagrantBox-SLE12'
-#BOX = 'VagrantBox-openSUSE-13.2'
+# Set BOX to one of 'openSUSE-13.2', 'Tumbleweed', 'SLE-12'
 BOX = 'openSUSE-13.2'
 
 # Set INSTALLATION to one of 'ceph-deploy', 'vsm'
