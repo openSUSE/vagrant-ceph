@@ -3,7 +3,7 @@
       {
          "providers" : [
             {
-               "url" : "http://download.opensuse.org/repositories/home:/swiftgist/boxes/openSUSE-13.2.x86_64-1.13.2.libvirt-Build21.2.box",
+               "url" : "http://download.opensuse.org/repositories/home:/swiftgist/boxes/openSUSE-13.2.x86_64-1.13.2.libvirt-Build21.16.box",
                "name" : "libvirt"
             }
          ],

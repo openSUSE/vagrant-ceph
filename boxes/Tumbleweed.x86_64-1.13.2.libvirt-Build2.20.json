@@ -3,7 +3,7 @@
       {
          "providers" : [
             {
-               "url" : "http://download.opensuse.org/repositories/home:/swiftgist/boxes/Tumbleweed.x86_64-1.13.2.libvirt-Build2.11.box",
+               "url" : "http://download.opensuse.org/repositories/home:/swiftgist/boxes/Tumbleweed.x86_64-1.13.2.libvirt-Build2.20.box",
                "name" : "libvirt"
             }
          ],

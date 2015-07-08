@@ -22,7 +22,7 @@ BOX = 'openSUSE-13.2'
 # Set INSTALLATION to one of 'ceph-deploy', 'vsm'
 INSTALLATION = 'ceph-deploy'
 
-# Set CONFIGURATION to one of 'default', 'small' or 'economical'
+# Set CONFIGURATION to one of 'default', 'small', 'iscsi' or 'economical'
 CONFIGURATION = 'small'
 
 raise "Box #{BOX} missing from config.yml" unless config[BOX]
@@ -93,7 +93,7 @@ Vagrant.configure("2") do |vconfig|
             disks = config[CONFIGURATION]['disks'][name]
             unless (disks['hds'].nil?) then
               (1..disks['hds']).each do |d|
-                l.storage :file, size: '1100M', type: 'raw'
+                l.storage :file, size: '2G', type: 'raw'
               end
             end
             unless (disks['ssds'].nil?) then

@@ -2,9 +2,13 @@
 Create a vagrant configuration to support multiple ceph cluster topologies.  Ideal for development or exploration of Ceph.
 
 ## Usage
-Review the config.yml.  All addresses are on private networks.  Each commented section lists the requirements for a configuration and approxiamate initialization time.
+Review the config.yml.  All addresses are on private networks.  Each commented section lists the requirements for a configuration and approximate initialization time.
 
-The current setup only supports libvirt as a provider.  Install the plugin if needed.
+The current setup supports both libvirt and virtualbox as providers.  Note that kvm and vbox kernel modules cannot be loaded simultaneously.
+
+### Libvirt plugin
+
+Install the plugin if needed.
 
 `$ vagrant plugin install vagrant-libvirt`
 
@@ -14,13 +18,27 @@ Note: fog-1.30.0 seems to remove support for libvirt.  To workaround this issue,
 
 `$ vagrant plugin install --plugin-version 1.29.0 fog`
 
-Next, add the vagrant box.  (If the following fails, see <a href="#Downloading">Downloading boxes</a> below)
+## Adding Vagrant boxes
+Next, add the vagrant box.  Choose the box you wish to use from the boxes subdirectory.
 
-`$ vagrant box add boxes/VagrantBox-openSUSE-13.2.x86_64-1.13.2.libvirt.json`
+`$ ls boxes/`
+
+<pre>
+openSUSE-13.2.x86_64-1.13.2.libvirt-Build21.16.json
+openSUSE-13.2.x86_64-1.13.2.virtualbox-Build21.16.json
+SLE-12.x86_64-1.12.0.libvirt-Build6.1.json
+SLE-12.x86_64-1.12.0.virtualbox-Build6.1.json
+Tumbleweed.x86_64-1.13.2.libvirt-Build2.20.json
+Tumbleweed.x86_64-1.13.2.virtualbox-Build2.20.json
+</pre>
+
+For instance, add the openSUSE box for libvirt with the following
+
+`$ vagrant box add boxes/openSUSE-13.2.x86_64-1.13.2.libvirt-Build21.16.json`
 
 Edit the _Vagrantfile_ and set BOX, INSTALLATION and CONFIGURATION.  Use the following for an initial test.
 
-`BOX = 'VagrantBox-openSUSE-13.2'` <br>
+`BOX = 'openSUSE-13.2'` <br>
 `INSTALLATION = 'ceph-deploy'` <br>
 `CONFIGURATION = 'small'` <br>
 
@@ -28,7 +46,9 @@ Start the environment.
 
 `$ vagrant up`
 
-Note that the base box image and VM OS disks are added to /var/lib/libvirt/images with additional disks added as 1G raw partitions for the data nodes.
+For libvirt, note that the base box image and VM OS disks are added to /var/lib/libvirt/images with additional disks added as raw partitions for the data nodes.
+
+For virtualbox, the VM OS disks are stored in your home directory.  The additional disks for the data nodes are stored in $HOME/disks.
 
 Next, log into the admin node and become root.
 
@@ -38,21 +58,11 @@ Next, log into the admin node and become root.
 
 You may now begin a ceph installation.  
 
-## <a name="Downloading"></a>Downloading boxes
-If the boxes do not download automatically, download the boxes from Google Drive.
-
-[openSUSE 13.2](https://drive.google.com/file/d/0B1474649NCkYZ0RqVkFudkNJR0U/view?usp=sharing) <br>
-[openSUSE Tumbleweed](https://drive.google.com/file/d/0B1474649NCkYSWQzSGRYTWo2d0U/view?usp=sharing) <br>
-[SLE 12](https://drive.google.com/file/d/0B1474649NCkYNkZLZGpoTUtmanc/view?usp=sharing)
-
-and save to the _boxes/_ subdirectory.  Edit the appropriate _json_ file, remove the url entry and change '\_local-example\_url' to 'url'.  Then run
-
-`$ vagrant box add boxes/VagrantBox-openSUSE-13.2.x86_64-1.13.2.libvirt.json`
 
 ## Caveats
 For the sake of completeness and stating the obvious, the private ssh key is only suitable for demonstrations and should never be used in a real environment.
 
-The automation does not install Ceph.  
+The automation does not install Ceph (yet).  
 
 The default root password is 'vagrant'.
 

@@ -21,6 +21,7 @@ openSUSE-13.2:
       'Main Repository (OSS)': 'http://download.opensuse.org/distribution/13.2/repo/oss/'
       #'Ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_13.2/'
       'Ceph': 'http://download.suse.de/ibs/Devel:/Storage:/1.0/openSUSE_Factory/'
+      'swiftgist/openSUSE 13.2': 'http://download.opensuse.org/repositories/home:/swiftgist/openSUSE_13.2/'
       'Devel C Libraries': 
         'http://download.opensuse.org/repositories/devel:libraries:c_c++/openSUSE_13.2/'
     packages:
@@ -113,11 +114,25 @@ Tumbleweed:
 ########################################
 # SLE 12
 ########################################
-VagrantBox-SLE12:
+SLE-12:
   ceph-deploy:
     repos:
-      'Main Repository (OSS)': 'http://download.suse.de/ibs/SUSE:/SLE-12:/GA/standard/'
-      'Ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/SLE_12/'
+      'SLE12 Pool (OSS)': 
+        'http://download.suse.de/ibs/SUSE:/SLE-12:/GA/standard/'
+      'SLE12 Pool Updates (OSS)': 
+        'http://download.suse.de/ibs/SUSE:/SLE-12:/Update/standard/'
+      'SDK':
+        'http://euklid.suse.de/mirror/SuSE/build.suse.de/SUSE/Products/SLE-SDK/12/x86_64/product'
+      'SDK Updates':
+        'http://euklid.suse.de/mirror/SuSE/build.suse.de/SUSE/Updates/SLE-SDK/12/x86_64/update'
+      #'Ceph': 
+      #  'http://download.opensuse.org/repositories/filesystems:/ceph/SLE_12/'
+      #'Ceph': 
+      #  'http://download.suse.de/ibs/Devel:/Storage:/1.0:/Staging/SLE_12/'
+      'Ceph':
+        'http://download.suse.de/ibs/Devel:/Storage:/2.0:/Staging/SLE12/'
+      'Python Devel': 
+        'http://download.opensuse.org/repositories/devel:/languages:/python/SLE_12/'
     packages:
       all:
         - ceph-deploy
@@ -259,6 +274,54 @@ small:
       management: 192.168.1.11
       public:  172.16.1.11
       cluster: 172.16.2.11
+    data1:
+      management: 192.168.1.21
+      public:  172.16.1.21
+      cluster: 172.16.2.21
+    data2:
+      management: 192.168.1.22
+      public:  172.16.1.22
+      cluster: 172.16.2.22
+    data3:
+      management: 192.168.1.23
+      public:  172.16.1.23
+      cluster: 172.16.2.23
+  memory:
+    admin: 1024
+  disks:
+    data1:
+      hds: 2
+    data2:
+      hds: 2
+    data3:
+      hds: 2
+iscsi:
+  description: "admin, 1 monitor, 3 data nodes"
+  nodes:
+    admin:
+      management: 192.168.1.254
+      public:  172.16.1.254
+      cluster: 172.16.2.254
+    mon1:
+      management: 192.168.1.11
+      public:  172.16.1.11
+      cluster: 172.16.2.11
+    mon2:
+      management: 192.168.1.12
+      public:  172.16.1.12
+      cluster: 172.16.2.12
+    mon3:
+      management: 192.168.1.13
+      public:  172.16.1.13
+      cluster: 172.16.2.13
+    igw1:
+      management: 192.168.1.16
+      public:  172.16.1.16
+      cluster: 172.16.2.16
+    igw2:
+      management: 192.168.1.17
+      public:  172.16.1.17
+      cluster: 172.16.2.17
     data1:
       management: 192.168.1.21
       public:  172.16.1.21
