@@ -141,6 +141,35 @@ SLE-12:
     commands:
       admin:
         - echo Done
+  salt:
+    repos:
+      'SLE12 Pool (OSS)': 
+        'http://download.suse.de/ibs/SUSE:/SLE-12:/GA/standard/'
+      'SLE12 Pool Updates (OSS)': 
+        'http://download.suse.de/ibs/SUSE:/SLE-12:/Update/standard/'
+      'SDK':
+        'http://euklid.suse.de/mirror/SuSE/build.suse.de/SUSE/Products/SLE-SDK/12/x86_64/product'
+      'SDK Updates':
+        'http://euklid.suse.de/mirror/SuSE/build.suse.de/SUSE/Updates/SLE-SDK/12/x86_64/update'
+      #'Ceph': 
+      #  'http://download.opensuse.org/repositories/filesystems:/ceph/SLE_12/'
+      #'Ceph': 
+      #  'http://download.suse.de/ibs/Devel:/Storage:/1.0:/Staging/SLE_12/'
+      'Ceph':
+        'http://download.suse.de/ibs/Devel:/Storage:/2.0:/Staging/SLE12/'
+      'Python Devel': 
+        'http://download.opensuse.org/repositories/devel:/languages:/python/SLE_12/'
+    packages:
+      all:
+        - ceph-deploy
+        - vim
+        - vim-data
+        - salt-minion
+      admin:
+        - salt-master
+    commands:
+      admin:
+        - echo Done
   # This installer requires an additional ~400M and ~4 minutes per VM initially.
   vsm:
     repos:
@@ -296,44 +325,56 @@ small:
     data3:
       hds: 2
 iscsi:
-  description: "admin, 1 monitor, 3 data nodes"
+  description: "admin, 2 clients, 3 monitors, 3 data nodes, 3 gateways"
   nodes:
     admin:
-      management: 192.168.1.254
-      public:  172.16.1.254
-      cluster: 172.16.2.254
+      management: 192.168.11.254
+      public:  172.16.11.254
+      cluster: 172.16.12.254
+    client1:
+      management: 192.168.11.5
+      public:  172.16.11.5
+      cluster: 172.16.12.5
+    client2:
+      management: 192.168.11.6
+      public:  172.16.11.6
+      cluster: 172.16.12.6
     mon1:
-      management: 192.168.1.11
-      public:  172.16.1.11
-      cluster: 172.16.2.11
+      management: 192.168.11.11
+      public:  172.16.11.11
+      cluster: 172.16.12.11
     mon2:
-      management: 192.168.1.12
-      public:  172.16.1.12
-      cluster: 172.16.2.12
+      management: 192.168.11.12
+      public:  172.16.11.12
+      cluster: 172.16.12.12
     mon3:
-      management: 192.168.1.13
-      public:  172.16.1.13
-      cluster: 172.16.2.13
+      management: 192.168.11.13
+      public:  172.16.11.13
+      cluster: 172.16.12.13
     igw1:
-      management: 192.168.1.16
-      public:  172.16.1.16
-      cluster: 172.16.2.16
+      management: 192.168.11.16
+      public:  172.16.11.16
+      cluster: 172.16.12.16
     igw2:
-      management: 192.168.1.17
-      public:  172.16.1.17
-      cluster: 172.16.2.17
+      management: 192.168.11.17
+      public:  172.16.11.17
+      cluster: 172.16.12.17
+    igw3:
+      management: 192.168.11.18
+      public:  172.16.11.18
+      cluster: 172.16.12.18
     data1:
-      management: 192.168.1.21
-      public:  172.16.1.21
-      cluster: 172.16.2.21
+      management: 192.168.11.21
+      public:  172.16.11.21
+      cluster: 172.16.12.21
     data2:
-      management: 192.168.1.22
-      public:  172.16.1.22
-      cluster: 172.16.2.22
+      management: 192.168.11.22
+      public:  172.16.11.22
+      cluster: 172.16.12.22
     data3:
-      management: 192.168.1.23
-      public:  172.16.1.23
-      cluster: 172.16.2.23
+      management: 192.168.11.23
+      public:  172.16.11.23
+      cluster: 172.16.12.23
   memory:
     admin: 1024
   disks:
