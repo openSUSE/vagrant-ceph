@@ -169,7 +169,12 @@ SLE-12:
         - salt-master
     commands:
       admin:
-        - echo Done
+        - systemctl start salt-master
+        - systemctl enable salt-master
+        - salt-key -y -A
+      all:
+        - systemctl start salt-minion
+        - systemctl enable salt-minion
   # This installer requires an additional ~400M and ~4 minutes per VM initially.
   vsm:
     repos:
