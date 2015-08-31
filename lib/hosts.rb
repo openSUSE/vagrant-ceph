@@ -11,9 +11,11 @@ module Vagrant
     #
     #   host_config - hash of hosts containing interfaces mapped to addresses
     #   selected - default network for short hostname
-    def initialize(host_config, selected = 'public')
+    def initialize(host_config, selected = 'public', domain = nil, aliases = {})
       @host_config = host_config
       @selected = selected
+      @domain = domain
+      @aliases = aliases
       File.open("hosts", "w") do |file|
         static_header(file)
         entries = reorganize
@@ -67,6 +69,8 @@ module Vagrant
           entry = "%-16s" % "#{@host_config[hostname][network]}"
           entry += "#{hostname}-#{network}"
           entry += " #{hostname}" if (network == @selected)
+          entry += " #{hostname}.#{@domain}" if (@domain)
+          entry += " #{@aliases[hostname]}" if (@aliases.has_key?(hostname))
           networks[network] << entry
         end
       end
