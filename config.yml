@@ -159,6 +159,8 @@ SLE-12:
         'http://download.suse.de/ibs/Devel:/Storage:/2.0:/Staging/SLE12/'
       'Python Devel': 
         'http://download.opensuse.org/repositories/devel:/languages:/python/SLE_12/'
+      'SES2 Staging': 
+        'http://download.suse.de/ibs/Devel:/Storage:/2.0:/Staging/SLE12/'
     packages:
       all:
         - ceph-deploy

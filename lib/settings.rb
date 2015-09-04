@@ -35,8 +35,9 @@ def libvirt_settings(provider, config, name)
         end
 
         # Set cpus to 2, allow specific configurations
+        provider.cpus =  2
         unless (config[CONFIGURATION]['cpu'].nil?) then
-          provider.cpus = config[CONFIGURATION]['cpu'][name] || 2
+          provider.cpus = config[CONFIGURATION]['cpu'][name] 
         end
 
         # Raw disk images to simulate additional drives on data nodes
@@ -65,8 +66,10 @@ def virtbox_settings(provider, config, name)
                            config[CONFIGURATION]['memory'][name] ]
           end
         end
+
+        provider.cpus = 2
         unless (config[CONFIGURATION]['cpu'].nil?) then
-          provider.cpus = config[CONFIGURATION]['cpu'][name] || 2
+          provider.cpus = config[CONFIGURATION]['cpu'][name] 
         end
 
         # Default interfaces will be eth0, eth1, eth2 and eth3
