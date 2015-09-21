@@ -5,12 +5,20 @@ prepare:
     - tgt_type: compound
     - highstate: True
 
+after reboots:
+  salt.state:
+    - tgt: "E@mon.*|data.*|igw.*|client.*"
+    - tgt_type: compound
+    - highstate: True
+    - require:
+      - salt: prepare
+
 install:
   salt.state:
     - tgt: "admin.ceph"
     - sls: deploy
     - require:
-      - salt: prepare
+      - salt: after reboots
 
 reweight:
   salt.state:

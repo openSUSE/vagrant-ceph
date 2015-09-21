@@ -25,11 +25,15 @@ prepare {{ node }} {{ device }}:
   cmd.run:
     - name: ceph-deploy osd prepare {{ node }}:{{ device }}2:{{ device }}1
     - unless: ssh -o ConnectTimeout=3 {{ node }} fsck /dev/{{ device }}2
+    - require:
+      - cmd: monitors
 
 activate {{ node }} {{ device }}:
   cmd.run:
     - name: ceph-deploy osd activate {{ node }}:{{ device }}2:{{ device }}1
     - unless: ssh -o ConnectTimeout=3 {{ node }} grep -q /dev/{{ device }}2 /proc/mounts
+    - require:
+      - cmd: monitors
 
   {% endfor %}
 {% endfor %}
@@ -39,5 +43,7 @@ admin {{ node }}:
   cmd.run:
     - name: "ceph-deploy admin {{ node }}"
     - unless: "ssh -o ConnectTimeout=3 {{ node }} stat /etc/ceph/ceph.conf"
+    - require:
+      - cmd: monitors
 {% endfor %}
 

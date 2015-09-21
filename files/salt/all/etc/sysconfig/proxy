@@ -1,0 +1,48 @@
+## Path:	Network/Proxy
+## Description:	
+## Type:	yesno
+## Default:	no
+## Config:      kde,profiles
+#
+# Enable a generation of the proxy settings to the profile.
+# This setting allows to turn the proxy on and off while
+# preserving the particular proxy setup.
+# 
+PROXY_ENABLED="yes"
+
+## Type:	string
+## Default:	""
+#
+# Some programs (e.g. lynx, arena and wget) support proxies, if set in
+# the environment. 
+# Example: HTTP_PROXY="http://proxy.provider.de:3128/"
+HTTP_PROXY="http://192.168.121.1:3128/"
+
+## Type:	string
+## Default:	""
+#
+# Some programs (e.g. lynx, arena and wget) support proxies, if set in
+# the environment. 
+# This setting is for https connections
+HTTPS_PROXY=""
+
+## Type:	string
+## Default:	""
+#
+# Example: FTP_PROXY="http://proxy.provider.de:3128/"
+#
+FTP_PROXY=""
+
+## Type:	string
+## Default:	""
+#
+# Example: GOPHER_PROXY="http://proxy.provider.de:3128/"
+#
+GOPHER_PROXY=""
+
+## Type:	string(localhost)
+## Default:	localhost
+#
+# Example: NO_PROXY="www.me.de, do.main, localhost"
+#
+NO_PROXY="localhost, 127.0.0.1"

@@ -1,6 +1,6 @@
 base:
-  ceph:
-    - match: nodegroup
+  'E@mon.*|data.*|igw.*':
+    - match: compound
     - prep
   'data*':
     - partition

@@ -59,15 +59,15 @@ def provisioning(hosts, node, config, name)
       repos = Vagrant::Repos.new(node, config[BOX][INSTALLATION]['repos'])
       repos.add
 
-      # Install additional/unique packages
-      pkgs = Vagrant::Packages.new(node, name, 
-                                   config[BOX][INSTALLATION]['packages'])
-      pkgs.install
-
       # Copy custom files 
       files = Vagrant::Files.new(node, INSTALLATION, name, 
                                  config[BOX][INSTALLATION]['files'])
       files.copy
+
+      # Install additional/unique packages
+      pkgs = Vagrant::Packages.new(node, name, 
+                                   config[BOX][INSTALLATION]['packages'])
+      pkgs.install
 
       # Run commands
       commands = Vagrant::Commands.new(node, name, 

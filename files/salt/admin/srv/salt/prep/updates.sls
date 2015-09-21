@@ -1,4 +1,12 @@
 
+/etc/sysconfig/proxy:
+  file.managed:
+    - source:
+      - salt://prep/proxy
+    - user: root
+    - group: root
+    - mode: 600
+
 zypper update:
   cmd.run:
     - name: "zypper --non-interactive update --replacefiles"
@@ -14,5 +22,5 @@ kernel update:
 reboot:
   module.run:
     - name: system.reboot
-    - unless: "test `uname -r` == '3.12.47-108-default'"
+    - unless: "test `uname -r` != '3.12.28-4-default'"
 

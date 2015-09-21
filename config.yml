@@ -29,6 +29,8 @@ openSUSE-13.2:
         - ceph-deploy
         - vim
         - vim-data
+      admin:
+        - ceph-deploy
     commands:
       admin:
         - echo Done
@@ -73,9 +75,10 @@ Tumbleweed:
       'Ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_Tumbleweed/'
     packages:
       all:
-        - ceph-deploy
         - vim
         - vim-data
+      admin:
+        - ceph-deploy
     commands:
       admin:
         - echo Done
@@ -135,9 +138,10 @@ SLE-12:
         'http://download.opensuse.org/repositories/devel:/languages:/python/SLE_12/'
     packages:
       all:
-        - ceph-deploy
         - vim
         - vim-data
+      admin:
+        - ceph-deploy
     commands:
       admin:
         - echo Done
@@ -163,20 +167,22 @@ SLE-12:
         'http://download.suse.de/ibs/Devel:/Storage:/2.0:/Staging/SLE12/'
     packages:
       all:
-        - ceph-deploy
         - vim
         - vim-data
         - salt-minion
       admin:
+        - ceph-deploy
         - salt-master
+    files:
+      all: true
+      admin: true
     commands:
       admin:
         - systemctl start salt-master
         - systemctl enable salt-master
+        - start_minions 
         - salt-key -y -A
-      all:
-        - systemctl start salt-minion
-        - systemctl enable salt-minion
+        - salt-run state.orchestrate orch.ceph
   # This installer requires an additional ~400M and ~4 minutes per VM initially.
   vsm:
     repos:
@@ -384,6 +390,11 @@ iscsi:
       cluster: 172.16.12.23
   memory:
     admin: 1024
+    igw1: 768
+    igw2: 768
+    igw3: 768
+    client1: 768
+    client2: 768
   disks:
     data1:
       hds: 2
