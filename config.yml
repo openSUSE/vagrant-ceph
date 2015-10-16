@@ -172,16 +172,19 @@ SLE-12:
         - salt-minion
       admin:
         - ceph-deploy
-        - salt-master
     files:
       all: true
       admin: true
     commands:
       admin:
+        #- rpm -e python-Twisted python-service_identity python-pyOpenSSL python-cryptography || exit 0
+        #- rpm -Uvh --oldpackage /tmp/python-cffi-1.1.0-0.x86_64.rpm  || exit 0
+        - zypper -n in --no-recommends salt-master
+        - mv /etc/salt/master.d/transport-raet.conf /etc/salt/master.d/transport-raet.conf-
         - systemctl start salt-master
         - systemctl enable salt-master
         - start_minions 
-        - salt-key -y -A
+        - salt-key -y -A || exit 0
         - salt-run state.orchestrate orch.ceph
   # This installer requires an additional ~400M and ~4 minutes per VM initially.
   vsm:
