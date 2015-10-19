@@ -15,7 +15,7 @@ zypper update:
 
 kernel update:
   cmd.run:
-    - name: "zypper --non-interactive --no-gpg-checks in kernel-default-3.12.47"
+    - name: "zypper --non-interactive --no-gpg-checks in kernel-default-3.12.48"
     - shell: /bin/bash
     - unless: "rpm -q kernel-default-3.12.47"
 
