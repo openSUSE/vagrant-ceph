@@ -180,7 +180,7 @@ SLE-12:
         #- rpm -e python-Twisted python-service_identity python-pyOpenSSL python-cryptography || exit 0
         #- rpm -Uvh --oldpackage /tmp/python-cffi-1.1.0-0.x86_64.rpm  || exit 0
         - zypper -n in --no-recommends salt-master
-        - mv /etc/salt/master.d/transport-raet.conf /etc/salt/master.d/transport-raet.conf-
+        - mv /etc/salt/master.d/transport-raet.conf /etc/salt/master.d/transport-raet.conf- || exit 0
         - systemctl start salt-master
         - systemctl enable salt-master
         - start_minions 
