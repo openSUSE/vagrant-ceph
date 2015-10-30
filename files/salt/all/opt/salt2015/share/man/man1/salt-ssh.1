@@ -1,0 +1,273 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "SALT-SSH" "1" "September 30, 2015" "2015.8.1" "Salt"
+.SH NAME
+salt-ssh \- salt-ssh Documentation
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.SH SYNOPSIS
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+salt\-ssh \(aq*\(aq [ options ] sys.doc
+
+salt\-ssh \-E \(aq.*\(aq [ options ] sys.doc cmd
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SH DESCRIPTION
+.sp
+Salt SSH allows for salt routines to be executed using only SSH for transport
+.SH OPTIONS
+.INDENT 0.0
+.TP
+.B \-r, \-\-raw, \-\-raw\-shell
+Execute a raw shell command.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-priv
+Specify the SSH private key file to be used for authentication.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-roster
+Define which roster system to use, this defines if a database backend,
+scanner, or custom roster system is used. Default is the flat file roster.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-roster\-file
+Define an alternative location for the default roster file location. The
+default roster file is called \fBroster\fP and is found in the same directory
+as the master config file.
+.sp
+New in version 2014.1.0.
+
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-refresh, \-\-refresh\-cache
+Force a refresh of the master side data cache of the target\(aqs data. This
+is needed if a target\(aqs grains have been changed and the auto refresh
+timeframe has not been reached.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-procs
+Set the number of concurrent minions to communicate with. This value
+defines how many processes are opened up at a time to manage connections,
+the more running process the faster communication should be, default
+is 25.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-i, \-\-ignore\-host\-keys
+Ignore the ssh host keys which by default are honored and connections
+would ask for approval.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-passwd
+Set the default password to attempt to use when authenticating.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-key\-deploy
+Set this flag to attempt to deploy the authorized ssh key with all
+minions. This combined with \-\-passwd can make initial deployment of keys
+very fast and easy.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+Print the version of Salt that is running.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-versions\-report
+Show program\(aqs dependencies and version number, and then exit
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-h, \-\-help
+Show the help message and exit
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-c CONFIG_DIR, \-\-config\-dir=CONFIG_dir
+The location of the Salt configuration directory. This directory contains
+the configuration files for Salt master and minions. The default location
+on most systems is \fB/etc/salt\fP\&.
+.UNINDENT
+.SS Target Selection
+.INDENT 0.0
+.TP
+.B \-E, \-\-pcre
+The target expression will be interpreted as a PCRE regular expression
+rather than a shell glob.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-L, \-\-list
+The target expression will be interpreted as a comma\-delimited list;
+example: server1.foo.bar,server2.foo.bar,example7.quo.qux
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-G, \-\-grain
+The target expression matches values returned by the Salt grains system on
+the minions. The target expression is in the format of \(aq<grain value>:<glob
+expression>\(aq; example: \(aqos:Arch*\(aq
+.sp
+This was changed in version 0.9.8 to accept glob expressions instead of
+regular expression. To use regular expression matching with grains, use
+the \-\-grain\-pcre option.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-grain\-pcre
+The target expression matches values returned by the Salt grains system on
+the minions. The target expression is in the format of \(aq<grain value>:<
+regular expression>\(aq; example: \(aqos:Arch.*\(aq
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-N, \-\-nodegroup
+Use a predefined compound target defined in the Salt master configuration
+file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-R, \-\-range
+Instead of using shell globs to evaluate the target, use a range expression
+to identify targets. Range expressions look like %cluster.
+.sp
+Using the Range option requires that a range server is set up and the
+location of the range server is referenced in the master configuration
+file.
+.UNINDENT
+.SS Logging Options
+.sp
+Logging options which override any settings defined on the configuration files.
+.INDENT 0.0
+.TP
+.B \-l LOG_LEVEL, \-\-log\-level=LOG_LEVEL
+Console logging log level. One of \fBall\fP, \fBgarbage\fP, \fBtrace\fP,
+\fBdebug\fP, \fBinfo\fP, \fBwarning\fP, \fBerror\fP, \fBquiet\fP\&. Default:
+\fBwarning\fP\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-log\-file=LOG_FILE
+Log file path. Default: /var/log/salt/ssh\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-log\-file\-level=LOG_LEVEL_LOGFILE
+Logfile logging log level. One of \fBall\fP, \fBgarbage\fP, \fBtrace\fP,
+\fBdebug\fP, \fBinfo\fP, \fBwarning\fP, \fBerror\fP, \fBquiet\fP\&. Default:
+\fBwarning\fP\&.
+.UNINDENT
+.SS Output Options
+.INDENT 0.0
+.TP
+.B \-\-out
+Pass in an alternative outputter to display the return of data. This
+outputter can be any of the available outputters:
+.INDENT 7.0
+.INDENT 3.5
+\fBgrains\fP, \fBhighstate\fP, \fBjson\fP, \fBkey\fP, \fBoverstatestage\fP, \fBpprint\fP, \fBraw\fP, \fBtxt\fP, \fByaml\fP
+.UNINDENT
+.UNINDENT
+.sp
+Some outputters are formatted only for data returned from specific
+functions; for instance, the \fBgrains\fP outputter will not work for non\-grains
+data.
+.sp
+If an outputter is used that does not support the data passed into it, then
+Salt will fall back on the \fBpprint\fP outputter and display the return data
+using the Python \fBpprint\fP standard library module.
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
+If using \fB\-\-out=json\fP, you will probably want \fB\-\-static\fP as well.
+Without the static option, you will get a separate JSON string per minion
+which makes JSON output invalid as a whole.
+This is due to using an iterative outputter. So if you want to feed it
+to a JSON parser, use \fB\-\-static\fP as well.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-out\-indent OUTPUT_INDENT, \-\-output\-indent OUTPUT_INDENT
+Print the output indented by the provided value in spaces. Negative values
+disable indentation. Only applicable in outputters that support
+indentation.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-out\-file=OUTPUT_FILE, \-\-output\-file=OUTPUT_FILE
+Write the output to the specified file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-color
+Disable all colored output
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-force\-color
+Force colored output
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
+When using colored output the color codes are as follows:
+.sp
+\fBgreen\fP denotes success, \fBred\fP denotes failure, \fBblue\fP denotes
+changes and success and \fByellow\fP denotes a expected future change in configuration.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SH SEE ALSO
+.sp
+\fIsalt(7)\fP
+\fIsalt\-master(1)\fP
+\fIsalt\-minion(1)\fP
+.SH AUTHOR
+Thomas S. Hatch <thatch45@gmail.com> and many others, please see the Authors file
+.SH COPYRIGHT
+2015 SaltStack, Inc.
+.\" Generated by docutils manpage writer.
+.

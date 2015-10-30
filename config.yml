@@ -147,45 +147,61 @@ SLE-12:
         - echo Done
   salt:
     repos:
-      'SLE12 Pool (OSS)': 
-        'http://download.suse.de/ibs/SUSE:/SLE-12:/GA/standard/'
-      'SLE12 Pool Updates (OSS)': 
-        'http://download.suse.de/ibs/SUSE:/SLE-12:/Update/standard/'
-      'SDK':
-        'http://euklid.suse.de/mirror/SuSE/build.suse.de/SUSE/Products/SLE-SDK/12/x86_64/product'
-      'SDK Updates':
-        'http://euklid.suse.de/mirror/SuSE/build.suse.de/SUSE/Updates/SLE-SDK/12/x86_64/update'
-      #'Ceph': 
-      #  'http://download.opensuse.org/repositories/filesystems:/ceph/SLE_12/'
-      #'Ceph': 
-      #  'http://download.suse.de/ibs/Devel:/Storage:/1.0:/Staging/SLE_12/'
-      'Ceph':
-        'http://download.suse.de/ibs/Devel:/Storage:/2.0:/Staging/SLE12/'
-      'Python Devel': 
-        'http://download.opensuse.org/repositories/devel:/languages:/python/SLE_12/'
-      'SES2 Staging': 
-        'http://download.suse.de/ibs/Devel:/Storage:/2.0:/Staging/SLE12/'
+      #'SLE12 Pool (OSS)': 
+      #  'http://download.suse.de/ibs/SUSE:/SLE-12:/GA/standard/'
+      #'SLE12 Pool Updates (OSS)': 
+      #  'http://download.suse.de/ibs/SUSE:/SLE-12:/Update/standard/'
+      #'SDK':
+      #  'http://euklid.suse.de/mirror/SuSE/build.suse.de/SUSE/Products/SLE-SDK/12/x86_64/product'
+      #'SDK Updates':
+      #  'http://euklid.suse.de/mirror/SuSE/build.suse.de/SUSE/Updates/SLE-SDK/12/x86_64/update'
+      ##'Ceph': 
+      ##  'http://download.opensuse.org/repositories/filesystems:/ceph/SLE_12/'
+      ##'Ceph': 
+      ##  'http://download.suse.de/ibs/Devel:/Storage:/1.0:/Staging/SLE_12/'
+      #'Ceph':
+      #  'http://download.suse.de/ibs/Devel:/Storage:/2.0:/Staging/SLE12/'
+      #'Python Devel': 
+      #  'http://download.opensuse.org/repositories/devel:/languages:/python/SLE_12/'
+      #'SES2 Staging': 
+      #  'http://download.suse.de/ibs/Devel:/Storage:/2.0:/Staging/SLE12/'
+      'sle-sdk': 'http://192.168.10.95/repo/products/sle-sdk/product'
+      'SLE 12': 'http://192.168.10.95/repo/products/SLE_12/product'
+      'Storage': 'http://192.168.10.95/repo/products/storage/product'
+      'sle-sdk update': 'http://192.168.10.95/repo/updates/sle-sdk/update'
+      'SLE 12 update': 'http://192.168.10.95/repo/updates/SLE_12/update'
+      'Storage update': 'http://192.168.10.95/repo/updates/storage/update'
     packages:
       all:
         - vim
         - vim-data
         - salt-minion
+        - diamond
       admin:
         - ceph-deploy
+      calamari:
+        - salt-master
+        - postgresql93-9.3.8-8.1
+        - calamari-server
     files:
       all: true
       admin: true
     commands:
       admin:
-        #- rpm -e python-Twisted python-service_identity python-pyOpenSSL python-cryptography || exit 0
-        #- rpm -Uvh --oldpackage /tmp/python-cffi-1.1.0-0.x86_64.rpm  || exit 0
-        - zypper -n in --no-recommends salt-master
-        - mv /etc/salt/master.d/transport-raet.conf /etc/salt/master.d/transport-raet.conf- || exit 0
+        - rpm -e salt-minion salt || exit 0
+        - zypper -n ar 'http://192.168.10.95/repo/systemsmanagement:/saltstack/SLE_12' 'System Management' || exit 0
+        - sleep 3
+        - zypper -n in salt-master-2015.8.1
         - systemctl start salt-master
         - systemctl enable salt-master
         - start_minions 
+        - sleep 10
         - salt-key -y -A || exit 0
         - salt-run state.orchestrate orch.ceph
+        - start_calamari_minions
+      calmari:
+        - systemctl start salt-master
+        - systemctl enable salt-master
   # This installer requires an additional ~400M and ~4 minutes per VM initially.
   vsm:
     repos:
@@ -341,7 +357,7 @@ small:
     data3:
       hds: 2
 iscsi:
-  description: "admin, 2 clients, 3 monitors, 3 data nodes, 3 gateways"
+  description: "admin, 2 clients, 3 monitors, 5 data nodes, 3 gateways"
   nodes:
     admin:
       management: 192.168.11.254
@@ -355,6 +371,10 @@ iscsi:
       management: 192.168.11.6
       public:  172.16.11.6
       cluster: 172.16.12.6
+    calamari:
+      management: 192.168.11.10
+      public:  172.16.11.10
+      cluster: 172.16.12.10
     mon1:
       management: 192.168.11.11
       public:  172.16.11.11
@@ -391,8 +411,17 @@ iscsi:
       management: 192.168.11.23
       public:  172.16.11.23
       cluster: 172.16.12.23
+    data4:
+      management: 192.168.11.24
+      public:  172.16.11.24
+      cluster: 172.16.12.24
+    data5:
+      management: 192.168.11.25
+      public:  172.16.11.25
+      cluster: 172.16.12.25
   memory:
-    admin: 1024
+    admin: 2048
+    calamari: 2048
     igw1: 768
     igw2: 768
     igw3: 768
@@ -404,6 +433,10 @@ iscsi:
     data2:
       hds: 2
     data3:
+      hds: 2
+    data4:
+      hds: 2
+    data5:
       hds: 2
 # The economical configuration represents a cold storage configuration that has
 # no SSD journals.  Additionally, the monitors and admin node do not have an
