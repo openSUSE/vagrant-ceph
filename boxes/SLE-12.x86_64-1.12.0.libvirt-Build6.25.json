@@ -6,7 +6,7 @@
          "version" : "1.12.0",
          "providers" : [
             {
-               "url" : "http://download.opensuse.org/repositories/home:/swiftgist/boxes/SLE-12.x86_64-1.12.0.libvirt-Build6.1.box",
+               "url" : "http://download.opensuse.org/repositories/home:/swiftgist/boxes/SLE-12.x86_64-1.12.0.libvirt-Build6.25.box",
                "name" : "libvirt"
             }
          ]

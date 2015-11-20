@@ -6,7 +6,7 @@
          "version" : "1.13.2",
          "providers" : [
             {
-               "url" : "http://download.opensuse.org/repositories/home:/swiftgist/boxes/openSUSE-13.2.x86_64-1.13.2.virtualbox-Build21.16.box",
+               "url" : "http://download.opensuse.org/repositories/home:/swiftgist/boxes/openSUSE-13.2.x86_64-1.13.2.virtualbox-Build21.39.box",
                "name" : "virtualbox"
             }
          ]

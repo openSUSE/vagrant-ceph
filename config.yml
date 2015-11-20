@@ -179,6 +179,7 @@ SLE-12:
         - diamond
       admin:
         - ceph-deploy
+        - git
       calamari:
         - salt-master
         - postgresql93-9.3.8-8.1
@@ -191,14 +192,16 @@ SLE-12:
         - rpm -e salt-minion salt || exit 0
         - zypper -n ar 'http://192.168.10.95/repo/systemsmanagement:/saltstack/SLE_12' 'System Management' || exit 0
         - sleep 3
-        - zypper -n in salt-master-2015.8.1
+        - zypper --gpg-auto-import-keys -n in salt-master-2015.8.1
+        - /srv/reactor/ready_check --init
         - systemctl start salt-master
         - systemctl enable salt-master
         - start_minions 
         - sleep 10
-        - salt-key -y -A || exit 0
-        - salt-run state.orchestrate orch.ceph
-        - start_calamari_minions
+        - salt-key -y -A 
+        - git clone https://github.com/saltstack/salt.git
+          #- salt-run state.orchestrate orch.ceph
+          #- start_calamari_minions
       calmari:
         - systemctl start salt-master
         - systemctl enable salt-master
@@ -387,6 +390,14 @@ iscsi:
       management: 192.168.11.13
       public:  172.16.11.13
       cluster: 172.16.12.13
+    mds1:
+      management: 192.168.11.14
+      public:  172.16.11.14
+      cluster: 172.16.12.14
+    mds2:
+      management: 192.168.11.15
+      public:  172.16.11.15
+      cluster: 172.16.12.15
     igw1:
       management: 192.168.11.16
       public:  172.16.11.16
@@ -427,6 +438,11 @@ iscsi:
     igw3: 768
     client1: 768
     client2: 768
+    data1: 1024
+    data2: 1024
+    data3: 1024
+    data4: 1024
+    data5: 1024
   disks:
     data1:
       hds: 2

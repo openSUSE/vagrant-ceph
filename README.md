@@ -24,17 +24,17 @@ Next, add the vagrant box.  Choose the box you wish to use from the boxes subdir
 `$ ls boxes/`
 
 <pre>
-openSUSE-13.2.x86_64-1.13.2.libvirt-Build21.16.json
-openSUSE-13.2.x86_64-1.13.2.virtualbox-Build21.16.json
-SLE-12.x86_64-1.12.0.libvirt-Build6.1.json
-SLE-12.x86_64-1.12.0.virtualbox-Build6.1.json
-Tumbleweed.x86_64-1.13.2.libvirt-Build2.20.json
-Tumbleweed.x86_64-1.13.2.virtualbox-Build2.20.json
+openSUSE-13.2.x86_64-1.13.2.libvirt-Build21.39.json
+openSUSE-13.2.x86_64-1.13.2.virtualbox-Build21.39.json
+SLE-12.x86_64-1.12.0.libvirt-Build6.25.json
+SLE-12.x86_64-1.12.0.virtualbox-Build6.25.json
+Tumbleweed.x86_64-1.13.2.libvirt-Build2.34.json
+Tumbleweed.x86_64-1.13.2.virtualbox-Build2.34.json
 </pre>
 
 For instance, add the openSUSE box for libvirt with the following
 
-`$ vagrant box add boxes/openSUSE-13.2.x86_64-1.13.2.libvirt-Build21.16.json`
+`$ vagrant box add boxes/openSUSE-13.2.x86_64-1.13.2.libvirt-Build21.39.json`
 
 Edit the _Vagrantfile_ and set BOX, INSTALLATION and CONFIGURATION.  Use the following for an initial test.
 
@@ -45,6 +45,10 @@ Edit the _Vagrantfile_ and set BOX, INSTALLATION and CONFIGURATION.  Use the fol
 Start the environment.
 
 `$ vagrant up`
+
+If the admin node starts prior to the other nodes, vagrant will complain that the admin node failed.  (This has been inconsistent depending on an environment.)  Run the provisionining step to compete the setup.
+
+`$ vagrant provision`
 
 For libvirt, note that the base box image and VM OS disks are added to /var/lib/libvirt/images with additional disks added as raw partitions for the data nodes.
 
@@ -62,10 +66,7 @@ You may now begin a ceph installation.
 ## Caveats
 For the sake of completeness and stating the obvious, the private ssh key is only suitable for demonstrations and should never be used in a real environment.
 
-The automation does not install Ceph (yet).  
+The ceph-deploy installation option does not automatically install ceph.  The environment is created to allow the running of ceph-deploy.  For automatic installation, compare the salt installation option. 
 
 The default root password is 'vagrant'.
 
-Depending on your hardware, an ssh command may fail on the initialization when a virtual machine did not respond quickly enough.  Run the provisioning again with
-
-`$ vagrant provision`

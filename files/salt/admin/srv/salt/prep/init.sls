@@ -1,4 +1,5 @@
 
 include:
-  - prep.updates
   - prep.ceph
+  - prep.updates
+  - prep.complete

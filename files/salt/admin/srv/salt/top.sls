@@ -1,5 +1,5 @@
 base:
-  'E@mon.*|data.*|igw.*':
+  'E@mon.*|data.*|igw.*|mds.*|client.*':
     - match: compound
     - prep
   'data*':
@@ -8,5 +8,5 @@ base:
     - iscsi
   'client*':
     - initiator
-  'admin.ceph':
-    - deploy
+  #'admin.ceph':
+  #  - deploy

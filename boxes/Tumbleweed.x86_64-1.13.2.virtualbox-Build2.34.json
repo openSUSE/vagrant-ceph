@@ -5,7 +5,7 @@
       {
          "providers" : [
             {
-               "url" : "http://download.opensuse.org/repositories/home:/swiftgist/boxes/Tumbleweed.x86_64-1.13.2.virtualbox-Build2.20.box",
+               "url" : "http://download.opensuse.org/repositories/home:/swiftgist/boxes/Tumbleweed.x86_64-1.13.2.virtualbox-Build2.34.box",
                "name" : "virtualbox"
             }
          ],

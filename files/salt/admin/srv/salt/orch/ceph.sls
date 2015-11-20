@@ -1,13 +1,13 @@
 
 prepare:
   salt.state:
-    - tgt: "E@mon.*|data.*|igw.*|client.*"
+    - tgt: "E@mon.*|data.*|igw.*|client.*|mds.*"
     - tgt_type: compound
     - highstate: True
 
 after reboots:
   salt.state:
-    - tgt: "E@mon.*|data.*|igw.*|client.*"
+    - tgt: "E@mon.*|data.*|igw.*|client.*|mds.*"
     - tgt_type: compound
     - highstate: True
     - require:
