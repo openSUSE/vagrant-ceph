@@ -65,3 +65,10 @@ iscsiadm:
     - require:
       - salt: multipathd
 
+mds:
+  salt.state:
+    - tgt: "admin.ceph"
+    - sls: cephfs
+    - require:
+      - salt: iscsiadm
+

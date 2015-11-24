@@ -8,5 +8,7 @@ base:
     - iscsi
   'client*':
     - initiator
-  #'admin.ceph':
-  #  - deploy
+  'admin.ceph':
+    - prep.complete
+  'calamari.ceph':
+    - prep.complete
