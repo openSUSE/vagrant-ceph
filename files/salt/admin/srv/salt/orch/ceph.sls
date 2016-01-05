@@ -72,3 +72,11 @@ mds:
     - require:
       - salt: iscsiadm
 
+mds clients:
+  salt.state:
+    - tgt: "E@client.*"
+    - tgt_type: compound
+    - sls: cephfs.client
+    - require:
+      - salt: mds
+

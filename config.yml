@@ -171,6 +171,7 @@ SLE-12:
       'sle-sdk update': 'http://192.168.10.95/repo/updates/sle-sdk/update'
       'SLE 12 update': 'http://192.168.10.95/repo/updates/SLE_12/update'
       'Storage update': 'http://192.168.10.95/repo/updates/storage/update'
+      'Goldwyn': 'http://download.suse.de/ibs/home:/goldwynr:/Kernel:/SLE12-SP1/standard/'
     packages:
       all:
         - vim
@@ -192,7 +193,7 @@ SLE-12:
         - rpm -e salt-minion salt || exit 0
         - zypper -n ar 'http://192.168.10.95/repo/systemsmanagement:/saltstack/SLE_12' 'System Management' || exit 0
         - sleep 3
-        - zypper --gpg-auto-import-keys -n in salt-master-2015.8.1
+        - zypper --gpg-auto-import-keys -n in salt-master-2015.8.2
         - /srv/reactor/ready_check --init
         - systemctl start salt-master
         - systemctl enable salt-master
