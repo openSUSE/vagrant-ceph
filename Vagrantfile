@@ -18,13 +18,13 @@ config = YAML.load_file(config_file)
 Vagrant::Hosts::check_for_ssh_keys
 
 # Set BOX to one of 'openSUSE-13.2', 'Tumbleweed', 'SLE-12'
-BOX = 'SLE-12'
+BOX = 'SLE_12-SP1'
 
 # Set INSTALLATION to one of 'ceph-deploy', 'vsm'
-INSTALLATION = 'salt'
+INSTALLATION = 'openattic'
 
 # Set CONFIGURATION to one of 'default', 'small', 'iscsi' or 'economical'
-CONFIGURATION = 'iscsi'
+CONFIGURATION = 'small'
 
 raise "Box #{BOX} missing from config.yml" unless config[BOX]
 raise "Installation #{INSTALLATION} missing for box #{BOX} from config.yml" unless config[BOX][INSTALLATION]
@@ -41,6 +41,9 @@ if (INSTALLATION == 'salt') then
   hosts = Vagrant::Hosts.new(config[CONFIGURATION]['nodes'], 
                              selected = 'public', domain='ceph', 
                              aliases={ 'admin' => 'salt' })
+elsif (INSTALLATION == 'openattic') then
+  hosts = Vagrant::Hosts.new(config[CONFIGURATION]['nodes'], 
+                             selected = 'public', domain='ceph')
 else
   hosts = Vagrant::Hosts.new(config[CONFIGURATION]['nodes'])
 end
