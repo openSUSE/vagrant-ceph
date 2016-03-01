@@ -412,9 +412,12 @@ SLE_12-SP1:
       admin: true
     commands:
       admin:
+        - ln -s /etc/icinga /etc/nagios3
+        - ln -s /etc/icinga/icinga.cfg /etc/icinga/nagios.cfg
+        - ln -s /usr/sbin/icinga /usr/sbin/nagios
         - systemctl enable apache2
         - systemctl start apache2
-        #- oaconfig install --allow-broken-hostname
+        - oaconfig install --allow-broken-hostname
   salt:
     repos:
       'sle-sdk': 'http://192.168.10.95/repo/products/sle-sdk-12-SP1/product'
