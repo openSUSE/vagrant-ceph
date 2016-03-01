@@ -18,10 +18,10 @@ config = YAML.load_file(config_file)
 Vagrant::Hosts::check_for_ssh_keys
 
 # Set BOX to one of 'openSUSE-13.2', 'Tumbleweed', 'SLE-12'
-BOX = 'SLE-12'
+BOX = 'SLE_12-SP1'
 
 # Set INSTALLATION to one of 'ceph-deploy', 'vsm'
-INSTALLATION = 'salt'
+INSTALLATION = 'two_salts'
 
 # Set CONFIGURATION to one of 'default', 'small', 'iscsi' or 'economical'
 CONFIGURATION = 'iscsi'

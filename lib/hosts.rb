@@ -16,14 +16,16 @@ module Vagrant
       @selected = selected
       @domain = domain
       @aliases = aliases
-      File.open("hosts", "w") do |file|
-        static_header(file)
-        entries = reorganize
-        entries.keys.each do |section|
-          entries[section].each do |entry|
-            file.puts entry
+      unless File.exists?("hosts") then
+        File.open("hosts", "w") do |file|
+          static_header(file)
+          entries = reorganize
+          entries.keys.each do |section|
+            entries[section].each do |entry|
+              file.puts entry
+            end
+            file.puts
           end
-          file.puts
         end
       end
     end

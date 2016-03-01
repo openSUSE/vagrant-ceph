@@ -37,7 +37,9 @@ def libvirt_settings(provider, config, name)
         # Set cpus to 2, allow specific configurations
         provider.cpus =  2
         unless (config[CONFIGURATION]['cpu'].nil?) then
-          provider.cpus = config[CONFIGURATION]['cpu'][name] 
+          unless (config[CONFIGURATION]['cpu'][name].nil?) then
+            provider.cpus = config[CONFIGURATION]['cpu'][name] 
+          end
         end
 
         # Raw disk images to simulate additional drives on data nodes
