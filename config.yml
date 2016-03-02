@@ -249,17 +249,46 @@ SLE-12:
 # OpenSUSE Leap 42.1
 ########################################
 openSUSE-42.1:
+  openattic+:
+    repos:
+      'OpenAttic': 'http://download.opensuse.org/repositories/filesystems:/openATTIC/openSUSE_Leap_42.1/'
+      'Ceph Jewel': 'http://download.opensuse.org/repositories/filesystems:/ceph:/jewel/openSUSE_Leap_42.1/'
+    packages:
+      admin:
+        - pnp4nagios-0.6.25-8.1
+        - openattic
+        - openattic-gui
+        - ceph-deploy
+        - git
+        - salt-master
+      all:
+        - vim
+        - vim-data
+        - man
+      client1:
+        - multipath-tools
+      client2:
+        - multipath-tools
+    files:
+      all: true
+      admin: true
+    commands:
+      admin:
+        - systemctl enable apache2
+        - systemctl start apache2
+        - oaconfig install --allow-broken-hostname
+        - zypper -n in -t pattern Basis-Devel
+        - zypper -n in python-devel libgit2-devel
+        - /srv/reactor/ready_check --init
+        - systemctl start salt-master
+        - systemctl enable salt-master
+        - /usr/local/sbin/start_minions
+        - sleep 10
+        - salt-key -y -A  || exit 0
+        - git clone https://github.com/saltstack/salt.git || exit 0
   openattic:
     repos:
-      #'Swiftgist': 'http://download.opensuse.org/repositories/home:/swiftgist:/monitoring/SLE_12/'
       'OpenAttic': 'http://download.opensuse.org/repositories/filesystems:/openATTIC/openSUSE_Leap_42.1/'
-      #'sle-sdk': 'http://192.168.10.95/repo/products/sle-sdk/product'
-      #'SLE 12': 'http://192.168.10.95/repo/products/SLE_12/product'
-      #'Storage': 'http://192.168.10.95/repo/products/storage/product'
-      #'sle-sdk update': 'http://192.168.10.95/repo/updates/sle-sdk/update'
-      #'SLE 12 update': 'http://192.168.10.95/repo/updates/SLE_12/update'
-      #'Storage update': 'http://192.168.10.95/repo/updates/storage/update'
-      #'System Monitoring': 'http://download.opensuse.org/repositories/server:/monitoring/SLE_12/'
     packages:
       admin:
         #- monitoring-plugins-http
@@ -629,7 +658,7 @@ small:
     data3:
       hds: 2
 iscsi:
-  description: "admin, 2 clients, 3 monitors, 5 data nodes, 3 gateways"
+  description: "admin, 2 clients, 3 monitors, 5 data nodes, 3 gateways, 2 mds and calamari"
   nodes:
     admin:
       management: 192.168.11.254
@@ -704,6 +733,98 @@ iscsi:
   memory:
     admin: 3072
     calamari: 2048
+    igw1: 768
+    igw2: 768
+    igw3: 768
+    client1: 768
+    client2: 768
+    data1: 1024
+    data2: 1024
+    data3: 1024
+    data4: 1024
+    data5: 1024
+  disks:
+    data1:
+      hds: 2
+    data2:
+      hds: 2
+    data3:
+      hds: 2
+    data4:
+      hds: 2
+    data5:
+      hds: 2
+sixteen:
+  description: "admin, 2 clients, 3 monitors, 5 data nodes, 3 gateways, 2 mds"
+  nodes:
+    admin:
+      management: 192.168.31.254
+      public:  172.16.31.254
+      cluster: 172.16.32.254
+    client1:
+      management: 192.168.31.5
+      public:  172.16.31.5
+      cluster: 172.16.32.5
+    client2:
+      management: 192.168.31.6
+      public:  172.16.31.6
+      cluster: 172.16.32.6
+    mon1:
+      management: 192.168.31.11
+      public:  172.16.31.11
+      cluster: 172.16.32.11
+    mon2:
+      management: 192.168.31.12
+      public:  172.16.31.12
+      cluster: 172.16.32.12
+    mon3:
+      management: 192.168.31.13
+      public:  172.16.31.13
+      cluster: 172.16.32.13
+    mds1:
+      management: 192.168.31.14
+      public:  172.16.31.14
+      cluster: 172.16.32.14
+    mds2:
+      management: 192.168.31.15
+      public:  172.16.31.15
+      cluster: 172.16.32.15
+    igw1:
+      management: 192.168.31.16
+      public:  172.16.31.16
+      cluster: 172.16.32.16
+    igw2:
+      management: 192.168.31.17
+      public:  172.16.31.17
+      cluster: 172.16.32.17
+    igw3:
+      management: 192.168.31.18
+      public:  172.16.31.18
+      cluster: 172.16.32.18
+    data1:
+      management: 192.168.31.21
+      public:  172.16.31.21
+      cluster: 172.16.32.21
+    data2:
+      management: 192.168.31.22
+      public:  172.16.31.22
+      cluster: 172.16.32.22
+    data3:
+      management: 192.168.31.23
+      public:  172.16.31.23
+      cluster: 172.16.32.23
+    data4:
+      management: 192.168.31.24
+      public:  172.16.31.24
+      cluster: 172.16.32.24
+    data5:
+      management: 192.168.31.25
+      public:  172.16.31.25
+      cluster: 172.16.32.25
+  cpu:
+    admin: 4
+  memory:
+    admin: 3072
     igw1: 768
     igw2: 768
     igw3: 768
