@@ -24,7 +24,7 @@ BOX = 'SLE_12-SP1'
 INSTALLATION = 'two_salts'
 
 # Set CONFIGURATION to one of 'default', 'small', 'iscsi' or 'economical'
-CONFIGURATION = 'small'
+CONFIGURATION = 'iscsi'
 
 raise "Box #{BOX} missing from config.yml" unless config[BOX]
 raise "Installation #{INSTALLATION} missing for box #{BOX} from config.yml" unless config[BOX][INSTALLATION]

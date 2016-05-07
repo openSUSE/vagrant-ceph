@@ -493,14 +493,15 @@ SLE_12-SP1:
         - systemctl enable salt-master
   two_salts:
     repos:
-      'sle-sdk': 'http://192.168.10.95/repo/products/sle-sdk-12-SP1/product'
-      'sle-sdk update': 'http://192.168.10.95/repo/updates/sle-sdk-12-SP1/update'
-      'SLE 12 SP1': 'http://192.168.10.95/repo/products/SLE_12-SP1/product'
-      'SLE 12 SP1 update': 'http://192.168.10.95/repo/updates/SLE_12-SP1/update'
-      'SES-image': 'http://192.168.10.95/repo/products/ses-2.1-image/SUSE-Enterprise-Storage-2.1-POOL-x86_64-Build0012-Media1'
-      'SES': 'http://192.168.10.95/repo/products/ses-2.1/standard'
+      'sle-sdk': 'http://192.168.121.1/repo/products/sle-sdk-12-SP1/product'
+      'sle-sdk update': 'http://192.168.121.1/repo/updates/sle-sdk-12-SP1/update'
+      'SLE 12 SP1': 'http://192.168.121.1/repo/products/SLE_12-SP1/product'
+      'SLE 12 SP1 update': 'http://192.168.121.1/repo/updates/SLE_12-SP1/update'
+      'SES-image': 'http://192.168.121.1/repo/products/ses-2.1-image/SUSE-Enterprise-Storage-2.1-POOL-x86_64-Build0012-Media1'
+      'SES': 'http://192.168.121.1/repo/products/ses-2.1/standard'
       'Goldwyn': 'http://download.suse.de/ibs/home:/goldwynr:/Kernel:/SLE12-SP1/standard/'
       'Nodejs': 'http://download.opensuse.org/repositories/devel:/languages:/nodejs/SLE_12/'
+      'Swiftgist': 'http://download.opensuse.org/repositories/home:/swiftgist/SLE_12/'
     packages:
       all:
         - vim
@@ -529,7 +530,7 @@ SLE_12-SP1:
         - zypper -n in -t pattern Basis-Devel
         - zypper --gpg-auto-import-keys -n in python-devel libgit2-devel
         - sleep 3
-        - zypper --gpg-auto-import-keys -n in salt-master-2015.8.3
+        - zypper --gpg-auto-import-keys -n in salt-master-2015.8.7
         - /srv/reactor/ready_check --init
         - systemctl start salt-master
         - systemctl enable salt-master
