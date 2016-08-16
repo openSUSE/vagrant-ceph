@@ -1,1 +1,0 @@
-https://github.com/saltstack/salt-testing/tarball/develop#egg=SaltTesting

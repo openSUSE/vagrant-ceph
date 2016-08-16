@@ -1,8 +1,0 @@
-#!/bin/bash
-
-for i in `awk '/-public/ {print $3}' /etc/hosts`
-do
-  ssh $i systemctl start salt-minion
-  ssh $i systemctl enable salt-minion
-done
-

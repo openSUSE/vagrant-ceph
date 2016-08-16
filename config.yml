@@ -449,23 +449,29 @@ SLE_12-SP1:
         - oaconfig install --allow-broken-hostname
   salt:
     repos:
-      'sle-sdk': 'http://192.168.10.95/repo/products/sle-sdk-12-SP1/product'
-      'sle-sdk update': 'http://192.168.10.95/repo/updates/sle-sdk-12-SP1/update'
-      'SLE 12 SP1': 'http://192.168.10.95/repo/products/SLE_12-SP1/product'
-      'SLE 12 SP1 update': 'http://192.168.10.95/repo/updates/SLE_12-SP1/update'
-      'SES-image': 'http://192.168.10.95/repo/products/ses-2.1-image/SUSE-Enterprise-Storage-2.1-POOL-x86_64-Build0012-Media1'
-      'SES': 'http://192.168.10.95/repo/products/ses-2.1/standard'
-      'System Management': 'http://192.168.10.95/repo/systemsmanagement:/saltstack/SLE_12' 
+      'sle-sdk': 'http://192.168.121.1/repo/products/sle-sdk-12-SP1/product'
+      'sle-sdk update': 'http://192.168.121.1/repo/updates/sle-sdk-12-SP1/update'
+      'SLE 12 SP1': 'http://192.168.121.1/repo/products/SLE_12-SP1/product'
+      'SLE 12 SP1 update': 'http://192.168.121.1/repo/updates/SLE_12-SP1/update'
+      #'SES-image': 'http://192.168.121.1/repo/products/ses-3.0-image/SUSE-Enterprise-Storage-3-POOL-x86_64-Build0122-Media1'
+      'SES3.0': 'http://192.168.121.1/repo/products/ses-3.0/SUSE-Enterprise-Storage-3-POOL-x86_64-Build0135-Media1/'
+      'SES3.0 Update': 'http://192.168.121.1/repo/updates/ses-3.0/standard'
+      'OpenAttic': 'http://192.168.121.1/repo/filesystems/openattic/SLE_12/'
     packages:
       all:
         - vim
         - vim-data
+        - python-setuptools
         - salt-minion
           #- diamond
       admin:
         - ceph-deploy
-        - git
+        #- git
         - salt-master
+        - ntp
+          #- openattic
+          #- openattic-gui
+        - tree
       calamari:
         #- salt-master
         #- postgresql93-9.3.8-8.1
@@ -480,66 +486,18 @@ SLE_12-SP1:
     commands:
       admin:
         - zypper -n in -t pattern Basis-Devel
-        - zypper -n in python-devel libgit2-devel
-        - /srv/reactor/ready_check --init
+        - systemctl start ntpd
+        - systemctl enable ntpd
         - systemctl start salt-master
         - systemctl enable salt-master
-        - /usr/local/sbin/start_minions 
         - sleep 10
         - salt-key -y -A  || exit 0
-        - git clone https://github.com/saltstack/salt.git || exit 0
-      calmari:
-        - systemctl start salt-master
-        - systemctl enable salt-master
-  two_salts:
-    repos:
-      'sle-sdk': 'http://192.168.121.1/repo/products/sle-sdk-12-SP1/product'
-      'sle-sdk update': 'http://192.168.121.1/repo/updates/sle-sdk-12-SP1/update'
-      'SLE 12 SP1': 'http://192.168.121.1/repo/products/SLE_12-SP1/product'
-      'SLE 12 SP1 update': 'http://192.168.121.1/repo/updates/SLE_12-SP1/update'
-      'SES-image': 'http://192.168.121.1/repo/products/ses-2.1-image/SUSE-Enterprise-Storage-2.1-POOL-x86_64-Build0012-Media1'
-      'SES': 'http://192.168.121.1/repo/products/ses-2.1/standard'
-      'Goldwyn': 'http://download.suse.de/ibs/home:/goldwynr:/Kernel:/SLE12-SP1/standard/'
-      'Nodejs': 'http://download.opensuse.org/repositories/devel:/languages:/nodejs/SLE_12/'
-      'Swiftgist': 'http://download.opensuse.org/repositories/home:/swiftgist/SLE_12/'
-    packages:
+        - chown -R salt:salt /srv/pillar/ceph
+        - systemctl restart salt-minion
       all:
-        - vim
-        - vim-data
-        - salt-minion
-        - diamond
-      admin:
-        - ceph-deploy
-        - git
-          #- salt-master
-      calamari:
-        - salt-master
-        - postgresql94
-        - calamari-server
-      client1:
-        - multipath-tools
-      client2:
-        - multipath-tools
-    files:
-      all: true
-      admin: true
-    commands:
-      admin:
-        - rpm -e salt-minion salt || exit 0
-        - zypper -n ar 'http://192.168.10.95/repo/systemsmanagement:/saltstack/SLE_12' 'System Management' || exit 0
-        - zypper -n in -t pattern Basis-Devel
-        - zypper --gpg-auto-import-keys -n in python-devel libgit2-devel
-        - sleep 3
-        - zypper --gpg-auto-import-keys -n in salt-master-2015.8.7
-        - /srv/reactor/ready_check --init
-        - systemctl start salt-master
-        - systemctl enable salt-master
-        - /usr/local/sbin/start_minions 
-        - sleep 10
-        - salt-key -y -A  || exit 0
-        - git clone https://github.com/saltstack/salt.git || exit 0
-          #- salt-run state.orchestrate orch.ceph
-          #- start_calamari_minions
+        - (cd /tmp/python-ceph-cfg; python setup.py install)
+        - systemctl restart salt-minion
+        - systemctl enable salt-minion
       calmari:
         - systemctl start salt-master
         - systemctl enable salt-master
@@ -754,6 +712,96 @@ iscsi:
     data4:
       hds: 2
     data5:
+      hds: 2
+fifteen:
+  description: "admin, 2 clients, 3 monitors, 6 data nodes, 3 gateways"
+  nodes:
+    admin:
+      management: 192.168.21.254
+      public:  172.16.21.254
+      cluster: 172.16.22.254
+    client1:
+      management: 192.168.21.5
+      public:  172.16.21.5
+      cluster: 172.16.22.5
+    client2:
+      management: 192.168.21.6
+      public:  172.16.21.6
+      cluster: 172.16.22.6
+    mon1:
+      management: 192.168.21.11
+      public:  172.16.21.11
+      cluster: 172.16.22.11
+    mon2:
+      management: 192.168.21.12
+      public:  172.16.21.12
+      cluster: 172.16.22.12
+    mon3:
+      management: 192.168.21.13
+      public:  172.16.21.13
+      cluster: 172.16.22.13
+    igw1:
+      management: 192.168.21.16
+      public:  172.16.21.16
+      cluster: 172.16.22.16
+    igw2:
+      management: 192.168.21.17
+      public:  172.16.21.17
+      cluster: 172.16.22.17
+    igw3:
+      management: 192.168.21.18
+      public:  172.16.21.18
+      cluster: 172.16.22.18
+    data1:
+      management: 192.168.21.21
+      public:  172.16.21.21
+      cluster: 172.16.22.21
+    data2:
+      management: 192.168.21.22
+      public:  172.16.21.22
+      cluster: 172.16.22.22
+    data3:
+      management: 192.168.21.23
+      public:  172.16.21.23
+      cluster: 172.16.22.23
+    data4:
+      management: 192.168.21.24
+      public:  172.16.21.24
+      cluster: 172.16.22.24
+    data5:
+      management: 192.168.21.25
+      public:  172.16.21.25
+      cluster: 172.16.22.25
+    data6:
+      management: 192.168.21.26
+      public:  172.16.21.26
+      cluster: 172.16.22.26
+  cpu:
+    admin: 4
+  memory:
+    admin: 3072
+    igw1: 768
+    igw2: 768
+    igw3: 768
+    client1: 768
+    client2: 768
+    data1: 1024
+    data2: 1024
+    data3: 1024
+    data4: 1024
+    data5: 1024
+  disks:
+    data1:
+      hds: 2
+    data2:
+      hds: 2
+    data3:
+      hds: 2
+    data4:
+      hds: 2
+    data5:
+      hds: 2
+    data6:
       hds: 2
 sixteen:
   description: "admin, 2 clients, 3 monitors, 5 data nodes, 3 gateways, 2 mds"

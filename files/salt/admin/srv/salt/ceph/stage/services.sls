@@ -1,0 +1,6 @@
+
+include:
+  - .iscsi
+  - .cephfs
+  - .rgw
+

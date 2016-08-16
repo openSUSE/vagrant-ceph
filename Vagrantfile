@@ -21,10 +21,10 @@ Vagrant::Hosts::check_for_ssh_keys
 BOX = 'SLE_12-SP1'
 
 # Set INSTALLATION to one of 'ceph-deploy', 'vsm'
-INSTALLATION = 'two_salts'
+INSTALLATION = 'salt'
 
 # Set CONFIGURATION to one of 'default', 'small', 'iscsi' or 'economical'
-CONFIGURATION = 'iscsi'
+CONFIGURATION = 'fifteen'
 
 raise "Box #{BOX} missing from config.yml" unless config[BOX]
 raise "Installation #{INSTALLATION} missing for box #{BOX} from config.yml" unless config[BOX][INSTALLATION]

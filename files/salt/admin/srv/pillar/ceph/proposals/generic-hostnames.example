@@ -1,0 +1,20 @@
+# Cluster assignment
+cluster-ceph/cluster/*.sls
+# Hardware Profile
+2Dsk2GB-1/cluster/data*.sls
+2Dsk2GB-1/stack/ceph/minions/data*.ceph.yml
+2Dsk2GB-1/stack/ceph/roles/storage.yml
+# Common configuration
+config/stack/ceph/cluster.yml
+config/stack/global.yml
+# Role assignment
+role-admin/cluster/*.sls
+role-admin/stack/ceph/roles/admin.yml
+role-igw/cluster/*.sls  slice=[9:12]
+role-mon/cluster/*.sls slice=[12:15]
+role-mon/cluster/*.sls re=.*mon[0-9].*$
+role-mon/stack/ceph/roles/mon.yml
+# Customization
+custom/stack/ceph/cluster.yml
+
+
