@@ -732,7 +732,6 @@ hash_type: sha256
 # ['garbage', 'trace', 'debug']
 #
 #log_level: warning
-log_level: debug
 
 # The level of messages to send to the log file.
 # One of 'garbage', 'trace', 'debug', info', 'warning', 'error', 'critical'.

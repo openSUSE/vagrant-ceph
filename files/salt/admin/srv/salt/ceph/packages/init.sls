@@ -1,6 +1,4 @@
 
 
 include:
-  - .begin
-  - .ceph
-  - .complete
+  - .{{ salt['pillar.get']('package_method', 'default') }}

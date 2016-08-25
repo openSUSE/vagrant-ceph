@@ -52,7 +52,7 @@ def queue(**kwargs):
                 listen=False)
 
         # skip dunder keys
-        settings = {k:v for k,v in settings.iteritems() if not k.startswith('__')}
+#        settings = {k:v for k,v in settings.iteritems() if not k.startswith('__')}
         event.fire_event(settings, tagify(['start', settings['next'], 'stage'], prefix='ceph'))
         log.info("firing event for stage {}".format(settings['next']))
     else:

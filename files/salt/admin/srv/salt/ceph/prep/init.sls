@@ -1,6 +1,0 @@
-
-
-include:
-  - .begin
-  - .updates
-  - .complete

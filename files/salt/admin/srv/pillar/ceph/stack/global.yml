@@ -1,0 +1,3 @@
+# Customizations for /srv/pillar/ceph/stack/global.yml
+time_service: custom
+

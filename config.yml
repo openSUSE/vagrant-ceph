@@ -456,6 +456,7 @@ SLE_12-SP1:
       #'SES-image': 'http://192.168.121.1/repo/products/ses-3.0-image/SUSE-Enterprise-Storage-3-POOL-x86_64-Build0122-Media1'
       'SES3.0': 'http://192.168.121.1/repo/products/ses-3.0/SUSE-Enterprise-Storage-3-POOL-x86_64-Build0135-Media1/'
       'SES3.0 Update': 'http://192.168.121.1/repo/updates/ses-3.0/standard'
+      'systemsmanagement': 'http://192.168.121.1/repo/systemsmanagement:/saltstack:/SLE_12_SP1'
       'OpenAttic': 'http://192.168.121.1/repo/filesystems/openattic/SLE_12/'
     packages:
       all:
@@ -493,7 +494,8 @@ SLE_12-SP1:
         - sleep 10
         - salt-key -y -A  || exit 0
         - chown -R salt:salt /srv/pillar/ceph
-        - systemctl restart salt-minion
+        - chmod 1777 /tmp
+        #- systemctl restart salt-minion
       all:
         - (cd /tmp/python-ceph-cfg; python setup.py install)
         - systemctl restart salt-minion
