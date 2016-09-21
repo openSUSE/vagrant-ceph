@@ -48,6 +48,10 @@ else
   hosts = Vagrant::Hosts.new(config[CONFIGURATION]['nodes'])
 end
 
+def provisioned?(vm_name='default', provider='libvirt')
+  File.exist?(".vagrant/machines/#{vm_name}/#{provider}/action_provision")
+end
+
 def provisioning(hosts, node, config, name)
       # Update /etc/hosts on each node
       hosts.update(node)
@@ -60,6 +64,9 @@ def provisioning(hosts, node, config, name)
 
       # Add missing repos
       repos = Vagrant::Repos.new(node, config[BOX][INSTALLATION]['repos'])
+      if ENV.has_key?("CLEAN_ZYPPER_REPOS") or !provisioned?(name)
+        repos.clean
+      end
       repos.add
 
       # Copy custom files 

@@ -21,6 +21,10 @@ module Vagrant
       end
     end
 
+    def clean
+      @node.vm.provision 'shell', inline: "sudo rm -f /etc/zypp/repos.d/*"
+    end
+
     # Runs all the commands in a single shell
     def add
       @node.vm.provision 'shell', inline: @cmds.join('; ') 
