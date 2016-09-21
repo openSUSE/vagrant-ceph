@@ -163,7 +163,7 @@ module Vagrant
     #
     #   tar_file - path to tar file
     def untar(tar_file)
-      cmd = "tar -C / -xf #{tar_file}"
+      cmd = "tar --no-overwrite-dir -C / -xf #{tar_file}"
       @node.vm.provision 'shell', inline: cmd
     end
   end
