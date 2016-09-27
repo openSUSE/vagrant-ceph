@@ -1,5 +1,0 @@
-
-include:
-  - .authtool
-  - .keyring
-  - .openattic
