@@ -10,7 +10,7 @@ install rgw:
 {% for role in salt['pillar.get']('rgw_configurations', [ 'rgw' ]) %}
 start {{ role }}:
   service.running:
-    - name: ceph-radosgw@{{ role }}
+    - name: ceph-radosgw@{{ role + "." + grains['host'] }}
     - enable: True
     - require:
         - cmd: install rgw

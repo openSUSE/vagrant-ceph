@@ -457,7 +457,8 @@ SLE_12-SP1:
       'SES3.0': 'http://192.168.121.1/repo/products/ses-3.0/SUSE-Enterprise-Storage-3-POOL-x86_64-Build0135-Media1/'
       'SES3.0 Update': 'http://192.168.121.1/repo/updates/ses-3.0/standard'
       'systemsmanagement': 'http://192.168.121.1/repo/systemsmanagement:/saltstack:/SLE_12_SP1'
-      'OpenAttic': 'http://192.168.121.1/repo/filesystems/openattic/SLE_12/'
+      'OpenAttic': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES4/standard/'
+      #'OpenAttic': 'http://download.opensuse.org/repositories/home:/swiftgist/SLE_12_SP1/'
       'lrbd': 'http://download.suse.de/ibs/home:/swiftgist/SLE_12_SP1/'
     packages:
       all:
@@ -990,6 +991,7 @@ eighteen:
     data3: 1024
     data4: 1024
     data5: 1024
+    data6: 1024
   disks:
     data1:
       hds: 2

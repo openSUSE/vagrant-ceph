@@ -1,6 +1,4 @@
 # Customizations for /srv/pillar/ceph/stack/global.yml
-time_service: custom
-
-discovery_method: custom
-rgw_method: custom
+stage_discovery: default-notimeout
+packages_common: default-zypper
 
