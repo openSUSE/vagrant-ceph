@@ -18,6 +18,23 @@ Note: fog-1.30.0 seems to remove support for libvirt.  To workaround this issue,
 
 `$ vagrant plugin install --plugin-version 1.29.0 fog`
 
+Second note: Encountering an error similar to the following:
+
+```
+ERROR:  Could not find a valid gem 'fog-core' (>= 0), here is why:
+          Unable to download data from https://rubygems.org/ - SSL_connect returned=1 errno=0 state=error: certificate verify failed (https://api.rubygems.org/specs.4.8.gz)
+```
+
+Update the gem in vagrant.  Download from http://guides.rubygems.org/ssl-certificate-update/#installing-using-update-packages.
+
+```
+/opt/vagrant/embedded/bin/gem install --local /tmp/rubygems-update-2.6.7.gem
+/opt/vagrant/embedded/bin/update_rubygems --no-ri --no-rdoc
+/opt/vagrant/embedded/bin/gem uninstall rubygems-update -x
+```
+
+Then, rerun the plugin installation above.
+
 ## Adding Vagrant boxes
 Next, add the vagrant box.  Choose the box you wish to use from the boxes subdirectory.
 
