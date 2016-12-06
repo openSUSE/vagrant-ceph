@@ -12,13 +12,15 @@ Install the plugin if needed.
 
 `$ vagrant plugin install vagrant-libvirt`
 
-Note: fog-1.30.0 seems to remove support for libvirt.  To workaround this issue, run the following as well if needed
+#### Workaround 1
+fog-1.30.0 seems to remove support for libvirt.  To workaround this issue, run the following as well if needed
 
 `$ vagrant plugin uninstall fog`
 
 `$ vagrant plugin install --plugin-version 1.29.0 fog`
 
-Second note: Encountering an error similar to the following:
+#### Workaround 2
+Encountering an error similar to the following:
 
 ```
 ERROR:  Could not find a valid gem 'fog-core' (>= 0), here is why:
@@ -32,6 +34,8 @@ Update the gem in vagrant.  Download from http://guides.rubygems.org/ssl-certifi
 /opt/vagrant/embedded/bin/update_rubygems --no-ri --no-rdoc
 /opt/vagrant/embedded/bin/gem uninstall rubygems-update -x
 ```
+
+For background on this issue, see https://gist.github.com/luislavena/f064211759ee0f806c88.
 
 Then, rerun the plugin installation above.
 
