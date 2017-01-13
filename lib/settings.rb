@@ -9,22 +9,23 @@ def common_settings(node, config, name)
 
       # Ceph has three networks
       networks = config[CONFIGURATION]['nodes'][name]
-      node.vm.network :private_network, ip: networks['management']
-      node.vm.network :private_network, ip: networks['public']
-      node.vm.network :private_network, ip: networks['cluster']
+      node.vm.network :private_network, :forward_mode => "route", :libvirt__network_name => "routed_all"
+      # node.vm.network :private_network, ip: networks['cluster']
 end
 
 def libvirt_settings(provider, config, name)
-        provider.host = 'localhost'
-        provider.username = 'root'
+        # this hsould override all provider options
+        # TODO make this configurable
+        provider.uri = 'qemu:///system'
 
 
-        # Use DSA key if available, otherwise, defaults to RSA
-        provider.id_ssh_key_file = 'id_dsa' if File.exists?("#{ENV['HOME']}/.ssh/id_dsa")
-        provider.connect_via_ssh = true
+        # TODO make this configurable
+        # provider.id_ssh_key_file = "#{ENV['HOME']}/.ssh/id_rsa_vagrant" if File.exists?("#{ENV['HOME']}/.ssh/id_rsa_vagrant")
+        # provider.connect_via_ssh = true
 
         # Libvirt pool and prefix value
-        provider.storage_pool_name = 'default'
+        # TODO make this configurable
+        provider.storage_pool_name = 'sles12_2'
         #l.default_prefix = ''
 
         # Memory defaults to 512M, allow specific configurations 
@@ -35,7 +36,8 @@ def libvirt_settings(provider, config, name)
         end
 
         # Set cpus to 2, allow specific configurations
-        provider.cpus =  2
+        provider.cpus =  1
+        provider.cpu_mode = 'host-passthrough'
         unless (config[CONFIGURATION]['cpu'].nil?) then
           unless (config[CONFIGURATION]['cpu'][name].nil?) then
             provider.cpus = config[CONFIGURATION]['cpu'][name] 
@@ -48,12 +50,12 @@ def libvirt_settings(provider, config, name)
             disks = config[CONFIGURATION]['disks'][name]
             unless (disks['hds'].nil?) then
               (1..disks['hds']).each do |d|
-                provider.storage :file, size: '2G', type: 'raw'
+                provider.storage :file, size: '2G'
               end
             end
             unless (disks['ssds'].nil?) then
               (1..disks['ssds']).each do |d|
-                provider.storage :file, size: '1G', type: 'raw'
+                provider.storage :file, size: '1G'
               end
             end
           end

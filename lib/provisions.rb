@@ -97,7 +97,7 @@ module Vagrant
     # Log into each machine and accept which generates the known_hosts
     def authorize
       @servers.each do |server|
-        cmd = "ssh -oStrictHostKeyChecking=no #{server} exit"
+        cmd = "ssh -i files/id_ecdsa -oStrictHostKeyChecking=no #{server} exit"
         @node.vm.provision 'shell', inline: cmd
       end
     end
