@@ -37,7 +37,8 @@ def libvirt_settings(provider, config, name)
 
         # Set cpus to 2, allow specific configurations
         provider.cpus =  1
-        provider.cpu_mode = 'host-passthrough'
+        provider.cpu_mode = 'custom'
+        provider.cpu_model = 'Haswell-noTSX'
         unless (config[CONFIGURATION]['cpu'].nil?) then
           unless (config[CONFIGURATION]['cpu'][name].nil?) then
             provider.cpus = config[CONFIGURATION]['cpu'][name] 

@@ -31,8 +31,8 @@ end
 def provisioning(node, config, name)
 
       # Allow passwordless root access between nodes
-      keys = Vagrant::Keys.new(node, config[CONFIGURATION]['nodes'].keys)
-      keys.authorize
+      # keys = Vagrant::Keys.new(node, config[CONFIGURATION]['nodes'].keys)
+      # keys.authorize
 
       # Add missing repos
       repos = Vagrant::Repos.new(node, config[BOX][INSTALLATION]['repos'])
@@ -78,7 +78,7 @@ Vagrant.configure("2") do |vconfig|
         virtbox_settings(vb, config, name)
       end
 
-      # provisioning(node, config, name)
+      provisioning(node, config, name)
 
     end
   end
@@ -99,7 +99,7 @@ Vagrant.configure("2") do |vconfig|
       virtbox_settings(vb, config, name)
     end
 
-    # provisioning(node, config, name)
+    provisioning(node, config, name)
 
   end
 
