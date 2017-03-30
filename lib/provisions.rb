@@ -106,6 +106,7 @@ module Vagrant
   # Copy files from files/install_mode to the virtual machine.  Effectively,
   # a poor man's patch after package installation to allow quick experimenting
   # until the real solution is decided
+  # TODO look further into this
   class Files
 
     # Saves arguments
@@ -187,6 +188,8 @@ module Vagrant
     end
 
     def run
+      # TODO should we maybe aggregate the commands and run as script? what if a
+        # command fails
       [ 'all', @host].each do |group|
         unless (@commands[group].nil?) then
           @commands[group].each do |cmd|

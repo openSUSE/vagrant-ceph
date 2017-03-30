@@ -1,28 +1,17 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-require 'yaml'
-require 'pp'
+require "yaml"
+require "pp"
 
 
-require_relative 'lib/settings.rb'
-require_relative 'lib/provisions.rb'
+require_relative "lib/settings.rb"
+require_relative "lib/provisions.rb"
 
-config_file = 'config.yml'
+
+# create config and default, merge both.
+config_file =  File.exists?("#{ENV['VC_CONFIG']}") : "#{ENV['VC_CONFIG']}"? "config/default.yml"
 config = YAML.load_file(config_file)
-
-# Set BOX to one of 'openSUSE-13.2', 'Tumbleweed', 'SLE-12'
-BOX = 'SLE12SP2'
-
-# Set INSTALLATION to one of 'ceph-deploy', 'vsm', 'salt'
-INSTALLATION = 'salt'
-
-# Set CONFIGURATION to one of 'default', 'small', 'iscsi' or 'economical'
-CONFIGURATION = 'default'
-
-raise "Box #{BOX} missing from config.yml" unless config[BOX]
-raise "Installation #{INSTALLATION} missing for box #{BOX} from config.yml" unless config[BOX][INSTALLATION]
-raise "Configuration #{CONFIGURATION} missing from config.yml" unless config[CONFIGURATION]
 
 def provisioned?(vm_name='default', provider='libvirt')
   File.exist?(".vagrant/machines/#{vm_name}/#{provider}/action_provision")
@@ -35,34 +24,33 @@ def provisioning(node, config, name)
       # keys.authorize
 
       # Add missing repos
-      repos = Vagrant::Repos.new(node, config[BOX][INSTALLATION]['repos'])
+      repos = Vagrant::Repos.new(node, config['repos'])
       if ENV.has_key?("CLEAN_ZYPPER_REPOS") or !provisioned?(name)
         repos.clean
       end
       repos.add
 
       # Copy custom files
-      files = Vagrant::Files.new(node, INSTALLATION, name,
-                                 config[BOX][INSTALLATION]['files'])
+      files = Vagrant::Files.new(node, name,
+                                 config["files"])
       files.copy
 
       # Install additional/unique packages
       pkgs = Vagrant::Packages.new(node, name,
-                                   config[BOX][INSTALLATION]['packages'])
+                                   config["packages"])
       pkgs.install
 
       # Run commands
       commands = Vagrant::Commands.new(node, name,
-                                       config[BOX][INSTALLATION]['commands'])
+                                       config["commands"])
       commands.run
 
 end
 
 Vagrant.configure("2") do |vconfig|
-  vconfig.vm.box = BOX
+  vconfig.vm.box = config["box"]
 
-  # Keep admin at the end for provisioning
-  nodes = config[CONFIGURATION]['nodes'].keys.reject{|i| i == 'admin'}
+  nodes = config["nodes"]
 
   nodes.each do |name|
     vm_name = name
@@ -74,33 +62,9 @@ Vagrant.configure("2") do |vconfig|
         libvirt_settings(l, config, name)
       end
 
-      node.vm.provider :virtualbox do |vb|
-        virtbox_settings(vb, config, name)
-      end
-
       provisioning(node, config, name)
 
     end
-  end
-
-  # Appending admin to the nodes array does *not* guarantee that admin
-  # will provision last
-  name = "admin"
-  vm_name = "admin"
-
-  vconfig.vm.define vm_name do |node|
-    common_settings(node, config, name)
-
-    node.vm.provider :libvirt do |l|
-      libvirt_settings(l, config, name)
-    end
-
-    node.vm.provider :virtualbox do |vb|
-      virtbox_settings(vb, config, name)
-    end
-
-    provisioning(node, config, name)
-
   end
 
 end

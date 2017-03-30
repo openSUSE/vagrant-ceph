@@ -1,0 +1,63 @@
+libvirt-uri: qemu:///system
+libvirt-storage-pool: sles12_2
+nodes:
+  admin:
+  mon1:
+  mon2:
+  data1:
+  data2:
+  data3:
+  data4:
+  data5:
+  data6:
+memory:
+  admin: 1024
+disks:
+  data1:
+    hds: 5
+    ssds: 1
+  data2:
+    hds: 5
+    ssds: 1
+  data3:
+    hds: 5
+    ssds: 1
+  data4:
+    hds: 5
+    ssds: 1
+  data5:
+    hds: 5
+    ssds: 1
+  data6:
+    hds: 5
+    ssds: 1
+box: sle12-sp2
+repos:
+  'sp2': 'http://dist.suse.de/ibs/SUSE/Products/SLE-SERVER/12-SP2/x86_64/product/'
+  'sp2 update': 'http://dist.suse.de/ibs/SUSE/Updates/SLE-SERVER/12-SP2/x86_64/update/'
+  'ses4': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES4/images/repo/SUSE-Enterprise-Storage-4-POOL-x86_64-Media1/'
+  'ses4 update': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES4/standard/'
+packages:
+  all:
+    - vim
+    - salt-minion
+  admin:
+    - salt-master
+    - ntp
+files:
+  all: false
+  admin: true
+commands:
+  admin:
+    # - zypper -n in -t pattern Basis-Devel
+    - systemctl start ntpd
+    - systemctl enable ntpd
+    - systemctl start salt-master
+    - systemctl enable salt-master
+    - sleep 10
+    - salt-key -y -A  || exit 0
+  all:
+    - 'echo "nameserver 192.168.100.1" > /etc/resolv.conf'
+    - 'echo "master: admin" > /etc/salt/minion.d/master.conf'
+    - systemctl restart salt-minion
+    - systemctl enable salt-minion
