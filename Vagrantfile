@@ -18,13 +18,13 @@ config = YAML.load_file(config_file)
 Vagrant::Hosts::check_for_ssh_keys
 
 # Set BOX to one of 'openSUSE-13.2', 'Tumbleweed', 'SLE-12'
-BOX = 'SLE_12-SP1'
+BOX = 'SLE_12-SP3'
 
 # Set INSTALLATION to one of 'ceph-deploy', 'vsm'
 INSTALLATION = 'salt'
 
 # Set CONFIGURATION to one of 'default', 'small', 'iscsi' or 'economical'
-CONFIGURATION = 'eighteen'
+CONFIGURATION = 'twentythree'
 
 raise "Box #{BOX} missing from config.yml" unless config[BOX]
 raise "Installation #{INSTALLATION} missing for box #{BOX} from config.yml" unless config[BOX][INSTALLATION]

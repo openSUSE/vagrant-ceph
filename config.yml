@@ -468,7 +468,7 @@ SLE_12-SP1:
         - salt-minion
           #- diamond
       admin:
-        - ceph-deploy
+        #- ceph-deploy
         #- git
         - salt-master
         - ntp
@@ -499,6 +499,138 @@ SLE_12-SP1:
         - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
         - chmod 1777 /tmp
         #- systemctl restart salt-minion
+      all:
+        - systemctl restart salt-minion
+        - systemctl enable salt-minion
+      calmari:
+        - systemctl start salt-master
+        - systemctl enable salt-master
+########################################
+# SLE 12 SP2
+########################################
+SLE_12-SP2:
+  salt:
+    repos:
+      'sle-sdk': 'http://192.168.121.1/repo/products/sle-sdk-12-SP1/product'
+      'sle-sdk update': 'http://192.168.121.1/repo/updates/sle-sdk-12-SP1/update'
+      #'SLE 12 SP2': 'http://download.suse.de/ibs/SUSE/Products/SLE-SERVER/12-SP2/x86_64/product/'
+      'SLE 12 SP2': 'http://192.168.121.1/repo/products/SLE_12-SP2/product'
+      #'SLE 12 SP2 update': 'http://download.suse.de/ibs/SUSE/Updates/SLE-SERVER/12-SP2/x86_64/update/'
+      'SLE 12 SP2 update': 'http://192.168.121.1/repo/updates/SLE_12-SP2/update'
+      #'SES4': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES4/images/repo/SUSE-Enterprise-Storage-4-POOL-x86_64-Media1/'
+      #'SES4': 'http://192.168.121.1/repo/products/ses4/SUSE-Enterprise-Storage-4-POOL-x86_64-Media1'
+      #'SES3.0': 'http://192.168.121.1/repo/products/ses-3.0/SUSE-Enterprise-Storage-3-POOL-x86_64-Build0135-Media1/'
+      #'SES4': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES4/standard/'
+      #'SES4 Update': 'http://192.168.121.1/repo/updates/ses4/standard'
+      'SES4': 'http://192.168.121.1/repo/products/storage/product'
+      'SES4 Update': 'http://192.168.121.1/repo/updates/storage/update'
+      #'SES5': 'http://192.168.121.1/repo/products/ses5/standard'
+      #'SES5': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES5/standard/'
+      'kmroz': 'http://download.opensuse.org/repositories/home:/k_mroz/openSUSE_Leap_42.1/'      
+      #'SES4 Devel': 'http://192.168.121.1/repo/devel/ses4/SLE12_SP2'
+      #'SES3.0 Update': 'http://192.168.121.1/repo/updates/ses-3.0/standard'
+      'systemsmanagement': 'http://192.168.121.1/repo/systemsmanagement:/saltstack:/products/SLE_12_SP2'
+      #'systemsmanagement': 'http://widehat.opensuse.org/repositories/systemsmanagement:/saltstack:/products/SLE_12_SP2'
+    packages:
+      all:
+        - vim
+          #- vim-data
+          #- python-setuptools
+        - salt-minion
+      admin:
+        - ceph-deploy
+        - salt-master
+        - ntp
+        - tree
+      calamari:
+        #- salt-master
+        #- postgresql93-9.3.8-8.1
+        #- calamari-server
+      client1:
+        - multipath-tools
+        - nfs-client
+      client2:
+        - multipath-tools
+        - nfs-client
+    files:
+      all: false
+      admin: true
+    commands:
+      admin:
+        - zypper -n in -t pattern Basis-Devel
+        - zypper -n in /tmp/deepsea-*.noarch.rpm
+        - systemctl start ntpd
+        - systemctl enable ntpd
+        - systemctl start salt-master
+        - systemctl enable salt-master
+        - sleep 10
+        - salt-key -y -A  || exit 0
+        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
+        - chmod 1777 /tmp
+        - systemctl restart salt-minion
+      all:
+        - systemctl restart salt-minion
+        - systemctl enable salt-minion
+      calmari:
+        - systemctl start salt-master
+        - systemctl enable salt-master
+########################################
+# SLE 12 SP3
+########################################
+SLE_12-SP3:
+  salt:
+    repos:
+      'sle-sdk': 'http://192.168.121.1/repo/products/sle-sdk-12-SP1/product'
+      'sle-sdk update': 'http://192.168.121.1/repo/updates/sle-sdk-12-SP1/update'
+      #'SLE 12 SP2': 'http://192.168.121.1/repo/products/SLE_12-SP2/product'
+      'SLE 12 SP3': 'http://192.168.121.1/repo/products/SLE_12-SP3/product'
+      #'SLE 12 SP2 update': 'http://192.168.121.1/repo/updates/SLE_12-SP2/update'
+      'SLE 12 SP3 update': 'http://192.168.121.1/repo/updates/SLE_12-SP3/update'
+      #'SES4': 'http://192.168.121.1/repo/products/storage/product'
+      #'SES4 Update': 'http://192.168.121.1/repo/updates/storage/update'
+      'SES5': 'http://192.168.121.1/repo/ses5/product'
+      #'SES5': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES5/standard/'
+      'kmroz': 'http://download.opensuse.org/repositories/home:/k_mroz/openSUSE_Leap_42.1/'      
+      #'SES4 Devel': 'http://192.168.121.1/repo/devel/ses4/SLE12_SP2'
+      #'SES3.0 Update': 'http://192.168.121.1/repo/updates/ses-3.0/standard'
+      #'systemsmanagement': 'http://192.168.121.1/repo/systemsmanagement:/saltstack:/products/SLE_12_SP2'
+      #'systemsmanagement': 'http://widehat.opensuse.org/repositories/systemsmanagement:/saltstack:/products/SLE_12_SP2'
+    packages:
+      all:
+        - vim
+          #- vim-data
+          #- python-setuptools
+        - salt-minion
+      admin:
+        - salt-master
+        - ntp
+        - tree
+      calamari:
+        #- salt-master
+        #- postgresql93-9.3.8-8.1
+        #- calamari-server
+      client1:
+        - multipath-tools
+        - nfs-client
+      client2:
+        - multipath-tools
+        - nfs-client
+    files:
+      all: false
+      admin: true
+    commands:
+      admin:
+        - zypper -n in -t pattern Basis-Devel
+        - zypper -n in /tmp/deepsea-*.noarch.rpm
+        - systemctl start ntpd
+        - systemctl enable ntpd
+        - systemctl start salt-master
+        - systemctl enable salt-master
+        - sleep 10
+        - salt-key -y -A  || exit 0
+        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
+        - chmod 1777 /tmp
+        - systemctl restart salt-minion
       all:
         - systemctl restart salt-minion
         - systemctl enable salt-minion
@@ -978,6 +1110,138 @@ eighteen:
     admin: 4
   memory:
     admin: 3072
+    mon1: 1024
+    mon2: 1024
+    mon3: 1024
+    rgw1: 768
+    rgw2: 768
+    rgw3: 768
+    igw1: 768
+    igw2: 768
+    igw3: 768
+    client1: 768
+    client2: 768
+    data1: 1024
+    data2: 1024
+    data3: 1024
+    data4: 1024
+    data5: 1024
+    data6: 1024
+  disks:
+    data1:
+      hds: 2
+    data2:
+      hds: 2
+    data3:
+      hds: 2
+    data4:
+      hds: 2
+    data5:
+      hds: 2
+    data6:
+      hds: 2
+twentythree:
+  description: "master, 2 clients/mds, 6 data nodes, 3 monitors/igw/rgw/ganesha"
+  nodes:
+    admin:
+      management: 192.168.21.254
+      public:  172.16.21.254
+      cluster: 172.16.22.254
+    ganesha1:
+      management: 192.168.21.2
+      public:  172.16.21.2
+      cluster: 172.16.22.2
+    ganesha2:
+      management: 192.168.21.3
+      public:  172.16.21.3
+      cluster: 172.16.22.3
+    ganesha3:
+      management: 192.168.21.4
+      public:  172.16.21.4
+      cluster: 172.16.22.4
+    client1:
+      management: 192.168.21.5
+      public:  172.16.21.5
+      cluster: 172.16.22.5
+    client2:
+      management: 192.168.21.6
+      public:  172.16.21.6
+      cluster: 172.16.22.6
+    rgw1:
+      management: 192.168.21.8
+      public:  172.16.21.8
+      cluster: 172.16.22.8
+    rgw2:
+      management: 192.168.21.9
+      public:  172.16.21.9
+      cluster: 172.16.22.9
+    rgw3:
+      management: 192.168.21.10
+      public:  172.16.21.10
+      cluster: 172.16.22.10
+    mon1:
+      management: 192.168.21.11
+      public:  172.16.21.11
+      cluster: 172.16.22.11
+    mon2:
+      management: 192.168.21.12
+      public:  172.16.21.12
+      cluster: 172.16.22.12
+    mon3:
+      management: 192.168.21.13
+      public:  172.16.21.13
+      cluster: 172.16.22.13
+    mds1:
+      management: 192.168.21.14
+      public:  172.16.21.14
+      cluster: 172.16.22.14
+    mds2:
+      management: 192.168.21.15
+      public:  172.16.21.15
+      cluster: 172.16.22.15
+    igw1:
+      management: 192.168.21.16
+      public:  172.16.21.16
+      cluster: 172.16.22.16
+    igw2:
+      management: 192.168.21.17
+      public:  172.16.21.17
+      cluster: 172.16.22.17
+    igw3:
+      management: 192.168.21.18
+      public:  172.16.21.18
+      cluster: 172.16.22.18
+    data1:
+      management: 192.168.21.21
+      public:  172.16.21.21
+      cluster: 172.16.22.21
+    data2:
+      management: 192.168.21.22
+      public:  172.16.21.22
+      cluster: 172.16.22.22
+    data3:
+      management: 192.168.21.23
+      public:  172.16.21.23
+      cluster: 172.16.22.23
+    data4:
+      management: 192.168.21.24
+      public:  172.16.21.24
+      cluster: 172.16.22.24
+    data5:
+      management: 192.168.21.25
+      public:  172.16.21.25
+      cluster: 172.16.22.25
+    data6:
+      management: 192.168.21.26
+      public:  172.16.21.26
+      cluster: 172.16.22.26
+  cpu:
+    admin: 4
+  memory:
+    admin: 3072
+    mon1: 1024
+    mon2: 1024
+    mon3: 1024
     rgw1: 768
     rgw2: 768
     rgw3: 768

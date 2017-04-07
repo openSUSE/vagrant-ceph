@@ -17,4 +17,9 @@ mds_init: default-shared
 #rgw_keyring: shared
 rgw_init: default-zypper
 
+rgw_configurations:
+  rgw:
+    users:
+      - { uid: "demo", name: "Demo", email: "demo@demo.nil" }
+      - { uid: "demo1", name: "Demo1", email: "demo1@demo.nil" }
 
