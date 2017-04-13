@@ -31,12 +31,6 @@ disks:
   data6:
     hds: 5
     ssds: 1
-box: sle12-sp2
-repos:
-  'sp2': 'http://dist.suse.de/ibs/SUSE/Products/SLE-SERVER/12-SP2/x86_64/product/'
-  'sp2 update': 'http://dist.suse.de/ibs/SUSE/Updates/SLE-SERVER/12-SP2/x86_64/update/'
-  'ses4': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES4/images/repo/SUSE-Enterprise-Storage-4-POOL-x86_64-Media1/'
-  'ses4 update': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES4/standard/'
 packages:
   all:
     - vim

@@ -1,0 +1,15 @@
+{
+   "versions" : [
+      {
+         "providers" : [
+            {
+               "url" : "http://download.opensuse.org/vagrant/openSUSE-Tumbleweed-libvirt-x86_64-1.0.0.box",
+               "name" : "libvirt"
+            }
+         ],
+         "version" : "1.0.0"
+      }
+   ],
+   "name" : "Tumbleweed",
+   "description" : "            Tumbleweed vagrant base box        "
+}

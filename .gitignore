@@ -1,3 +1,5 @@
 .vagrant
 *.sw?
 hosts
+config/*
+boxes/*.box

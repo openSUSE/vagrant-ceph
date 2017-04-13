@@ -20,6 +20,7 @@ def libvirt_settings(provider, config, name)
         # provider.connect_via_ssh = true
 
         # Memory defaults to 512M, allow specific configurations 
+        provider.memory = 1024
         unless (config['memory'].nil?) then
           unless (config['memory'][name].nil?) then
             provider.memory = config['memory'][name]
