@@ -34,9 +34,6 @@ def provisioning(node, config, name)
 
       # Add missing repos
       repos = Vagrant::Repos.new(node, config['repos'])
-      if ENV.has_key?("CLEAN_ZYPPER_REPOS") or !provisioned?(name)
-        repos.clean
-      end
       repos.add
 
       # Copy custom files

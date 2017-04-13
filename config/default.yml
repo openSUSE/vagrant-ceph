@@ -4,6 +4,7 @@ nodes:
   admin:
   mon1:
   mon2:
+  mon3:
   data1:
   data2:
   data3:
