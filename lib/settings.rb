@@ -20,7 +20,7 @@ def libvirt_settings(provider, config, name)
         # provider.connect_via_ssh = true
 
         # Memory defaults to 512M, allow specific configurations 
-        provider.memory = 1024
+        provider.memory = 2048
         unless (config['memory'].nil?) then
           unless (config['memory'][name].nil?) then
             provider.memory = config['memory'][name]
@@ -42,12 +42,12 @@ def libvirt_settings(provider, config, name)
             disks = config['disks'][name]
             unless (disks['hds'].nil?) then
               (1..disks['hds']).each do |d|
-                provider.storage :file, size: '2G'
+                provider.storage :file, size: '10G'
               end
             end
             unless (disks['ssds'].nil?) then
               (1..disks['ssds']).each do |d|
-                provider.storage :file, size: '1G'
+                provider.storage :file, size: '5G'
               end
             end
           end

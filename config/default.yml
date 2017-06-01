@@ -12,7 +12,6 @@ nodes:
   data5:
   data6:
 memory:
-  admin: 1024
 disks:
   data1:
     hds: 5
@@ -38,13 +37,11 @@ packages:
     - salt-minion
   admin:
     - salt-master
-    - ntp
 files:
   all: false
   admin: true
 commands:
   admin:
-    # - zypper -n in -t pattern Basis-Devel
     - systemctl start ntpd
     - systemctl enable ntpd
     - systemctl start salt-master
