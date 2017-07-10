@@ -1,0 +1,16 @@
+ceph:
+  storage:
+    osds:
+      /dev/vdb:
+        format: bluestore
+      /dev/vdc:
+        format: bluestore
+      /dev/vdd:
+        format: bluestore
+      /dev/vde:
+        format: bluestore
+      /dev/vdf:
+        format: bluestore
+      /dev/vdg:
+        format: bluestore
+

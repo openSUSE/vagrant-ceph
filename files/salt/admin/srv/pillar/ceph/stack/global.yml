@@ -1,3 +1,0 @@
-# Customizations for /srv/pillar/ceph/stack/global.yml
-stage_discovery: default-notimeout
-

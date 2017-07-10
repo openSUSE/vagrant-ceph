@@ -1,0 +1,10 @@
+storage:
+  osds:
+  - /dev/vdb
+  - /dev/vdc
+  data+journals:
+  - /dev/vdd: /dev/vdg
+  - /dev/vde: /dev/vdg
+  - /dev/vdf: /dev/vdg
+  
+

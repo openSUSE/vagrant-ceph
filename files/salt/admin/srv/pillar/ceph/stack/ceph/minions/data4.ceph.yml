@@ -1,0 +1,27 @@
+ceph:
+  storage:
+    osds:
+      /dev/vdb:
+        format: bluestore
+        wal: /dev/vdg
+        wal_size: 200M
+      /dev/vdc:
+        format: bluestore
+        db: /dev/vdg
+        db_size: 100M
+      /dev/vdd:
+        format: bluestore
+        db: /dev/vdg
+        db_size: 150M
+      /dev/vde:
+        format: bluestore
+        wal: /dev/vdg
+        wal_size: 300M
+      /dev/vdf:
+        format: bluestore
+        wal: /dev/vdg
+        wal_size: 200M
+        db: /dev/vdg
+        db_size: 100M
+      
+

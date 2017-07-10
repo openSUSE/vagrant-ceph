@@ -1144,97 +1144,97 @@ twentythree:
   description: "master, 2 clients/mds, 6 data nodes, 3 monitors/igw/rgw/ganesha"
   nodes:
     admin:
-      management: 192.168.21.254
-      public:  172.16.21.254
-      cluster: 172.16.22.254
+      management: 192.168.11.254
+      public:  172.16.11.254
+      cluster: 172.16.12.254
     ganesha1:
-      management: 192.168.21.2
-      public:  172.16.21.2
-      cluster: 172.16.22.2
+      management: 192.168.11.2
+      public:  172.16.11.2
+      cluster: 172.16.12.2
     ganesha2:
-      management: 192.168.21.3
-      public:  172.16.21.3
-      cluster: 172.16.22.3
+      management: 192.168.11.3
+      public:  172.16.11.3
+      cluster: 172.16.12.3
     ganesha3:
-      management: 192.168.21.4
-      public:  172.16.21.4
-      cluster: 172.16.22.4
+      management: 192.168.11.4
+      public:  172.16.11.4
+      cluster: 172.16.12.4
     client1:
-      management: 192.168.21.5
-      public:  172.16.21.5
-      cluster: 172.16.22.5
+      management: 192.168.11.5
+      public:  172.16.11.5
+      cluster: 172.16.12.5
     client2:
-      management: 192.168.21.6
-      public:  172.16.21.6
-      cluster: 172.16.22.6
+      management: 192.168.11.6
+      public:  172.16.11.6
+      cluster: 172.16.12.6
     rgw1:
-      management: 192.168.21.8
-      public:  172.16.21.8
-      cluster: 172.16.22.8
+      management: 192.168.11.8
+      public:  172.16.11.8
+      cluster: 172.16.12.8
     rgw2:
-      management: 192.168.21.9
-      public:  172.16.21.9
-      cluster: 172.16.22.9
+      management: 192.168.11.9
+      public:  172.16.11.9
+      cluster: 172.16.12.9
     rgw3:
-      management: 192.168.21.10
-      public:  172.16.21.10
-      cluster: 172.16.22.10
+      management: 192.168.11.10
+      public:  172.16.11.10
+      cluster: 172.16.12.10
     mon1:
-      management: 192.168.21.11
-      public:  172.16.21.11
-      cluster: 172.16.22.11
+      management: 192.168.11.11
+      public:  172.16.11.11
+      cluster: 172.16.12.11
     mon2:
-      management: 192.168.21.12
-      public:  172.16.21.12
-      cluster: 172.16.22.12
+      management: 192.168.11.12
+      public:  172.16.11.12
+      cluster: 172.16.12.12
     mon3:
-      management: 192.168.21.13
-      public:  172.16.21.13
-      cluster: 172.16.22.13
+      management: 192.168.11.13
+      public:  172.16.11.13
+      cluster: 172.16.12.13
     mds1:
-      management: 192.168.21.14
-      public:  172.16.21.14
-      cluster: 172.16.22.14
+      management: 192.168.11.14
+      public:  172.16.11.14
+      cluster: 172.16.12.14
     mds2:
-      management: 192.168.21.15
-      public:  172.16.21.15
-      cluster: 172.16.22.15
+      management: 192.168.11.15
+      public:  172.16.11.15
+      cluster: 172.16.12.15
     igw1:
-      management: 192.168.21.16
-      public:  172.16.21.16
-      cluster: 172.16.22.16
+      management: 192.168.11.16
+      public:  172.16.11.16
+      cluster: 172.16.12.16
     igw2:
-      management: 192.168.21.17
-      public:  172.16.21.17
-      cluster: 172.16.22.17
+      management: 192.168.11.17
+      public:  172.16.11.17
+      cluster: 172.16.12.17
     igw3:
-      management: 192.168.21.18
-      public:  172.16.21.18
-      cluster: 172.16.22.18
+      management: 192.168.11.18
+      public:  172.16.11.18
+      cluster: 172.16.12.18
     data1:
-      management: 192.168.21.21
-      public:  172.16.21.21
-      cluster: 172.16.22.21
+      management: 192.168.11.11
+      public:  172.16.11.21
+      cluster: 172.16.12.21
     data2:
-      management: 192.168.21.22
-      public:  172.16.21.22
-      cluster: 172.16.22.22
+      management: 192.168.11.12
+      public:  172.16.11.22
+      cluster: 172.16.12.22
     data3:
-      management: 192.168.21.23
-      public:  172.16.21.23
-      cluster: 172.16.22.23
+      management: 192.168.11.23
+      public:  172.16.11.23
+      cluster: 172.16.12.23
     data4:
-      management: 192.168.21.24
-      public:  172.16.21.24
-      cluster: 172.16.22.24
+      management: 192.168.11.24
+      public:  172.16.11.24
+      cluster: 172.16.12.24
     data5:
-      management: 192.168.21.25
-      public:  172.16.21.25
-      cluster: 172.16.22.25
+      management: 192.168.11.25
+      public:  172.16.11.25
+      cluster: 172.16.12.25
     data6:
-      management: 192.168.21.26
-      public:  172.16.21.26
-      cluster: 172.16.22.26
+      management: 192.168.11.26
+      public:  172.16.11.26
+      cluster: 172.16.12.26
   cpu:
     admin: 4
   memory:
@@ -1258,17 +1258,17 @@ twentythree:
     data6: 1024
   disks:
     data1:
-      hds: 2
+      hds: 6
     data2:
-      hds: 2
+      hds: 6
     data3:
-      hds: 2
+      hds: 6
     data4:
-      hds: 2
+      hds: 6
     data5:
-      hds: 2
+      hds: 6
     data6:
-      hds: 2
+      hds: 6
 # The economical configuration represents a cold storage configuration that has
 # no SSD journals.  Additionally, the monitors and admin node do not have an
 # interface on the cluster network to save money on one less 10G interface.
