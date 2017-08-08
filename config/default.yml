@@ -11,6 +11,8 @@ nodes:
   data4:
   data5:
   data6:
+  client1:
+  client2:
 memory:
 disks:
   data1:
@@ -36,6 +38,9 @@ packages:
     - vim
     - salt-minion
   admin:
+    - git
+    - make
+    - ntp
     - salt-master
 files:
   all: false
