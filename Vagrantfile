@@ -1,5 +1,4 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
+# -*- mode: ruby -*- # vi: set ft=ruby :
 
 require 'yaml'
 require 'pp'
@@ -17,14 +16,14 @@ config = YAML.load_file(config_file)
 # Check that the user has an ssh key
 Vagrant::Hosts::check_for_ssh_keys
 
-# Set BOX to one of 'openSUSE-13.2', 'Tumbleweed', 'SLE-12'
-BOX = 'SLE_12-SP3'
+# Set BOX to one of 'openSUSE-13.2', 'Tumbleweed', 'SLE-12', 'SLE12-SP2', 'SLE12-SP3' and more
+BOX = 'SLE12-SP3'
 
-# Set INSTALLATION to one of 'ceph-deploy', 'vsm'
+# Set INSTALLATION to one of 'ceph-deploy', 'salt'
 INSTALLATION = 'salt'
 
-# Set CONFIGURATION to one of 'default', 'small', 'iscsi' or 'economical'
-CONFIGURATION = 'twentythree'
+# Set CONFIGURATION to one of 'default', 'tiny', 'small', 'iscsi' or 'economical'
+CONFIGURATION = 'tiny'
 
 raise "Box #{BOX} missing from config.yml" unless config[BOX]
 raise "Installation #{INSTALLATION} missing for box #{BOX} from config.yml" unless config[BOX][INSTALLATION]
@@ -68,10 +67,14 @@ def provisioning(hosts, node, config, name)
         repos.clean
       end
       repos.add
+      #
+      # Add SUSEConnect repos
+      suseconnect = Vagrant::SUSEConnect.new(node, config[BOX][INSTALLATION]['register'])
+      suseconnect.add
 
       # Copy custom files 
       files = Vagrant::Files.new(node, INSTALLATION, name, 
-                                 config[BOX][INSTALLATION]['files'])
+                                 config[BOX][INSTALLATION]['files'], BOX, CONFIGURATION)
       files.copy
 
       # Install additional/unique packages

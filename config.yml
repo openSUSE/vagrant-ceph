@@ -13,59 +13,6 @@
 #
 # Change the INSTALLATION to either 'ceph-deploy' or 'vsm' in the Vagrantfile.
 ########################################
-# OpenSUSE 13.2
-########################################
-openSUSE-13.2:
-  ceph-deploy:
-    repos:
-      'Main Repository (OSS)': 'http://download.opensuse.org/distribution/13.2/repo/oss/'
-      #'Ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_13.2/'
-      'Ceph': 'http://download.suse.de/ibs/Devel:/Storage:/1.0/openSUSE_Factory/'
-      'swiftgist/openSUSE 13.2': 'http://download.opensuse.org/repositories/home:/swiftgist/openSUSE_13.2/'
-      'Devel C Libraries': 
-        'http://download.opensuse.org/repositories/devel:libraries:c_c++/openSUSE_13.2/'
-    packages:
-      all:
-        - ceph-deploy
-        - vim
-        - vim-data
-      admin:
-        - ceph-deploy
-    commands:
-      admin:
-        - echo Done
-  # This installer requires an additional ~400M and ~4 minutes per VM initially.
-  vsm:
-    repos:
-      'Main Repository (OSS)': 'http://download.opensuse.org/distribution/13.2/repo/oss/'
-      'swiftgist/openSUSE 13.2': 'http://download.opensuse.org/repositories/home:/swiftgist/openSUSE_13.2/'
-      'Ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_13.2/'
-      'Openstack - Juno': 'http://download.opensuse.org/repositories/Cloud:/OpenStack:/Juno/openSUSE_13.2/'
-    packages:
-      all:
-        - vim
-        - vim-data
-        - lsb-release
-        - python-vsmclient
-        - vsm
-        - vsm-dashboard
-        - vsm-deploy
-      admin:
-        - curl
-        - rabbitmq-server
-        - openstack-keystone
-    files:
-      admin: true
-      data1: true
-      data2: true
-      data3: true
-    commands:
-      admin:
-        - vsm-controller
-        - ssh data1 vsm-storage
-        - ssh data2 vsm-storage
-        - ssh data3 vsm-storage
-########################################
 # OpenSUSE Tumbleweed
 ########################################
 Tumbleweed:
@@ -115,314 +62,141 @@ Tumbleweed:
         - ssh data2 vsm-storage
         - ssh data3 vsm-storage
 ########################################
-# SLE 12
+# OpenSUSE Leap 42.2
 ########################################
-SLE-12:
-  ceph-deploy:
-    repos:
-      'SLE12 Pool (OSS)': 
-        'http://download.suse.de/ibs/SUSE:/SLE-12:/GA/standard/'
-      'SLE12 Pool Updates (OSS)': 
-        'http://download.suse.de/ibs/SUSE:/SLE-12:/Update/standard/'
-      'SDK':
-        'http://euklid.suse.de/mirror/SuSE/build.suse.de/SUSE/Products/SLE-SDK/12/x86_64/product'
-      'SDK Updates':
-        'http://euklid.suse.de/mirror/SuSE/build.suse.de/SUSE/Updates/SLE-SDK/12/x86_64/update'
-      #'Ceph': 
-      #  'http://download.opensuse.org/repositories/filesystems:/ceph/SLE_12/'
-      #'Ceph': 
-      #  'http://download.suse.de/ibs/Devel:/Storage:/1.0:/Staging/SLE_12/'
-      'Ceph':
-        'http://download.suse.de/ibs/Devel:/Storage:/2.0:/Staging/SLE12/'
-      'Python Devel': 
-        'http://download.opensuse.org/repositories/devel:/languages:/python/SLE_12/'
-    packages:
-      all:
-        - vim
-        - vim-data
-      admin:
-        - ceph-deploy
-    commands:
-      admin:
-        - echo Done
+opensuse/openSUSE-42.2-x86_64:
   salt:
     repos:
-      #'SLE12 Pool (OSS)': 
-      #  'http://download.suse.de/ibs/SUSE:/SLE-12:/GA/standard/'
-      #'SLE12 Pool Updates (OSS)': 
-      #  'http://download.suse.de/ibs/SUSE:/SLE-12:/Update/standard/'
-      #'SDK':
-      #  'http://euklid.suse.de/mirror/SuSE/build.suse.de/SUSE/Products/SLE-SDK/12/x86_64/product'
-      #'SDK Updates':
-      #  'http://euklid.suse.de/mirror/SuSE/build.suse.de/SUSE/Updates/SLE-SDK/12/x86_64/update'
-      ##'Ceph': 
-      ##  'http://download.opensuse.org/repositories/filesystems:/ceph/SLE_12/'
-      ##'Ceph': 
-      ##  'http://download.suse.de/ibs/Devel:/Storage:/1.0:/Staging/SLE_12/'
-      #'Ceph':
-      #  'http://download.suse.de/ibs/Devel:/Storage:/2.0:/Staging/SLE12/'
-      #'Python Devel': 
-      #  'http://download.opensuse.org/repositories/devel:/languages:/python/SLE_12/'
-      #'SES2 Staging': 
-      #  'http://download.suse.de/ibs/Devel:/Storage:/2.0:/Staging/SLE12/'
-      'sle-sdk': 'http://192.168.10.95/repo/products/sle-sdk/product'
-      'SLE 12': 'http://192.168.10.95/repo/products/SLE_12/product'
-      'Storage': 'http://192.168.10.95/repo/products/storage/product'
-      'sle-sdk update': 'http://192.168.10.95/repo/updates/sle-sdk/update'
-      'SLE 12 update': 'http://192.168.10.95/repo/updates/SLE_12/update'
-      'Storage update': 'http://192.168.10.95/repo/updates/storage/update'
-      'Goldwyn': 'http://download.suse.de/ibs/home:/goldwynr:/Kernel:/SLE12-SP1/standard/'
+      'ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_Leap_42.3/'
+      '42.2': 'http://download.opensuse.org/distribution/leap/42.2/repo/oss/suse/'
     packages:
       all:
         - vim
-        - vim-data
         - salt-minion
-        - diamond
       admin:
-        - ceph-deploy
-        - git
-      calamari:
         - salt-master
-        - postgresql93-9.3.8-8.1
-        - calamari-server
+        - ntp
     files:
-      all: true
+      all: false
       admin: true
     commands:
       admin:
-        - rpm -e salt-minion salt || exit 0
-        - zypper -n ar 'http://192.168.10.95/repo/systemsmanagement:/saltstack/SLE_12' 'System Management' || exit 0
-        - sleep 3
-        - zypper --gpg-auto-import-keys -n in salt-master-2015.8.3
-        - /srv/reactor/ready_check --init
+        - systemctl start ntpd
+        - systemctl enable ntpd
         - systemctl start salt-master
         - systemctl enable salt-master
-        - start_minions 
         - sleep 10
         - salt-key -y -A  || exit 0
-        - git clone https://github.com/saltstack/salt.git || exit 0
-          #- salt-run state.orchestrate orch.ceph
-          #- start_calamari_minions
+      all:
+        - systemctl disable SuSEfirewall2
+        - systemctl stop SuSEfirewall2
+        - systemctl restart salt-minion
+        - systemctl enable salt-minion
+          #
+########################################
+# SLE 12 SP2 SES4 migration
+########################################
+SLE12-SP2-migration:
+  salt:
+    register:
+        - SUSEConnect -r 0000000000000
+        - SUSEConnect -r 0000000000000 -p ses/4/x86_64
+    packages:
+      all:
+        - vim
+        - salt-minion
+      admin:
+        - salt-master
+        - vim-data
+        - ntp
+      client1:
+        - multipath-tools
+      client2:
+        - multipath-tools
+    files:
+      all: false
+      admin: true
+      customized: true
+    commands:
+      admin:
+        - systemctl start ntpd
+        - systemctl enable ntpd
+        - systemctl start salt-master
+        - systemctl enable salt-master
+        - sleep 20
+        - salt-key -y -A  || exit 0
+        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph 
+        - chmod 1777 /tmp
+        - zypper -n in deepsea
+        - salt-run state.orch ceph.stage.0
+      all:
+        - systemctl disable SuSEfirewall2
+        - systemctl stop SuSEfirewall2
+        - systemctl restart salt-minion
+        - systemctl enable salt-minion
+        - zypper -n in kernel-default | true
+        - zypper -n rm kernel-default-base | true
       calmari:
         - systemctl start salt-master
         - systemctl enable salt-master
-  # This installer requires an additional ~400M and ~4 minutes per VM initially.
-  vsm:
-    repos:
-      'Main Repository (OSS)': 
-        'http://download.suse.de/ibs/SUSE:/SLE-12:/GA/standard/'
-      'Docker Devel': 'http://download.suse.de/ibs/Devel:/Docker/SLE_12/'
-      'Python Devel': 
-        'http://download.opensuse.org/repositories/devel:/languages:/python/SLE_12/'
-      'Ceph': 
-        'http://download.opensuse.org/repositories/filesystems:/ceph/SLE_12/'
-      'swiftgist/SLE_12': 
-        'http://download.opensuse.org/repositories/home:/swiftgist/SLE_12/'
-      'Openstack - Juno': 
-        'http://download.opensuse.org/repositories/Cloud:/OpenStack:/Juno/SLE_12/'
-    packages:
-      all:
-        - vim
-        - vim-data
-        - lsb-release
-        - python-vsmclient
-        - vsm
-        - vsm-dashboard
-        - vsm-deploy
-      admin:
-        - curl
-        - rabbitmq-server
-        - openstack-keystone
-    files:
-      admin: true
-      data1: true
-      data2: true
-      data3: true
-    commands:
-      admin:
-        - vsm-controller
-        - ssh data1 vsm-storage
-        - ssh data2 vsm-storage
-        - ssh data3 vsm-storage
 
+          
 ########################################
-# OpenSUSE Leap 42.1
+# SLE 12 SP3 SES5
 ########################################
-openSUSE-42.1:
-  openattic+:
-    repos:
-      'OpenAttic': 'http://download.opensuse.org/repositories/filesystems:/openATTIC/openSUSE_Leap_42.1/'
-      'Ceph Jewel': 'http://download.opensuse.org/repositories/filesystems:/ceph:/jewel/openSUSE_Leap_42.1/'
-    packages:
-      admin:
-        - pnp4nagios-0.6.25-8.1
-        - openattic
-        - openattic-gui
-        - ceph-deploy
-        - git
-        - salt-master
-      all:
-        - vim
-        - vim-data
-        - man
-      client1:
-        - multipath-tools
-      client2:
-        - multipath-tools
-    files:
-      all: true
-      admin: true
-    commands:
-      admin:
-        - systemctl enable apache2
-        - systemctl start apache2
-        - oaconfig install --allow-broken-hostname
-        - zypper -n in -t pattern Basis-Devel
-        - zypper -n in python-devel libgit2-devel
-        - /srv/reactor/ready_check --init
-        - systemctl start salt-master
-        - systemctl enable salt-master
-        - /usr/local/sbin/start_minions
-        - sleep 10
-        - salt-key -y -A  || exit 0
-        - git clone https://github.com/saltstack/salt.git || exit 0
-  openattic:
-    repos:
-      'OpenAttic': 'http://download.opensuse.org/repositories/filesystems:/openATTIC/openSUSE_Leap_42.1/'
-    packages:
-      admin:
-        #- monitoring-plugins-http
-        #- monitoring-plugins-swap
-        #- monitoring-plugins-ssh
-        #- monitoring-plugins-ping
-        #- monitoring-plugins-disk
-        - pnp4nagios-0.6.25-8.1
-        - openattic
-        - openattic-gui
-      all:
-        - vim
-        - vim-data
-        - man
-    commands:
-      admin:
-        - ln -s /etc/icinga /etc/nagios3
-        - ln -s /etc/icinga/icinga.cfg /etc/icinga/nagios.cfg
-        - ln -s /usr/sbin/icinga /usr/sbin/nagios
-        - systemctl enable apache2
-        - systemctl start apache2
-        - oaconfig install --allow-broken-hostname
+SLE12-SP3-patch:
   salt:
-    repos:
-      'sle-sdk': 'http://192.168.10.95/repo/products/sle-sdk-12-SP1/product'
-      'sle-sdk update': 'http://192.168.10.95/repo/updates/sle-sdk-12-SP1/update'
-      'SLE 12 SP1': 'http://192.168.10.95/repo/products/SLE_12-SP1/product'
-      'SLE 12 SP1 update': 'http://192.168.10.95/repo/updates/SLE_12-SP1/update'
-      'SES-image': 'http://192.168.10.95/repo/products/ses-2.1-image/SUSE-Enterprise-Storage-2.1-POOL-x86_64-Build0012-Media1'
-      'SES': 'http://192.168.10.95/repo/products/ses-2.1/standard'
-      'System Management': 'http://192.168.10.95/repo/systemsmanagement:/saltstack/SLE_12'
+    register:
+        - SUSEConnect -r 0000000000000
+        - SUSEConnect -r 0000000000000 -p ses/4/x86_64
     packages:
       all:
         - vim
-        - vim-data
         - salt-minion
-          #- diamond
       admin:
-        - ceph-deploy
-        - git
         - salt-master
-      calamari:
-        #- salt-master
-        #- postgresql93-9.3.8-8.1
-        #- calamari-server
+        - vim-data
+        - ntp
       client1:
         - multipath-tools
       client2:
         - multipath-tools
     files:
-      all: true
+      all: false
       admin: true
     commands:
       admin:
-        - zypper -n in -t pattern Basis-Devel
-        - zypper -n in python-devel libgit2-devel
-        - /srv/reactor/ready_check --init
+        - systemctl start ntpd
+        - systemctl enable ntpd
         - systemctl start salt-master
         - systemctl enable salt-master
-        - /usr/local/sbin/start_minions
-        - sleep 10
+        - sleep 20
         - salt-key -y -A  || exit 0
-        - git clone https://github.com/saltstack/salt.git || exit 0
-      calmari:
-        - systemctl start salt-master
-        - systemctl enable salt-master
-  two_salts:
-    repos:
-      'sle-sdk': 'http://192.168.10.95/repo/products/sle-sdk-12-SP1/product'
-      'sle-sdk update': 'http://192.168.10.95/repo/updates/sle-sdk-12-SP1/update'
-      'SLE 12 SP1': 'http://192.168.10.95/repo/products/SLE_12-SP1/product'
-      'SLE 12 SP1 update': 'http://192.168.10.95/repo/updates/SLE_12-SP1/update'
-      'SES-image': 'http://192.168.10.95/repo/products/ses-2.1-image/SUSE-Enterprise-Storage-2.1-POOL-x86_64-Build0012-Media1'
-      'SES': 'http://192.168.10.95/repo/products/ses-2.1/standard'
-      'Goldwyn': 'http://download.suse.de/ibs/home:/goldwynr:/Kernel:/SLE12-SP1/standard/'
-      'Nodejs': 'http://download.opensuse.org/repositories/devel:/languages:/nodejs/SLE_12/'
-    packages:
+        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph 
+        - chmod 1777 /tmp
       all:
-        - vim
-        - vim-data
-        - salt-minion
-        - diamond
-      admin:
-        - ceph-deploy
-        - git
-          #- salt-master
-      calamari:
-        - salt-master
-        - postgresql94
-        - calamari-server
-      client1:
-        - multipath-tools
-      client2:
-        - multipath-tools
-    files:
-      all: true
-      admin: true
-    commands:
-      admin:
-        - rpm -e salt-minion salt || exit 0
-        - zypper -n ar 'http://192.168.10.95/repo/systemsmanagement:/saltstack/SLE_12' 'System Management' || exit 0
-        - zypper -n in -t pattern Basis-Devel
-        - zypper --gpg-auto-import-keys -n in python-devel libgit2-devel
-        - sleep 3
-        - zypper --gpg-auto-import-keys -n in salt-master-2015.8.2
-        - /srv/reactor/ready_check --init
-        - systemctl start salt-master
-        - systemctl enable salt-master
-        - /usr/local/sbin/start_minions
-        - sleep 10
-        - salt-key -y -A  || exit 0
-        - git clone https://github.com/saltstack/salt.git || exit 0
-          #- salt-run state.orchestrate orch.ceph
-          #- start_calamari_minions
+        - systemctl disable SuSEfirewall2
+        - systemctl stop SuSEfirewall2
+        - systemctl restart salt-minion
+        - systemctl enable salt-minion
       calmari:
         - systemctl start salt-master
         - systemctl enable salt-master
 
 ########################################
-# SLE 12 SP1
+# SLE 12 SP2 SES4
 ########################################
-SLE_12-SP1:
+########################################
+# SLE 12 SP3 SES5
+########################################
+SLE12-SP3:
   openattic:
     repos:
-      #'Swiftgist': 'http://download.opensuse.org/repositories/home:/swiftgist:/monitoring/SLE_12/'
-      #'OpenAttic': 'http://download.opensuse.org/repositories/home:/LenzGr:/openattic/SLE_12/'
-      'OpenAttic': 'http://download.opensuse.org/repositories/filesystems:/openATTIC/SLE_12_SP1/'
-      'sle-sdk': 'http://192.168.10.95/repo/products/sle-sdk/product'
-      'SLE 12': 'http://192.168.10.95/repo/products/SLE_12/product'
-      'Storage': 'http://192.168.10.95/repo/products/storage/product'
-      'sle-sdk update': 'http://192.168.10.95/repo/updates/sle-sdk/update'
-      'SLE 12 update': 'http://192.168.10.95/repo/updates/SLE_12/update'
-      'Storage update': 'http://192.168.10.95/repo/updates/storage/update'
-      #'System Monitoring': 'http://download.opensuse.org/repositories/server:/monitoring/SLE_12/'
+      'OpenAttic': 'http://download.opensuse.org/repositories/filesystems:/openATTIC/SLE_12_SP2/'
+      'sle-sdk': 'http://download.suse.de/ibs/SUSE/Products/SLE-SDK/12-SP2/x86_64/product/'
+      'sle-sdk update': 'http://download.suse.de/ibs/SUSE/Updates/SLE-SDK/12-SP2/x86_64/update/'
+      'SLE 12 update': 'http://download.suse.de/ibs/SUSE/Products/SLE-SERVER/12-SP2/x86_64/product/'
+      'Storage': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES5/standard/'
     packages:
       admin:
         #- monitoring-plugins-http
@@ -449,36 +223,97 @@ SLE_12-SP1:
         - oaconfig install --allow-broken-hostname
   salt:
     repos:
-      'sle-sdk': 'http://192.168.121.1/repo/products/sle-sdk-12-SP1/product'
-      'sle-sdk update': 'http://192.168.121.1/repo/updates/sle-sdk-12-SP1/update'
-      'SLE 12 SP1': 'http://192.168.121.1/repo/products/SLE_12-SP1/product'
-      'SLE 12 SP1 update': 'http://192.168.121.1/repo/updates/SLE_12-SP1/update'
-      #'SES-image': 'http://192.168.121.1/repo/products/ses-3.0-image/SUSE-Enterprise-Storage-3-POOL-x86_64-Build0122-Media1'
-      'SES3.0': 'http://192.168.121.1/repo/products/ses-3.0/SUSE-Enterprise-Storage-3-POOL-x86_64-Build0135-Media1/'
-      'SES3.0 Update': 'http://192.168.121.1/repo/updates/ses-3.0/standard'
-      'systemsmanagement': 'http://192.168.121.1/repo/systemsmanagement:/saltstack:/SLE_12_SP1'
-      'OpenAttic': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES4/standard/'
-      #'OpenAttic': 'http://download.opensuse.org/repositories/home:/swiftgist/SLE_12_SP1/'
-      'lrbd': 'http://download.suse.de/ibs/home:/swiftgist/SLE_12_SP1/'
+      'Storage': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP3:/Update:/Products:/SES5/images/repo/SUSE-Enterprise-Storage-5-POOL-x86_64-Media1/'
+      'SP3': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP3:/GA/images/repo/SLE-12-SP3-Server-POOL-x86_64-Media1/'
+    packages:
+      all:
+        - vim
+        - salt-minion
+      admin:
+        - salt-master
+        - vim-data
+        - ntp
+      client1:
+        - multipath-tools
+      client2:
+        - multipath-tools
+    files:
+      all: false
+      admin: true
+    commands:
+      admin:
+        - systemctl start ntpd
+        - systemctl enable ntpd
+        - systemctl start salt-master
+        - systemctl enable salt-master
+        - sleep 10
+        - salt-key -y -A  || exit 0
+        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph 
+        - chmod 1777 /tmp
+      all:
+        - systemctl disable SuSEfirewall2
+        - systemctl stop SuSEfirewall2
+        - systemctl restart salt-minion
+        - systemctl enable salt-minion
+      calmari:
+        - systemctl start salt-master
+        - systemctl enable salt-master
+
+
+########################################
+# SLE 12 SP2 SES4 IBS image1
+########################################
+suse/sles12sp2:
+  openattic:
+    repos:
+      'OpenAttic': 'http://download.opensuse.org/repositories/filesystems:/openATTIC/SLE_12_SP2/'
+      'sle-sdk': 'http://download.suse.de/ibs/SUSE/Products/SLE-SDK/12-SP2/x86_64/product/'
+      'sle-sdk update': 'http://download.suse.de/ibs/SUSE/Updates/SLE-SDK/12-SP2/x86_64/update/'
+      'SLE 12 update': 'http://download.suse.de/ibs/SUSE/Products/SLE-SERVER/12-SP2/x86_64/product/'
+      'Storage': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES5/standard/'
+    packages:
+      admin:
+        #- monitoring-plugins-http
+        #- monitoring-plugins-swap
+        #- monitoring-plugins-ssh
+        #- monitoring-plugins-ping
+        #- monitoring-plugins-disk
+        - pnp4nagios-0.6.25-8.3
+        - openattic
+        - openattic-gui
+      all:
+        - vim
+        - vim-data
+        - man
+    files:
+      admin: true
+    commands:
+      admin:
+        - ln -s /etc/icinga /etc/nagios3
+        - ln -s /etc/icinga/icinga.cfg /etc/icinga/nagios.cfg
+        - ln -s /usr/sbin/icinga /usr/sbin/nagios
+        - systemctl enable apache2
+        - systemctl start apache2
+        - oaconfig install --allow-broken-hostname
+  salt:
+    repos:
+      'sle-sdk': 'http://download.suse.de/ibs/SUSE/Products/SLE-SDK/12-SP2/x86_64/product/'
+      'sle-sdk update': 'http://download.suse.de/ibs/SUSE/Updates/SLE-SDK/12-SP2/x86_64/update/'
+      'SLE 12 update': 'http://download.suse.de/ibs/SUSE/Products/SLE-SERVER/12-SP2/x86_64/product/'
+      'Storage': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES4/images/repo/SUSE-Enterprise-Storage-4-POOL-x86_64-Media1/'
+      'Salt': 'http://download.opensuse.org/repositories/systemsmanagement:/saltstack:/products/SLE_12_SP2/'
+      'ses4updates': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES4:/Update/standard/'
+      'sle12updates': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update/standard/'
     packages:
       all:
         - vim
         - vim-data
         - python-setuptools
         - salt-minion
-          #- diamond
       admin:
-        #- ceph-deploy
-        #- git
         - salt-master
         - ntp
-          #- openattic
-          #- openattic-gui
         - tree
-      calamari:
-        #- salt-master
-        #- postgresql93-9.3.8-8.1
-        #- calamari-server
       client1:
         - multipath-tools
       client2:
@@ -488,149 +323,93 @@ SLE_12-SP1:
       admin: true
     commands:
       admin:
-        - zypper -n in -t pattern Basis-Devel
-        - zypper -n in /tmp/deepsea-*.noarch.rpm
         - systemctl start ntpd
         - systemctl enable ntpd
         - systemctl start salt-master
         - systemctl enable salt-master
         - sleep 10
         - salt-key -y -A  || exit 0
-        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
+        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph 
         - chmod 1777 /tmp
-        #- systemctl restart salt-minion
       all:
         - systemctl restart salt-minion
         - systemctl enable salt-minion
       calmari:
         - systemctl start salt-master
         - systemctl enable salt-master
+
+
 ########################################
-# SLE 12 SP2
+# SLE 12 SP2 SES4
 ########################################
-SLE_12-SP2:
+SLE12-SP2:
+  openattic:
+    repos:
+      'OpenAttic': 'http://download.opensuse.org/repositories/filesystems:/openATTIC/SLE_12_SP2/'
+      'sle-sdk': 'http://download.suse.de/ibs/SUSE/Products/SLE-SDK/12-SP2/x86_64/product/'
+      'sle-sdk update': 'http://download.suse.de/ibs/SUSE/Updates/SLE-SDK/12-SP2/x86_64/update/'
+      'SLE 12 update': 'http://download.suse.de/ibs/SUSE/Products/SLE-SERVER/12-SP2/x86_64/product/'
+      'Storage': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES5/standard/'
+    packages:
+      admin:
+        #- monitoring-plugins-http
+        #- monitoring-plugins-swap
+        #- monitoring-plugins-ssh
+        #- monitoring-plugins-ping
+        #- monitoring-plugins-disk
+        - pnp4nagios-0.6.25-8.3
+        - openattic
+        - openattic-gui
+      all:
+        - vim
+        - vim-data
+        - man
+    files:
+      admin: true
+    commands:
+      admin:
+        - ln -s /etc/icinga /etc/nagios3
+        - ln -s /etc/icinga/icinga.cfg /etc/icinga/nagios.cfg
+        - ln -s /usr/sbin/icinga /usr/sbin/nagios
+        - systemctl enable apache2
+        - systemctl start apache2
+        - oaconfig install --allow-broken-hostname
   salt:
     repos:
-      'sle-sdk': 'http://192.168.121.1/repo/products/sle-sdk-12-SP1/product'
-      'sle-sdk update': 'http://192.168.121.1/repo/updates/sle-sdk-12-SP1/update'
-      #'SLE 12 SP2': 'http://download.suse.de/ibs/SUSE/Products/SLE-SERVER/12-SP2/x86_64/product/'
-      'SLE 12 SP2': 'http://192.168.121.1/repo/products/SLE_12-SP2/product'
-      #'SLE 12 SP2 update': 'http://download.suse.de/ibs/SUSE/Updates/SLE-SERVER/12-SP2/x86_64/update/'
-      'SLE 12 SP2 update': 'http://192.168.121.1/repo/updates/SLE_12-SP2/update'
-      #'SES4': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES4/images/repo/SUSE-Enterprise-Storage-4-POOL-x86_64-Media1/'
-      #'SES4': 'http://192.168.121.1/repo/products/ses4/SUSE-Enterprise-Storage-4-POOL-x86_64-Media1'
-      #'SES3.0': 'http://192.168.121.1/repo/products/ses-3.0/SUSE-Enterprise-Storage-3-POOL-x86_64-Build0135-Media1/'
-      #'SES4': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES4/standard/'
-      #'SES4 Update': 'http://192.168.121.1/repo/updates/ses4/standard'
-      'SES4': 'http://192.168.121.1/repo/products/storage/product'
-      'SES4 Update': 'http://192.168.121.1/repo/updates/storage/update'
-      #'SES5': 'http://192.168.121.1/repo/products/ses5/standard'
-      #'SES5': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES5/standard/'
-      'kmroz': 'http://download.opensuse.org/repositories/home:/k_mroz/openSUSE_Leap_42.1/'      
-      #'SES4 Devel': 'http://192.168.121.1/repo/devel/ses4/SLE12_SP2'
-      #'SES3.0 Update': 'http://192.168.121.1/repo/updates/ses-3.0/standard'
-      'systemsmanagement': 'http://192.168.121.1/repo/systemsmanagement:/saltstack:/products/SLE_12_SP2'
-      #'systemsmanagement': 'http://widehat.opensuse.org/repositories/systemsmanagement:/saltstack:/products/SLE_12_SP2'
+      'sle-sdk': 'http://download.suse.de/ibs/SUSE/Products/SLE-SDK/12-SP2/x86_64/product/'
+      'sle-sdk update': 'http://download.suse.de/ibs/SUSE/Updates/SLE-SDK/12-SP2/x86_64/update/'
+      'SLE 12 update': 'http://download.suse.de/ibs/SUSE/Products/SLE-SERVER/12-SP2/x86_64/product/'
+      'Storage': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES4/images/repo/SUSE-Enterprise-Storage-4-POOL-x86_64-Media1/'
+      'Salt': 'http://download.opensuse.org/repositories/systemsmanagement:/saltstack:/products/SLE_12_SP2/'
+      'ses4updates': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES4:/Update/standard/'
+      'sle12updates': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update/standard/'
     packages:
       all:
         - vim
-          #- vim-data
-          #- python-setuptools
+        - vim-data
+        - python-setuptools
         - salt-minion
       admin:
-        - ceph-deploy
         - salt-master
         - ntp
         - tree
-      calamari:
-        #- salt-master
-        #- postgresql93-9.3.8-8.1
-        #- calamari-server
       client1:
         - multipath-tools
-        - nfs-client
       client2:
         - multipath-tools
-        - nfs-client
     files:
       all: false
       admin: true
     commands:
       admin:
-        - zypper -n in -t pattern Basis-Devel
-        - zypper -n in /tmp/deepsea-*.noarch.rpm
         - systemctl start ntpd
         - systemctl enable ntpd
         - systemctl start salt-master
         - systemctl enable salt-master
         - sleep 10
         - salt-key -y -A  || exit 0
-        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
+        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph 
         - chmod 1777 /tmp
-        - systemctl restart salt-minion
-      all:
-        - systemctl restart salt-minion
-        - systemctl enable salt-minion
-      calmari:
-        - systemctl start salt-master
-        - systemctl enable salt-master
-########################################
-# SLE 12 SP3
-########################################
-SLE_12-SP3:
-  salt:
-    repos:
-      'sle-sdk': 'http://192.168.121.1/repo/products/sle-sdk-12-SP1/product'
-      'sle-sdk update': 'http://192.168.121.1/repo/updates/sle-sdk-12-SP1/update'
-      #'SLE 12 SP2': 'http://192.168.121.1/repo/products/SLE_12-SP2/product'
-      'SLE 12 SP3': 'http://192.168.121.1/repo/products/SLE_12-SP3/product'
-      #'SLE 12 SP2 update': 'http://192.168.121.1/repo/updates/SLE_12-SP2/update'
-      'SLE 12 SP3 update': 'http://192.168.121.1/repo/updates/SLE_12-SP3/update'
-      #'SES4': 'http://192.168.121.1/repo/products/storage/product'
-      #'SES4 Update': 'http://192.168.121.1/repo/updates/storage/update'
-      'SES5': 'http://192.168.121.1/repo/ses5/product'
-      #'SES5': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP2:/Update:/Products:/SES5/standard/'
-      'kmroz': 'http://download.opensuse.org/repositories/home:/k_mroz/openSUSE_Leap_42.1/'      
-      #'SES4 Devel': 'http://192.168.121.1/repo/devel/ses4/SLE12_SP2'
-      #'SES3.0 Update': 'http://192.168.121.1/repo/updates/ses-3.0/standard'
-      #'systemsmanagement': 'http://192.168.121.1/repo/systemsmanagement:/saltstack:/products/SLE_12_SP2'
-      #'systemsmanagement': 'http://widehat.opensuse.org/repositories/systemsmanagement:/saltstack:/products/SLE_12_SP2'
-    packages:
-      all:
-        - vim
-          #- vim-data
-          #- python-setuptools
-        - salt-minion
-      admin:
-        - salt-master
-        - ntp
-        - tree
-      calamari:
-        #- salt-master
-        #- postgresql93-9.3.8-8.1
-        #- calamari-server
-      client1:
-        - multipath-tools
-        - nfs-client
-      client2:
-        - multipath-tools
-        - nfs-client
-    files:
-      all: false
-      admin: true
-    commands:
-      admin:
-        - zypper -n in -t pattern Basis-Devel
-        - zypper -n in /tmp/deepsea-*.noarch.rpm
-        - systemctl start ntpd
-        - systemctl enable ntpd
-        - systemctl start salt-master
-        - systemctl enable salt-master
-        - sleep 10
-        - salt-key -y -A  || exit 0
-        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
-        - chmod 1777 /tmp
-        - systemctl restart salt-minion
       all:
         - systemctl restart salt-minion
         - systemctl enable salt-minion
@@ -646,11 +425,55 @@ SLE_12-SP3:
 # elections, etc.  Six data nodes with 30 osds and a pretend journal give
 # enough flexibility to try replicas and erasure coding (e.g. k=3, m=2) while
 # downing an osd or an entire node.
-#
-# This requires 5G RAM and ~32G disk space.  Initial vagrant up is ~28 minutes
-# on a quad core.
+
+dataonmon:
+  description: "admin, 3 monitors, 5 data nodes with journals"
+  nodes:
+    admin:
+      management: 192.168.1.254
+      public:  172.16.1.254
+      cluster: 172.16.2.254
+    data1:
+      management: 192.168.1.21
+      public:  172.16.1.21
+      cluster: 172.16.2.21
+    data2:
+      management: 192.168.1.22
+      public:  172.16.1.22
+      cluster: 172.16.2.22
+    data3:
+      management: 192.168.1.23
+      public:  172.16.1.23
+      cluster: 172.16.2.23
+    data4:
+      management: 192.168.1.24
+      public:  172.16.1.24
+      cluster: 172.16.2.24
+  memory:
+    admin: 2048
+    mon1: 2048
+    mon2: 2048
+    mon3: 2048
+    data1: 1536
+    data2: 1536
+    data3: 1536
+    data4: 1536 
+  disks:
+    data1:
+      hds: 5
+      ssds: 1
+    data2:
+      hds: 5
+      ssds: 1
+    data3:
+      hds: 5
+      ssds: 1
+    data4:
+      hds: 5
+      ssds: 1
+
 default:
-  description: "admin, 3 monitors, 6 data nodes with journals"
+  description: "admin, 3 monitors, 5 data nodes with journals"
   nodes:
     admin:
       management: 192.168.1.254
@@ -688,12 +511,16 @@ default:
       management: 192.168.1.25
       public:  172.16.1.25
       cluster: 172.16.2.25
-    data6:
-      management: 192.168.1.26
-      public:  172.16.1.26
-      cluster: 172.16.2.26
   memory:
-    admin: 1024
+    admin: 2048
+    mon1: 2048
+    mon2: 2048
+    mon3: 2048
+    data1: 1536
+    data2: 1536
+    data3: 1536
+    data4: 1536 
+    data5: 1536
   disks:
     data1:
       hds: 5
@@ -710,9 +537,6 @@ default:
     data5:
       hds: 5
       ssds: 1
-    data6:
-      hds: 5
-      ssds: 1
 # The small configuration is a typical demo setup of a monitor and three data
 # nodes with two osds each.  This can be ideal for varifying that Vagrant and
 # libvirt are behaving.  Simpler installations can be verified and the ceph
@@ -720,6 +544,30 @@ default:
 #
 # This requires 2.5G RAM and ~7G disk space.  Initial vagrant up is ~13 minutes
 # on a quad core.
+tiny:
+  description: "1 admin, 1mon, 1 data node"
+  nodes:
+    admin:
+      management: 192.168.1.254
+      public:  172.16.1.254
+      cluster: 172.16.2.254
+    mon1:
+      management: 192.168.1.11
+      public:  172.16.1.11
+      cluster: 172.16.2.11
+    data1:
+      management: 192.168.1.21
+      public:  172.16.1.21
+      cluster: 172.16.2.21
+  memory:
+    admin: 2048
+    mon1: 2048
+    data1: 2048
+  disks:
+    data1:
+      hds: 4
+      ssds: 1
+
 small:
   description: "admin, 1 monitor, 3 data nodes"
   nodes:
@@ -752,6 +600,7 @@ small:
       hds: 2
     data3:
       hds: 2
+
 iscsi:
   description: "admin, 2 clients, 3 monitors, 5 data nodes, 3 gateways, 2 mds and calamari"
   nodes:
@@ -1110,9 +959,6 @@ eighteen:
     admin: 4
   memory:
     admin: 3072
-    mon1: 1024
-    mon2: 1024
-    mon3: 1024
     rgw1: 768
     rgw2: 768
     rgw3: 768
@@ -1140,135 +986,6 @@ eighteen:
       hds: 2
     data6:
       hds: 2
-twentythree:
-  description: "master, 2 clients/mds, 6 data nodes, 3 monitors/igw/rgw/ganesha"
-  nodes:
-    admin:
-      management: 192.168.11.254
-      public:  172.16.11.254
-      cluster: 172.16.12.254
-    ganesha1:
-      management: 192.168.11.2
-      public:  172.16.11.2
-      cluster: 172.16.12.2
-    ganesha2:
-      management: 192.168.11.3
-      public:  172.16.11.3
-      cluster: 172.16.12.3
-    ganesha3:
-      management: 192.168.11.4
-      public:  172.16.11.4
-      cluster: 172.16.12.4
-    client1:
-      management: 192.168.11.5
-      public:  172.16.11.5
-      cluster: 172.16.12.5
-    client2:
-      management: 192.168.11.6
-      public:  172.16.11.6
-      cluster: 172.16.12.6
-    rgw1:
-      management: 192.168.11.8
-      public:  172.16.11.8
-      cluster: 172.16.12.8
-    rgw2:
-      management: 192.168.11.9
-      public:  172.16.11.9
-      cluster: 172.16.12.9
-    rgw3:
-      management: 192.168.11.10
-      public:  172.16.11.10
-      cluster: 172.16.12.10
-    mon1:
-      management: 192.168.11.11
-      public:  172.16.11.11
-      cluster: 172.16.12.11
-    mon2:
-      management: 192.168.11.12
-      public:  172.16.11.12
-      cluster: 172.16.12.12
-    mon3:
-      management: 192.168.11.13
-      public:  172.16.11.13
-      cluster: 172.16.12.13
-    mds1:
-      management: 192.168.11.14
-      public:  172.16.11.14
-      cluster: 172.16.12.14
-    mds2:
-      management: 192.168.11.15
-      public:  172.16.11.15
-      cluster: 172.16.12.15
-    igw1:
-      management: 192.168.11.16
-      public:  172.16.11.16
-      cluster: 172.16.12.16
-    igw2:
-      management: 192.168.11.17
-      public:  172.16.11.17
-      cluster: 172.16.12.17
-    igw3:
-      management: 192.168.11.18
-      public:  172.16.11.18
-      cluster: 172.16.12.18
-    data1:
-      management: 192.168.11.11
-      public:  172.16.11.21
-      cluster: 172.16.12.21
-    data2:
-      management: 192.168.11.12
-      public:  172.16.11.22
-      cluster: 172.16.12.22
-    data3:
-      management: 192.168.11.23
-      public:  172.16.11.23
-      cluster: 172.16.12.23
-    data4:
-      management: 192.168.11.24
-      public:  172.16.11.24
-      cluster: 172.16.12.24
-    data5:
-      management: 192.168.11.25
-      public:  172.16.11.25
-      cluster: 172.16.12.25
-    data6:
-      management: 192.168.11.26
-      public:  172.16.11.26
-      cluster: 172.16.12.26
-  cpu:
-    admin: 4
-  memory:
-    admin: 3072
-    mon1: 1024
-    mon2: 1024
-    mon3: 1024
-    rgw1: 768
-    rgw2: 768
-    rgw3: 768
-    igw1: 768
-    igw2: 768
-    igw3: 768
-    client1: 768
-    client2: 768
-    data1: 1024
-    data2: 1024
-    data3: 1024
-    data4: 1024
-    data5: 1024
-    data6: 1024
-  disks:
-    data1:
-      hds: 6
-    data2:
-      hds: 6
-    data3:
-      hds: 6
-    data4:
-      hds: 6
-    data5:
-      hds: 6
-    data6:
-      hds: 6
 # The economical configuration represents a cold storage configuration that has
 # no SSD journals.  Additionally, the monitors and admin node do not have an
 # interface on the cluster network to save money on one less 10G interface.
