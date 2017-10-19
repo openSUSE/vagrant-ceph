@@ -1,4 +1,3 @@
-
 require 'open3'
 ##include Archive::Tar
 
@@ -15,9 +14,11 @@ module Vagrant
     def initialize(node, repos)
       @node = node
       @cmds = []
-      repos.keys.each do |repo|
-        # Use shell short circuit to determine if repo already exists
-        @cmds << "zypper lr \'#{repo}\' | grep -sq ^Name || zypper ar \'#{repos[repo]}\' \'#{repo}\'"
+      unless repos.nil? then
+        repos.keys.each do |repo|
+          # Use shell short circuit to determine if repo already exists
+          @cmds << "zypper lr \'#{repo}\' | grep -sq ^Name || zypper ar -f \'#{repos[repo]}\' \'#{repo}\'"
+        end
       end
     end
 
@@ -26,6 +27,23 @@ module Vagrant
     end
 
     # Runs all the commands in a single shell
+    def add
+      @node.vm.provision 'shell', inline: @cmds.join('; ') 
+    end
+  end
+
+  # Adds SUSEConnect Repos
+  class SUSEConnect
+    def initialize(node, commands)
+      @node = node
+      @cmds = []
+      unless commands.nil? then
+        commands.each do |cmd|
+          @cmds << "#{cmd}"
+        end
+      end
+    end
+
     def add
       @node.vm.provision 'shell', inline: @cmds.join('; ') 
     end
@@ -81,14 +99,15 @@ module Vagrant
     # Copy static private/public key to root account.  Run necessary shell 
     # commands in a single call. 
     def setup
-      [ 'files/id_ecdsa', 'files/id_ecdsa.pub' ].each do |file|
+      [ "/home/#{ENV['USER']}/.ssh/id_rsa.pub", 'files/id_ecdsa', 'files/id_ecdsa.pub' ].each do |file|
         @node.vm.provision 'file', source: file, destination: "/home/vagrant/#{File.basename(file)}"
       end
       steps = <<-END.gsub(/^ {8}/, '')
         mkdir -p /root/.ssh
-        mv /home/vagrant/id_ecdsa /root/.ssh
+        mv /home/vagrant/id_ecdsa /root/.ssh/
+        cat /home/vagrant/id_ecdsa.pub >> /root/.ssh/authorized_keys
         mv /home/vagrant/id_ecdsa.pub /root/.ssh
-        cp /root/.ssh/id_ecdsa.pub /root/.ssh/authorized_keys
+        cat /home/vagrant/id_rsa.pub >> /root/.ssh/authorized_keys
         chmod 0600 /root/.ssh/id_ecdsa
       END
       @node.vm.provision 'shell', inline: steps
@@ -114,11 +133,15 @@ module Vagrant
     #   install_mode - type of installation
     #   host - hostname
     #   files - boolean determining if tree should be copied
-    def initialize(node, install_mode, host, files)
+    #   box - box name / indentifier in config
+    #   configuration / tiny/default/small
+    def initialize(node, install_mode, host, files, box, configuration)
       @node = node
       @install_mode = install_mode
       @host = host
       @files = files
+      @box = box
+      @configuration = configuration
     end
 
     # Creates a tar file, uses vagrant's copy command and then extracts
@@ -132,12 +155,22 @@ module Vagrant
             if (@files[subdir]) then
               tar_file = tar(subdir)
               vm_tar_file = "/home/vagrant/#{File.basename(tar_file)}"
-              @node.vm.provision 'file', source: tar_file, 
+              @node.vm.provision 'file', source: tar_file,
                 destination: vm_tar_file
               untar(vm_tar_file)
+            if (@files['customized']) then
+              dir_name = "#{@box}_#{@configuration}"
+              if (File.directory?("files/#{@install_mode}/#{dir_name}")) then
+                tar_file = tar(dir_name)
+                vm_tar_file = "/home/vagrant/#{File.basename(tar_file)}"
+                @node.vm.provision 'file', source: tar_file,
+                  destination: vm_tar_file
+                untar(vm_tar_file)
+              end
             end
           end
         end
+      end
       end
     end
 

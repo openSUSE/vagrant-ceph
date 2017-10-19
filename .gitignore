@@ -1,3 +1,5 @@
 .vagrant
 *.sw?
 hosts
+*.box
+tags
