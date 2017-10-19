@@ -1,25 +1,3 @@
-#osd_init: default-small
-#pool_method: custom
-#igw_method: custom
-#igw_import: custom
+osd_init: default
 
-#configuration_method: shared
-#igw_key: shared
-#igw_auth: shared
-#igw_keyring: shared
-#igw_sysconfig: shared
-#mds_key: default-shared
-#mds_auth: default-shared
-#mds_keyring: default-shared
-#mds_init: default-shared
-#rgw_key: shared
-#rgw_auth: shared
-#rgw_keyring: shared
-#rgw_init: default-zypper
-
-rgw_configurations:
-  rgw:
-    users:
-      - { uid: "demo", name: "Demo", email: "demo@demo.nil" }
-      - { uid: "demo1", name: "Demo1", email: "demo1@demo.nil" }
 

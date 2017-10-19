@@ -83,6 +83,30 @@ Next, log into the admin node and become root.
 
 You may now begin a ceph installation.  
 
+## Customizations
+
+This repository diverged from it's origin in following features:
+
+  * Partly overwrite configs under files/
+    * If you deploy different versions of ceph
+      you might need different settings.
+      This allows you to do so.
+  * Import the ssh pubkey from your $HOME
+  * Allow SUSEConnect registrations
+  * include a comprehensive .bash_history on the master
+  * More cluster sizes and configurations
+
+## Partly overwrite configurations
+
+files/<b>installation_mode</b>/<b>HOST</b> holds files that will be copied over to the <b>HOST</b>.
+If you deploy different kinds of Versions of SLES/SES you can create subdirectories that match the following pattern:
+
+"files/<b>installation_mode</b>/<b>BOX</b>_<b>CONFIGURATION</b>"
+
+I.e. "SLE12-SP3\_default"
+
+This directory can hold a single file that differs from the default tree in files/<b>installation_mode</b>/<b>HOST</b>
+
 
 ## Caveats
 For the sake of completeness and stating the obvious, the private ssh key is only suitable for demonstrations and should never be used in a real environment.
