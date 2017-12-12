@@ -48,12 +48,12 @@ def libvirt_settings(provider, config, name)
             disks = config[CONFIGURATION]['disks'][name]
             unless (disks['hds'].nil?) then
               (1..disks['hds']).each do |d|
-                provider.storage :file, size: '20G', type: 'raw'
+                provider.storage :file, size: '20G', type: 'qcow2'
               end
             end
             unless (disks['ssds'].nil?) then
               (1..disks['ssds']).each do |d|
-                provider.storage :file, size: '10G', type: 'raw'
+                provider.storage :file, size: '20G', type: 'qcow2'
               end
             end
           end

@@ -1,0 +1,2 @@
+stage_prep_minion: default-update-no-reboot
+stage_prep_master: default-update-no-reboot

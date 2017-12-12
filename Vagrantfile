@@ -16,14 +16,19 @@ config = YAML.load_file(config_file)
 # Check that the user has an ssh key
 Vagrant::Hosts::check_for_ssh_keys
 
-# Set BOX to one of 'openSUSE-13.2', 'Tumbleweed', 'SLE-12', 'SLE12-SP2', 'SLE12-SP3' and more
+# Set BOX to one of 'openSUSE-13.2', 'Tumbleweed', 'SLE-12'
+#BOX = 'opensuse/openSUSE-42.2-x86_64'
+#BOX = 'SLE12-SP2-migration'
+#BOX = 'SLE12-SP3-qa'
 BOX = 'SLE12-SP3'
 
 # Set INSTALLATION to one of 'ceph-deploy', 'salt'
 INSTALLATION = 'salt'
 
-# Set CONFIGURATION to one of 'default', 'tiny', 'small', 'iscsi' or 'economical'
+# Set CONFIGURATION to one of 'default', 'small', 'iscsi' or 'economical'
+#CONFIGURATION = 'default'
 CONFIGURATION = 'tiny'
+#CONFIGURATION = 'dataonmon'
 
 raise "Box #{BOX} missing from config.yml" unless config[BOX]
 raise "Installation #{INSTALLATION} missing for box #{BOX} from config.yml" unless config[BOX][INSTALLATION]
@@ -58,6 +63,7 @@ def provisioning(hosts, node, config, name)
       # Allow passwordless root access between nodes
       keys = Vagrant::Keys.new(node, config[CONFIGURATION]['nodes'].keys)
       if (name == 'admin') then
+         # puts "authorize dummy"
           keys.authorize 
       end
 
