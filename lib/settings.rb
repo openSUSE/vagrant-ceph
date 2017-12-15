@@ -53,7 +53,7 @@ def libvirt_settings(provider, config, name)
             end
             unless (disks['ssds'].nil?) then
               (1..disks['ssds']).each do |d|
-                provider.storage :file, size: '10G', type: 'qcow2'
+                provider.storage :file, size: '20G', type: 'qcow2'
               end
             end
           end
