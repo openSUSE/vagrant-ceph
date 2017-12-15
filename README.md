@@ -119,6 +119,16 @@ I.e. "SLE12-SP3\_default"
 
 This directory can hold a single file that differs from the default tree in files/<b>installation_mode</b>/<b>HOST</b>
 
+### Options for files upload
+```
+files:
+  @node: false/true/merge/custom
+```
+
+* false - don't upload files
+* true - upload directory that matches node name
+* custom - upload __only__ directory `BOX_CONFIGURATION`
+* merge - upload both node directory as well as `BOX_CONFIGURATION` directory
 
 ## Caveats
 For the sake of completeness and stating the obvious, the private ssh key is only suitable for demonstrations and should never be used in a real environment.
