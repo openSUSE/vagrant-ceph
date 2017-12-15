@@ -15,7 +15,7 @@ systemctl start libvirtd
 
 vagrant plugin install vagrant-libvirt
 
-#git clone --depth 1 https://github.com/openSUSE/vagrant-ceph
-#cd vagrant-ceph
+git clone --depth 1 https://github.com/openSUSE/vagrant-ceph
+cd vagrant-ceph
 
 #vagrant up

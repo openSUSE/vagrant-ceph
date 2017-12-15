@@ -12,7 +12,12 @@ Install the plugin if needed.
 
 `$ vagrant plugin install vagrant-libvirt`
 
-Or use script in case you have openSUSE: `$ sudo ./openSUSE_vagrant_setup.sh`
+Or use script in case you have openSUSE:
+```
+# curl https://raw.githubusercontent.com/openSUSE/vagrant-ceph/master/openSUSE_vagrant_setup.sh -o openSUSE_vagrant_setup.sh
+# chmod +x openSUSE_vagrant_setup.sh
+# sudo ./openSUSE_vagrant_setup.sh
+```
 
 #### Workaround 1
 fog-1.30.0 seems to remove support for libvirt.  To workaround this issue, run the following as well if needed
