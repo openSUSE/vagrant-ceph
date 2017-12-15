@@ -12,6 +12,8 @@ Install the plugin if needed.
 
 `$ vagrant plugin install vagrant-libvirt`
 
+Or use script in case you have openSUSE: `$ sudo ./openSUSE_vagrant_setup.sh`
+
 #### Workaround 1
 fog-1.30.0 seems to remove support for libvirt.  To workaround this issue, run the following as well if needed
 
@@ -40,6 +42,9 @@ For background on this issue, see https://gist.github.com/luislavena/f064211759e
 Then, rerun the plugin installation above.
 
 ## Adding Vagrant boxes
+
+Skip this section if you use standard boxes from [Vagrant Cloud](https://app.vagrantup.com/opensuse)
+
 Next, add the vagrant box.  Choose the box you wish to use from the boxes subdirectory.
 
 `$ ls boxes/`
@@ -81,9 +86,11 @@ Next, log into the admin node and become root.
 
 `vagrant@admin:~> sudo su -`
 
-You may now begin a ceph installation.  
+You may now begin a ceph installation.
 
 ## Customizations
+
+Add `customized: true` to `files` section of you config.
 
 This repository diverged from it's origin in following features:
 
