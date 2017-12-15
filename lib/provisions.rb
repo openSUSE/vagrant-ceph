@@ -152,13 +152,14 @@ module Vagrant
         [ 'all', @host ].each do |subdir|
           unless (@files[subdir].nil?) then
             # check if enabled
-            if (@files[subdir]) then
+            if ([ true, "merge" ].include?(@files[subdir])) then
               tar_file = tar(subdir)
               vm_tar_file = "/home/vagrant/#{File.basename(tar_file)}"
               @node.vm.provision 'file', source: tar_file,
                 destination: vm_tar_file
               untar(vm_tar_file)
-            if (@files['customized']) then
+            end
+            if ([ "custom", "merge" ].include?(@files[subdir])) then
               dir_name = "#{@box}_#{@configuration}"
               if (File.directory?("files/#{@install_mode}/#{dir_name}")) then
                 tar_file = tar(dir_name)
@@ -170,7 +171,6 @@ module Vagrant
             end
           end
         end
-      end
       end
     end
 

@@ -39,8 +39,7 @@ opensuse/openSUSE-Tumbleweed-x86_64:
         - deepsea
     files:
       all: false
-      admin: true
-      customized: true
+      admin: custom
     commands:
       admin:
         - systemctl start ntpd
@@ -82,8 +81,7 @@ opensuse/openSUSE-42.3-x86_64:
         - deepsea
     files:
       all: false
-      admin: true
-      customized: true
+      admin: custom
     commands:
       admin:
         - systemctl start ntpd
