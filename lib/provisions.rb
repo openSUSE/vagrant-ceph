@@ -140,7 +140,7 @@ module Vagrant
       @install_mode = install_mode
       @host = host
       @files = files
-      @box = box
+      @box = box.split('/').last
       @configuration = configuration
     end
 

@@ -1,0 +1,5 @@
+# Customizations for /srv/pillar/ceph/stack/global.yml
+DEV_ENV: True
+#stage_prep_minion: default-update-no-reboot
+#stage_prep_master: default-update-no-reboot
+
