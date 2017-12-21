@@ -20,7 +20,9 @@ Vagrant::Hosts::check_for_ssh_keys
 #BOX = 'opensuse/openSUSE-42.2-x86_64'
 #BOX = 'SLE12-SP2-migration'
 #BOX = 'SLE12-SP3-qa'
-BOX = 'SLE12-SP3'
+#BOX = 'SLE12-SP3'
+#BOX = 'opensuse/openSUSE-Tumbleweed-x86_64'
+BOX = 'opensuse/openSUSE-42.3-x86_64'
 
 # Set INSTALLATION to one of 'ceph-deploy', 'salt'
 INSTALLATION = 'salt'
@@ -97,6 +99,9 @@ end
 
 Vagrant.configure("2") do |vconfig|
   vconfig.vm.box = BOX
+
+  # workaround to skip key replacement, as it could hang with vagrant 1.8.7
+  vconfig.ssh.insert_key = false
 
   # Keep admin at the end for provisioning
   nodes = config[CONFIGURATION]['nodes'].keys.reject{|i| i == 'admin'} 

@@ -14,23 +14,32 @@
 # Change the INSTALLATION to either 'ceph-deploy' or 'vsm' in the Vagrantfile.
 
 ########################################
+
+########################################
 # OpenSUSE Tumbleweed
 ########################################
-Tumbleweed:
-  ceph-deploy:
+opensuse/openSUSE-Tumbleweed-x86_64:
+  salt:
     repos:
-      'Main Repository (OSS)': 'http://download.opensuse.org/tumbleweed/repo/oss/'
-      'Ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_Tumbleweed/'
+      'oss': 'http://download.opensuse.org/tumbleweed/repo/oss/suse/'
+      'up': 'http://download.opensuse.org/update/tumbleweed/'
+      'ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph:/luminous/openSUSE_Tumbleweed/'
+#      'monitoring': 'https://download.opensuse.org/repositories/server:/monitoring/openSUSE_Tumbleweed/'
+      'oA and monitoring': 'https://download.opensuse.org/repositories/filesystems:/openATTIC:/3.x/openSUSE_Tumbleweed/'
+      # workaround until salt-2017 is supported by deepsea
+      'salt-2016': 'http://download.opensuse.org/repositories/systemsmanagement:/saltstack:/products/openSUSE_Tumbleweed/'
     packages:
       all:
         - vim
-        - salt-minion
+        - libcrypto42
+        - salt-minion-2016.11.04
       admin:
-        - salt-master
+        - salt-master-2016.11.04
         - ntp
+        - deepsea
     files:
       all: false
-      admin: true
+      admin: custom
     commands:
       admin:
         - systemctl start ntpd
@@ -39,6 +48,51 @@ Tumbleweed:
         - systemctl enable salt-master
         - sleep 10
         - salt-key -y -A  || exit 0
+        # https://github.com/SUSE/DeepSea/issues/309
+        - salt '*' cmd.run 'echo "openSUSE 20170605 (x86_64)" >> /etc/SuSE-release'
+        - chown -R salt:salt /srv/salt/ceph 
+        - chown -R salt:salt /srv/pillar/ceph
+      all:
+        - systemctl disable SuSEfirewall2
+        - systemctl stop SuSEfirewall2
+        - systemctl restart salt-minion
+        - systemctl enable salt-minion
+
+########################################
+# OpenSUSE Leap 42.3
+########################################
+opensuse/openSUSE-42.3-x86_64:
+  salt:
+    repos:
+      '42.3': 'http://download.opensuse.org/distribution/leap/42.3/repo/oss/suse/'
+      '42.3 up': 'http://download.opensuse.org/update/leap/42.3/oss/'
+      'ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph:/luminous/openSUSE_Leap_42.3/'
+#      'monitoring': 'https://download.opensuse.org/repositories/server:/monitoring/openSUSE_Leap_42.3/'
+      'oA and monitoring': 'https://download.opensuse.org/repositories/filesystems:/openATTIC:/3.x/openSUSE_Leap_42.3/'
+      # workaround until salt-2017 is supported by deepsea
+      '42.3 salt-2016': 'http://download.opensuse.org/repositories/systemsmanagement:/saltstack:/products/openSUSE_Leap_42.3/'
+    packages:
+      all:
+        - vim
+        - salt-minion-2016.11.04
+      admin:
+        - salt-master-2016.11.04
+        - ntp
+        - deepsea
+    files:
+      all: false
+      admin: custom
+    commands:
+      admin:
+        - systemctl start ntpd
+        - systemctl enable ntpd
+        - systemctl start salt-master
+        - systemctl enable salt-master
+        - sleep 10
+        - salt-key -y -A  || exit 0
+        - sleep 5
+        - chown -R salt:salt /srv/salt/ceph 
+        - chown -R salt:salt /srv/pillar/ceph
       all:
         - systemctl disable SuSEfirewall2
         - systemctl stop SuSEfirewall2
@@ -53,38 +107,6 @@ opensuse/openSUSE-42.2-x86_64:
     repos:
       'ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_Leap_42.3/'
       '42.2': 'http://download.opensuse.org/distribution/leap/42.2/repo/oss/suse/'
-    packages:
-      all:
-        - vim
-        - salt-minion
-      admin:
-        - salt-master
-        - ntp
-    files:
-      all: false
-      admin: true
-    commands:
-      admin:
-        - systemctl start ntpd
-        - systemctl enable ntpd
-        - systemctl start salt-master
-        - systemctl enable salt-master
-        - sleep 10
-        - salt-key -y -A  || exit 0
-      all:
-        - systemctl disable SuSEfirewall2
-        - systemctl stop SuSEfirewall2
-        - systemctl restart salt-minion
-        - systemctl enable salt-minion
-          
-########################################
-# OpenSUSE Leap 42.3
-########################################
-opensuse/openSUSE-42.3-x86_64:
-  salt:
-    repos:
-      'ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_Leap_42.3/'
-      '42.2': 'http://download.opensuse.org/ristribution/leap/42.3/repo/oss/suse/'
     packages:
       all:
         - vim
@@ -487,6 +509,7 @@ default:
     data5:
       hds: 5
       ssds: 1
+
 # The small configuration is a typical demo setup of a monitor and three data
 # nodes with two osds each.  This can be ideal for varifying that Vagrant and
 # libvirt are behaving.  Simpler installations can be verified and the ceph
@@ -646,6 +669,7 @@ iscsi:
       hds: 2
     data5:
       hds: 2
+
 fifteen:
   description: "admin, 2 clients, 3 monitors, 6 data nodes, 3 gateways"
   nodes:
@@ -736,6 +760,7 @@ fifteen:
       hds: 2
     data6:
       hds: 2
+
 sixteen:
   description: "admin, 2 clients, 3 monitors, 5 data nodes, 3 gateways, 2 mds"
   nodes:
@@ -828,6 +853,7 @@ sixteen:
       hds: 2
     data5:
       hds: 2
+
 eighteen:
   description: "master, 2 clients, 3 monitors, 6 data nodes, 3 igw, 3 rgw"
   nodes:
@@ -946,15 +972,19 @@ economical:
     admin:
       management: 192.168.1.254
       public:  172.16.1.254
+      cluster: 172.16.2.254
     mon1:
       management: 192.168.1.11
       public:  172.16.1.11
+      cluster: 172.16.2.11
     mon2:
       management: 192.168.1.12
       public:  172.16.1.12
+      cluster: 172.16.2.12
     mon3:
       management: 192.168.1.13
       public:  172.16.1.13
+      cluster: 172.16.2.13
     data1:
       management: 192.168.1.21
       public:  172.16.1.21
