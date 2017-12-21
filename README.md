@@ -95,8 +95,6 @@ You may now begin a ceph installation.
 
 ## Customizations
 
-Add `customized: true` to `files` section of you config.
-
 This repository diverged from it's origin in following features:
 
   * Partly overwrite configs under files/
