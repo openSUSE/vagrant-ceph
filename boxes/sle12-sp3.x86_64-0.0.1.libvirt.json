@@ -1,0 +1,15 @@
+{
+   "description" : "SLE12 SP3 vagrant box",
+   "name" : "SUSE/SLE-12-SP3",
+   "versions" : [
+      {
+         "providers" : [
+            {
+               "name" : "libvirt",
+               "url" : "http://download.suse.de/ibs/home:/dkondratenko:/images:/vagrant/vagrant/sle12-sp3.x86_64-0.0.1.libvirt-Build47.1.box"
+            }
+         ],
+         "version" : "0.0.1"
+      }
+   ]
+}
