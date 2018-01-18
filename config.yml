@@ -23,7 +23,7 @@ opensuse/openSUSE-Tumbleweed-x86_64:
     repos:
       'oss': 'http://download.opensuse.org/tumbleweed/repo/oss/suse/'
       'up': 'http://download.opensuse.org/update/tumbleweed/'
-      'ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph:/luminous/openSUSE_Tumbleweed/'
+      'ceph': 'https://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_Tumbleweed/'
 #      'monitoring': 'https://download.opensuse.org/repositories/server:/monitoring/openSUSE_Tumbleweed/'
       'oA and monitoring': 'https://download.opensuse.org/repositories/filesystems:/openATTIC:/3.x/openSUSE_Tumbleweed/'
       # workaround until salt-2017 is supported by deepsea
@@ -39,7 +39,7 @@ opensuse/openSUSE-Tumbleweed-x86_64:
         - deepsea
     files:
       all: false
-      admin: custom
+      admin: merge
     commands:
       admin:
         - systemctl start ntpd
@@ -48,10 +48,13 @@ opensuse/openSUSE-Tumbleweed-x86_64:
         - systemctl enable salt-master
         - sleep 10
         - salt-key -y -A  || exit 0
+        - sleep 5
         # https://github.com/SUSE/DeepSea/issues/309
-        - salt '*' cmd.run 'echo "openSUSE 20170605 (x86_64)" >> /etc/SuSE-release'
+        - salt '*' cmd.run 'echo "openSUSE 20170929 (x86_64)" >> /etc/SuSE-release' timeout=10
         - chown -R salt:salt /srv/salt/ceph 
         - chown -R salt:salt /srv/pillar/ceph
+        # https://github.com/SUSE/DeepSea/issues/840
+        - cd /; patch -p1 < /root/issue_840_workaround
       all:
         - systemctl disable SuSEfirewall2
         - systemctl stop SuSEfirewall2
