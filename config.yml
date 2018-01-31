@@ -267,6 +267,33 @@ SUSE/SLE-12-SP3:
         - systemctl restart salt-minion
         - systemctl enable salt-minion
 
+########################################
+# SLE 15 SES6
+########################################
+SUSE/SLE-15:
+  salt:
+    repos:
+      'Storage': 'http://download.suse.de/ibs/SUSE:/SLE-15:/Update:/Products:/SES6/images/repo/SUSE-Enterprise-Storage-6-POOL-x86_64-Media1/'
+      'SLE-15': 'http://download.suse.de/ibs/SUSE:/SLE-15:/GA/standard/'
+      'SLE-15 Update': 'http://download.suse.de/ibs/SUSE:/SLE-15:/Update/standard/'
+    packages:
+      all:
+        - vim
+      admin:
+        - vim-data
+      client1:
+        - multipath-tools
+      client2:
+        - multipath-tools
+    files:
+      all: false
+      admin: merge
+    commands:
+      admin:
+        - sleep 5
+      all:
+        - systemctl disable SuSEfirewall2
+        - systemctl stop SuSEfirewall2
 
 ########################################
 # SLE 12 SP2 SES4
