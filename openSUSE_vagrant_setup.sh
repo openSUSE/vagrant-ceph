@@ -14,7 +14,8 @@ gem install ruby-libvirt -v '0.7.0'
 systemctl enable libvirtd
 systemctl start libvirtd
 
-vagrant plugin install vagrant-libvirt
+# 0.0.41 does not find provider 2/2/2018
+vagrant plugin install --plugin-version 0.0.40 vagrant-libvirt
 
 git clone --depth 1 https://github.com/openSUSE/vagrant-ceph
 cd vagrant-ceph
