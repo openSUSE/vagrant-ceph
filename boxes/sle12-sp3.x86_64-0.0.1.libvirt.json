@@ -6,7 +6,7 @@
          "providers" : [
             {
                "name" : "libvirt",
-               "url" : "http://download.suse.de/ibs/home:/dkondratenko:/images:/vagrant/vagrant/sle12-sp3.x86_64-0.0.1.libvirt-Build47.1.box"
+               "url" : "http://download.suse.de/ibs/home:/dkondratenko:/images:/vagrant/vagrant/sle12-sp3.x86_64.libvirt.box"
             }
          ],
          "version" : "0.0.1"
