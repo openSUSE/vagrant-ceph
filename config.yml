@@ -274,8 +274,8 @@ SUSE/SLE-15:
   salt:
     repos:
       'Storage': 'http://download.suse.de/ibs/SUSE:/SLE-15:/Update:/Products:/SES6/standard/'
-      'basesystyem': 'http://download.suse.de/install/SLP/SLE-15-Module-Basesystem-Beta6/'
-      'sles-applications': 'http://download.suse.de/install/SLP/SLE-15-Module-Server-Applications-Beta6/'
+      'basesystyem': 'http://download.suse.de/install/SLP/SLE-15-Module-Basesystem-LATEST/x86_64/DVD1/'
+      'sles-applications': 'http://download.suse.de/install/SLP/SLE-15-Module-Server-Applications-LATEST/x86_64/DVD1/'
     packages:
       all:
         - vim
