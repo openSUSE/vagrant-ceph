@@ -273,13 +273,15 @@ SUSE/SLE-12-SP3:
 SUSE/SLE-15:
   salt:
     repos:
-      'Storage': 'http://download.suse.de/ibs/SUSE:/SLE-15:/Update:/Products:/SES6/images/repo/SUSE-Enterprise-Storage-6-POOL-x86_64-Media1/'
-      'SLE-15': 'http://download.suse.de/ibs/SUSE:/SLE-15:/GA/standard/'
-      'SLE-15 Update': 'http://download.suse.de/ibs/SUSE:/SLE-15:/Update/standard/'
+      'Storage': 'http://download.suse.de/ibs/SUSE:/SLE-15:/Update:/Products:/SES6/standard/'
+      'basesystyem': 'http://download.suse.de/install/SLP/SLE-15-Module-Basesystem-Beta6/'
+      'sles-applications': 'http://download.suse.de/install/SLP/SLE-15-Module-Server-Applications-Beta6/'
     packages:
       all:
         - vim
+        - salt-minion
       admin:
+        - salt-master
         - vim-data
       client1:
         - multipath-tools
@@ -290,10 +292,16 @@ SUSE/SLE-15:
       admin: merge
     commands:
       admin:
+        - systemctl start salt-master
+        - systemctl enable salt-master
         - sleep 5
+        - salt-key -y -A  || exit 0
+        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph 
       all:
         - systemctl disable SuSEfirewall2
         - systemctl stop SuSEfirewall2
+        - systemctl restart salt-minion
+        - systemctl enable salt-minion
 
 ########################################
 # SLE 12 SP2 SES4
