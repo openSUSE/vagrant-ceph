@@ -7,53 +7,49 @@ def common_settings(node, config, name)
 
       node.vm.hostname = name
 
-      # Ceph has three networks
-      networks = config[CONFIGURATION]['nodes'][name]
-      node.vm.network :private_network, ip: networks['management']
-      node.vm.network :private_network, ip: networks['public']
-      node.vm.network :private_network, ip: networks['cluster']
+      node.vm.network :private_network, :forward_mode => "route", :libvirt__network_name => "routed_all"
 end
 
 def libvirt_settings(provider, config, name)
-        provider.host = 'localhost'
-        provider.username = 'root'
 
+        provider.uri = config["libvirt-uri"]
+        provider.storage_pool_name = 'sles12_2'
 
-        # Use DSA key if available, otherwise, defaults to RSA
-        provider.id_ssh_key_file = 'id_dsa' if File.exists?("#{ENV['HOME']}/.ssh/id_dsa")
-        provider.connect_via_ssh = true
-
-        # Libvirt pool and prefix value
-        provider.storage_pool_name = 'default'
-        #l.default_prefix = ''
+        # TODO make this configurable
+        # provider.id_ssh_key_file = "#{ENV['HOME']}/.ssh/id_rsa_vagrant" if File.exists?("#{ENV['HOME']}/.ssh/id_rsa_vagrant")
+        # provider.connect_via_ssh = true
 
         # Memory defaults to 512M, allow specific configurations 
-        unless (config[CONFIGURATION]['memory'].nil?) then
-          unless (config[CONFIGURATION]['memory'][name].nil?) then
-            provider.memory = config[CONFIGURATION]['memory'][name]
+        provider.memory = 2048
+        unless (config['memory'].nil?) then
+          unless (config['memory'][name].nil?) then
+            provider.memory = config['memory'][name]
           end
         end
 
-        # Set cpus to 2, allow specific configurations
-        provider.cpus =  2
-        unless (config[CONFIGURATION]['cpu'].nil?) then
-          unless (config[CONFIGURATION]['cpu'][name].nil?) then
-            provider.cpus = config[CONFIGURATION]['cpu'][name] 
+        provider.cpus =  1
+        provider.cpu_mode = 'custom'
+        provider.cpu_model = 'Haswell-noTSX'
+        unless (config['cpu'].nil?) then
+          unless (config['cpu'][name].nil?) then
+            provider.cpus = config['cpu'][name] 
           end
         end
 
         # Raw disk images to simulate additional drives on data nodes
-        unless (config[CONFIGURATION]['disks'].nil?) then
-          unless (config[CONFIGURATION]['disks'][name].nil?) then
-            disks = config[CONFIGURATION]['disks'][name]
+        unless (config['disks'].nil?) then
+          unless (config['disks'][name].nil?) then
+            disks = config['disks'][name]
             unless (disks['hds'].nil?) then
               (1..disks['hds']).each do |d|
                 provider.storage :file, size: '20G', type: 'qcow2'
+                # provider.storage :file, size: '10G'
               end
             end
             unless (disks['ssds'].nil?) then
               (1..disks['ssds']).each do |d|
                 provider.storage :file, size: '20G', type: 'qcow2'
+                # provider.storage :file, size: '5G'
               end
             end
           end
@@ -61,6 +57,7 @@ def libvirt_settings(provider, config, name)
 
 end
 
+# TODO Won't work for now
 def virtbox_settings(provider, config, name)
         unless (config[CONFIGURATION]['memory'].nil?) then
           unless (config[CONFIGURATION]['memory'][name].nil?) then

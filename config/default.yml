@@ -1,0 +1,58 @@
+libvirt-uri: qemu:///system
+libvirt-storage-pool: sles15
+nodes:
+  admin:
+  mon1:
+  mon2:
+  mon3:
+  data1:
+  data2:
+  data3:
+  data4:
+  data5:
+  client1:
+memory:
+disks:
+  data1:
+    hds: 5
+    ssds: 1
+  data2:
+    hds: 5
+    ssds: 1
+  data3:
+    hds: 5
+    ssds: 1
+  data4:
+    hds: 5
+    ssds: 1
+  data5:
+    hds: 5
+    ssds: 1
+  data6:
+    hds: 5
+    ssds: 1
+packages:
+  all:
+    - vim
+    - salt-minion
+  admin:
+    - git
+    - make
+    - ntp
+    - salt-master
+files:
+  all: false
+  admin: true
+commands:
+  admin:
+    - systemctl start ntpd
+    - systemctl enable ntpd
+    - systemctl start salt-master
+    - systemctl enable salt-master
+    - sleep 10
+    - salt-key -y -A  || exit 0
+  all:
+    - 'echo "nameserver 192.168.100.1" > /etc/resolv.conf'
+    - 'echo "master: admin" > /etc/salt/minion.d/master.conf'
+    - systemctl restart salt-minion
+    - systemctl enable salt-minion

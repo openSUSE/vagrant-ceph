@@ -116,7 +116,7 @@ module Vagrant
     # Log into each machine and accept which generates the known_hosts
     def authorize
       @servers.each do |server|
-        cmd = "ssh -oStrictHostKeyChecking=no #{server} exit"
+        cmd = "ssh -i files/id_ecdsa -oStrictHostKeyChecking=no #{server} exit"
         @node.vm.provision 'shell', inline: cmd
       end
     end
@@ -125,6 +125,7 @@ module Vagrant
   # Copy files from files/install_mode to the virtual machine.  Effectively,
   # a poor man's patch after package installation to allow quick experimenting
   # until the real solution is decided
+  # TODO look further into this
   class Files
 
     # Saves arguments
@@ -220,6 +221,8 @@ module Vagrant
     end
 
     def run
+      # TODO should we maybe aggregate the commands and run as script? what if a
+        # command fails
       [ 'all', @host].each do |group|
         unless (@commands[group].nil?) then
           @commands[group].each do |cmd|

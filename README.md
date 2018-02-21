@@ -18,9 +18,13 @@ Or use script in case you have openSUSE:
 # chmod +x openSUSE_vagrant_setup.sh
 # sudo ./openSUSE_vagrant_setup.sh
 ```
+Note: make sure you have the ruby2.2 development headers as well as the libvirt
+development headers. Usually they are called [ruby2.2, libvirt]-devel or
+something like that.
 
 #### Workaround 1
 fog-1.30.0 seems to remove support for libvirt.  To workaround this issue, run the following as well if needed
+Note: fog-1.30.0 seems to remove support for libvirt.  To workaround this issue, run the following as well if needed
 
 `$ vagrant plugin uninstall fog`
 
