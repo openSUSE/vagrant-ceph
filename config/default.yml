@@ -1,5 +1,5 @@
 libvirt-uri: qemu:///system
-libvirt-storage-pool: sles12_2
+libvirt-storage-pool: sles15
 nodes:
   admin:
   mon1:
@@ -10,9 +10,7 @@ nodes:
   data3:
   data4:
   data5:
-  data6:
   client1:
-  client2:
 memory:
 disks:
   data1:
