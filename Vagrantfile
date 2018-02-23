@@ -88,7 +88,7 @@ Vagrant.configure("2") do |vconfig|
   nodes = config["nodes"]
 
   nodes.each_key do |name|
-    vm_name = name
+      vm_name = config.fetch('prefix', '') + name
 
     vconfig.vm.define vm_name do |node|
       common_settings(node, config, name)
@@ -101,5 +101,4 @@ Vagrant.configure("2") do |vconfig|
 
     end
   end
-
 end

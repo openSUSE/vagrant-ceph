@@ -13,7 +13,7 @@ end
 def libvirt_settings(provider, config, name)
 
         provider.uri = config["libvirt-uri"]
-        provider.storage_pool_name = 'sles12_2'
+        provider.storage_pool_name = config['libvirt-storage-pool']
 
         # TODO make this configurable
         # provider.id_ssh_key_file = "#{ENV['HOME']}/.ssh/id_rsa_vagrant" if File.exists?("#{ENV['HOME']}/.ssh/id_rsa_vagrant")
@@ -28,8 +28,8 @@ def libvirt_settings(provider, config, name)
         end
 
         provider.cpus =  1
-        provider.cpu_mode = 'custom'
-        provider.cpu_model = 'Haswell-noTSX'
+        # provider.cpu_mode = 'custom'
+        # provider.cpu_model = 'Haswell-noTSX'
         unless (config['cpu'].nil?) then
           unless (config['cpu'][name].nil?) then
             provider.cpus = config['cpu'][name] 

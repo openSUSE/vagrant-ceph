@@ -70,8 +70,10 @@ module Vagrant
 
     # Runs necessary zypper command, automatically trust repo
     def install_all
-      cmd = "zypper --gpg-auto-import-keys -n in #{@packages['all'].join(' ')}"
-      @node.vm.provision 'shell', inline: cmd
+      unless @packages['all'].nil? then
+        cmd = "zypper --gpg-auto-import-keys -n in #{@packages['all'].join(' ')}"
+        @node.vm.provision 'shell', inline: cmd
+      end
     end
 
     # Runs necessary zypper command, automatically trust repo
