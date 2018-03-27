@@ -99,7 +99,7 @@ module Vagrant
     # Copy static private/public key to root account.  Run necessary shell 
     # commands in a single call. 
     def setup
-      [ "/home/#{ENV['USER']}/.ssh/id_rsa.pub", 'files/id_ecdsa', 'files/id_ecdsa.pub' ].each do |file|
+      [ "{ENV['HOME']}/.ssh/id_rsa.pub", 'files/id_ecdsa', 'files/id_ecdsa.pub' ].each do |file|
         @node.vm.provision 'file', source: file, destination: "/home/vagrant/#{File.basename(file)}"
       end
       steps = <<-END.gsub(/^ {8}/, '')
