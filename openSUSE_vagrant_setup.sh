@@ -2,8 +2,8 @@ set -ex
 
 # install vagrant and it dependencies, devel files to build vagrant plugins later
 # use new --allow-unsigned-rpm option if zypper supports it
-zypper_version=$(zypper -V)[1]
-if [[ $zypper_version < '1.14.4' ]]
+zypper_version=($(zypper -V))
+if [[ ${zypper_version[1]} < '1.14.4' ]]
 then
     zypper in -y https://releases.hashicorp.com/vagrant/2.0.3/vagrant_2.0.3_x86_64.rpm
 else
