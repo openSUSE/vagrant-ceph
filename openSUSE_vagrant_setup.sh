@@ -1,14 +1,7 @@
 set -ex
 
-# install vagrant and it dependencies, devel files to build vagrant plugins later
-# use new --allow-unsigned-rpm option if zypper supports it
-zypper_version=$(zypper -V)[1]
-if [[ $zypper_version < '1.14.4' ]]
-then
-    zypper in -y https://releases.hashicorp.com/vagrant/2.0.3/vagrant_2.0.3_x86_64.rpm
-else
-    zypper in -y --allow-unsigned-rpm https://releases.hashicorp.com/vagrant/2.0.3/vagrant_2.0.3_x86_64.rpm
-fi
+#install vagrant and it dependencies, devel files to build vagrant plugins later
+zypper in -y https://releases.hashicorp.com/vagrant/2.0.3/vagrant_2.0.3_x86_64.rpm 
 zypper in -y ruby-devel
 zypper in -y gcc gcc-c++ make
 zypper in -y qemu-kvm libvirt-daemon-qemu libvirt libvirt-devel
