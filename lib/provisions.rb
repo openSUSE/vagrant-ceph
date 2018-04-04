@@ -18,6 +18,7 @@ module Vagrant
         repos.keys.each do |repo|
           # Use shell short circuit to determine if repo already exists
           @cmds << "zypper lr \'#{repo}\' | grep -sq ^Name || zypper ar -f \'#{repos[repo]}\' \'#{repo}\'"
+          
         end
       end
     end
