@@ -1,6 +1,9 @@
 # vagrant-ceph
-Create a vagrant configuration to support multiple ceph cluster topologies.  Ideal for development or exploration of Ceph.
 [![Build Status](http://storage-ci.suse.de:8080/buildStatus/icon?job=vagrant-ceph)](http://storage-ci.suse.de:8080/job/vagrant-ceph/)
+[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://github.com/openSUSE/vagrant-ceph/blob/master/LICENSE)
+
+
+Create a vagrant configuration to support multiple ceph cluster topologies.  Ideal for development or exploration of Ceph.
 
 ## Usage
 Review the config.yml.  All addresses are on private networks.  Each commented section lists the requirements for a configuration and approximate initialization time.
