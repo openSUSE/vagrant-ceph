@@ -18,14 +18,12 @@ module Vagrant
         repos.keys.each do |repo|
           # Use shell short circuit to determine if repo already exists
           @cmds << "zypper lr \'#{repo}\' | grep -sq ^Name || zypper ar -f \'#{repos[repo]}\' \'#{repo}\'"
-          
         end
       end
     end
 
     def clean
       @node.vm.provision 'shell', inline: "sudo rm -f /etc/zypp/repos.d/*"
-      
     end
 
     # Runs all the commands in a single shell
@@ -102,7 +100,7 @@ module Vagrant
     # Copy static private/public key to root account.  Run necessary shell 
     # commands in a single call. 
     def setup
-      [ "{ENV['HOME']}/.ssh/id_rsa.pub", 'files/id_ecdsa', 'files/id_ecdsa.pub' ].each do |file|
+      [ "#{ENV['HOME']}/.ssh/id_rsa.pub", 'files/id_ecdsa', 'files/id_ecdsa.pub' ].each do |file|
         @node.vm.provision 'file', source: file, destination: "/home/vagrant/#{File.basename(file)}"
       end
       steps = <<-END.gsub(/^ {8}/, '')
