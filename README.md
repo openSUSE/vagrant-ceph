@@ -139,3 +139,11 @@ The ceph-deploy installation option does not automatically install ceph.  The en
 
 The default root password is 'vagrant'.
 
+## CI
+There couple of Jenkins CI jobs currently running:
+* every day
+* for every push into repo
+
+There is no reporting back to the PR but status could be found on Jenkins: http://storage-ci.suse.de:8080/job/vagrant/ .
+
+Sources for Jenkins jobs are here: https://github.com/SUSE/sesci/blob/master/jenkins/jjb/vagrant-ceph.yaml .
