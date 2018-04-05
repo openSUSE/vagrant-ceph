@@ -1,5 +1,5 @@
 # vagrant-ceph
-[![Build Status](http://storage-ci.suse.de:8080/buildStatus/icon?job=vagrant-ceph)](http://storage-ci.suse.de:8080/job/vagrant-ceph/)
+[![Build Status](http://storage-ci.suse.de:8080/buildStatus/icon?job=vagrant-run-master)](http://storage-ci.suse.de:8080/job/vagrant-run-master/)
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://github.com/openSUSE/vagrant-ceph/blob/master/LICENSE)
 
 
