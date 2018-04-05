@@ -29,6 +29,7 @@ module Vagrant
     # Runs all the commands in a single shell
     def add
       @node.vm.provision 'shell', inline: @cmds.join('; ') 
+      
     end
   end
 
