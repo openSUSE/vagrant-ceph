@@ -27,6 +27,14 @@ def libvirt_settings(provider, config, name)
         provider.storage_pool_name = 'default'
         #l.default_prefix = ''
 
+        # Default disk is size is 20G if not specified in config
+        hd_size = config[CONFIGURATION]['hd_size'].nil? ? \
+                  '20G' : \
+                  config[CONFIGURATION]['hd_size']
+        ssd_size = config[CONFIGURATION]['ssd_size'].nil? ? \
+                  '20G' : \
+                  config[CONFIGURATION]['ssd_size']
+
         # Memory defaults to 512M, allow specific configurations 
         unless (config[CONFIGURATION]['memory'].nil?) then
           unless (config[CONFIGURATION]['memory'][name].nil?) then
@@ -48,12 +56,12 @@ def libvirt_settings(provider, config, name)
             disks = config[CONFIGURATION]['disks'][name]
             unless (disks['hds'].nil?) then
               (1..disks['hds']).each do |d|
-                provider.storage :file, size: '20G', type: 'qcow2'
+                provider.storage :file, size: hd_size, type: 'qcow2'
               end
             end
             unless (disks['ssds'].nil?) then
               (1..disks['ssds']).each do |d|
-                provider.storage :file, size: '20G', type: 'qcow2'
+                provider.storage :file, size: ssd_size, type: 'qcow2'
               end
             end
           end

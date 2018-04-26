@@ -431,6 +431,14 @@ SLE12-SP3-qa:
 # Configuration Section
 ########################################
 #
+# Default disk size is 20G if not specified for configuration:
+#default:
+#  description: ...
+#  hd_size: "10G"
+#  ssd_size: "5G"
+#  nodes:
+#  ...
+#
 # The default allows for reasonable exploration of Ceph installations and
 # configurations.  Three monitors allow for a quorum and understanding failover,
 # elections, etc.  Six data nodes with 30 osds and a pretend journal give
