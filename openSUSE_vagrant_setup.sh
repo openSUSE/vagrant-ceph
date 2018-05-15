@@ -5,7 +5,7 @@ set -ex
 zypper_version=($(zypper -V))
 if [[ ${zypper_version[1]} < '1.14.4' ]]
 then
-    zypper in -y https://releases.hashicorp.com/vagrant/2.0.3/vagrant_2.0.3_x86_64.rpm
+    zypper --no-gpg-checks in -y https://releases.hashicorp.com/vagrant/2.0.3/vagrant_2.0.3_x86_64.rpm
 else
     zypper in -y --allow-unsigned-rpm https://releases.hashicorp.com/vagrant/2.0.3/vagrant_2.0.3_x86_64.rpm
 fi
