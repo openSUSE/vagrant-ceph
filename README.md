@@ -1,7 +1,10 @@
 # vagrant-ceph
-[![Build Status](http://storage-ci.suse.de:8080/buildStatus/icon?job=vagrant-run-master)](http://storage-ci.suse.de:8080/job/vagrant-run-master/)
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://github.com/openSUSE/vagrant-ceph/blob/master/LICENSE)
 
+ Box and Base system | openSUSE 42.3 | openSUSE 15.0 
+--- | --- | ---
+**opensuse/openSUSE-42.3-x86_64** | [![Build Status](http://storage-ci.suse.de:8080/buildStatus/icon?job=vagrant-matrix/BOX=opensuse/openSUSE-42.3-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64)](http://storage-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-42.3-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64/) | [![Build Status](http://storage-ci.suse.de:8080/buildStatus/icon?job=vagrant-matrix/BOX=opensuse/openSUSE-42.3-x86_64,TARGET_IMAGE=teuthology-opensuse-15.0-x86_64)](http://storage-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-42.3-x86_64,TARGET_IMAGE=teuthology-opensuse-15.0-x86_64/)
+**opensuse/openSUSE-15.0-x86_64** | [![Build Status](http://storage-ci.suse.de:8080/buildStatus/icon?job=vagrant-matrix/BOX=opensuse/openSUSE-15.0-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64)](http://storage-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-15.0-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64/) | [![Build Status](http://storage-ci.suse.de:8080/buildStatus/icon?job=vagrant-matrix/BOX=opensuse/openSUSE-15.0-x86_64,TARGET_IMAGE=teuthology-opensuse-15.0-x86_64)](http://storage-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-15.0-x86_64,TARGET_IMAGE=teuthology-opensuse-15.0-x86_64/) 
 
 Create a vagrant configuration to support multiple ceph cluster topologies.  Ideal for development or exploration of Ceph.
 
