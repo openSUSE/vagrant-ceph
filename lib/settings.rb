@@ -9,9 +9,10 @@ def common_settings(node, config, name)
 
       # Ceph has three networks
       networks = config[CONFIGURATION]['nodes'][name]
-      node.vm.network :private_network, ip: networks['management']
-      node.vm.network :private_network, ip: networks['public']
-      node.vm.network :private_network, ip: networks['cluster']
+      node.vm.network :private_network, :autostart => true, ip: networks['management']
+      node.vm.network :private_network, :autostart => true, ip: networks['public']
+      node.vm.network :private_network, :autostart => true, ip: networks['cluster']
+
 end
 
 def libvirt_settings(provider, config, name)

@@ -56,8 +56,43 @@ opensuse/openSUSE-Tumbleweed-x86_64:
         # https://github.com/SUSE/DeepSea/issues/840
         - cd /; patch -p1 < /root/issue_840_workaround
       all:
-        - systemctl disable SuSEfirewall2
-        - systemctl stop SuSEfirewall2
+        - systemctl disable firewald
+        - systemctl stop firewald
+        - systemctl restart salt-minion
+        - systemctl enable salt-minion
+
+########################################
+# OpenSUSE Leap 15
+########################################
+opensuse/openSUSE-15.0-x86_64:
+  salt:
+    repos:
+      '15.0': 'http://download.opensuse.org/distribution/leap/15.0/repo/oss/'
+      '15.0 up': 'http://download.opensuse.org/update/leap/15.0/oss/'
+      'ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph:/mimic/openSUSE_Leap_15.0/'
+      'deepsea': 'https://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_Leap_15.0/'
+    packages:
+      all:
+        - vim
+        - salt-minion
+      admin:
+        - salt-master
+        - vim-data
+      client1:
+        - multipath-tools
+      client2:
+        - multipath-tools
+    files:
+      all: false
+      admin: merge
+    commands:
+      admin:
+        - systemctl start salt-master
+        - systemctl enable salt-master
+        - sleep 5
+        - salt-key -y -A  || exit 0
+        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
+      all:
         - systemctl restart salt-minion
         - systemctl enable salt-minion
 
