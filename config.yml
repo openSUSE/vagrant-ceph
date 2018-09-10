@@ -297,8 +297,6 @@ SUSE/SLE-12-SP3:
         - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph 
         - chmod 1777 /tmp
       all:
-        - systemctl disable SuSEfirewall2
-        - systemctl stop SuSEfirewall2
         - systemctl restart salt-minion
         - systemctl enable salt-minion
 
