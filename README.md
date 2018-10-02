@@ -8,8 +8,6 @@ Create a vagrant configuration to support multiple ceph cluster topologies.  Ide
 **opensuse/openSUSE-42.3-x86_64** | [![Build Status](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-42.3-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64/badge/icon)](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-42.3-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64/) | [![Build Status](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-42.3-x86_64,TARGET_IMAGE=teuthology-opensuse-15.0-x86_64/badge/icon)](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-42.3-x86_64,TARGET_IMAGE=teuthology-opensuse-15.0-x86_64/)
 **opensuse/openSUSE-15.0-x86_64** | [![Build Status](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-15.0-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64/badge/icon)](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-15.0-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64/) | [![Build Status](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-15.0-x86_64,TARGET_IMAGE=teuthology-opensuse-15.0-x86_64/badge/icon)](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-15.0-x86_64,TARGET_IMAGE=teuthology-opensuse-15.0-x86_64/) 
 
-http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-15.0-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64/
-
 ## Usage
 Review the config.yml.  All addresses are on private networks.  Each commented section lists the requirements for a configuration and approximate initialization time.
 
