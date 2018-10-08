@@ -8,10 +8,11 @@ then
     zypper --no-gpg-checks in -y https://releases.hashicorp.com/vagrant/2.1.5/vagrant_2.1.5_x86_64.rpm
 else
     zypper in -y --allow-unsigned-rpm https://releases.hashicorp.com/vagrant/2.1.5/vagrant_2.1.5_x86_64.rpm
-
-    # workaround for https://github.com/hashicorp/vagrant/issues/10019
-    mv /opt/vagrant/embedded/lib/libreadline.so.7{,.disabled}
 fi
+
+# workaround for https://github.com/hashicorp/vagrant/issues/10019
+mv /opt/vagrant/embedded/lib/libreadline.so.7{,.disabled}
+    
 zypper in -y ruby-devel
 zypper in -y gcc gcc-c++ make
 zypper in -y qemu-kvm libvirt-daemon-qemu libvirt libvirt-devel
