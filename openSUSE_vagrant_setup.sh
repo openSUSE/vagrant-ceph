@@ -11,7 +11,7 @@ else
 fi
 
 # workaround for https://github.com/hashicorp/vagrant/issues/10019
-mv /opt/vagrant/embedded/lib/libreadline.so.7{,.disabled}
+mv /opt/vagrant/embedded/lib/libreadline.so.7{,.disabled} | true
     
 zypper in -y ruby-devel
 zypper in -y gcc gcc-c++ make
