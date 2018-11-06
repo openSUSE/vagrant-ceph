@@ -301,14 +301,14 @@ SUSE/SLE-12-SP3:
         - systemctl enable salt-minion
 
 ########################################
-# SLE 15 SES6
+# SLE 15 SP1 SES6
 ########################################
-SUSE/SLE-15:
+SUSE/SLE-15-SP1:
   salt:
     repos:
-      'Storage': 'http://download.suse.de/ibs/SUSE:/SLE-15:/Update:/Products:/SES6/images/repo/SUSE-Enterprise-Storage-6-POOL-x86_64-Media1/'
-      'basesystyem': 'http://download.suse.de/install/SLP/SLE-15-Module-Basesystem-LATEST/x86_64/DVD1/'
-      'sles-applications': 'http://download.suse.de/install/SLP/SLE-15-Module-Server-Applications-LATEST/x86_64/DVD1/'
+      'Storage': 'http://download.suse.de/ibs/SUSE:/SLE-15-SP1:/Update:/Products:/SES6/images/repo/SUSE-Enterprise-Storage-6-POOL-x86_64-Media1/'
+      'basesystem': 'http://download.suse.de/install/SLP/SLE-15-SP1-Module-Basesystem-LATEST/x86_64/DVD1/'
+      'sles-applications': 'http://download.suse.de/install/SLP/SLE-15-SP1-Module-Server-Applications-LATEST/x86_64/DVD1/'
     packages:
       all:
         - vim

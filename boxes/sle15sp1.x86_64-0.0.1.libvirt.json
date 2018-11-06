@@ -1,0 +1,15 @@
+{
+   "description" : "SLE-15-SP1 vagrant box",
+   "name" : "SUSE/SLE-15-SP1",
+   "versions" : [
+      {
+         "providers" : [
+            {
+               "name" : "libvirt",
+               "url" : "http://download.suse.de/ibs/Devel:/Storage:/6.0/vagrant/sle15sp1.x86_64.box"
+            }
+         ],
+         "version" : "0.0.1"
+      }
+   ]
+}
