@@ -1,7 +1,7 @@
 ---
-# This configuration file has two sections.  The first is the Vagrant boxes 
-# subdivided into ceph installation methods with related repositories and 
-# packages.  The second is the various server configurations to simulate 
+# This configuration file has two sections.  The first is the Vagrant boxes
+# subdivided into ceph installation methods with related repositories and
+# packages.  The second is the various server configurations to simulate
 # different environments.
 #
 ########################################
@@ -21,20 +21,19 @@
 opensuse/openSUSE-Tumbleweed-x86_64:
   salt:
     repos:
-      'oss': 'http://download.opensuse.org/tumbleweed/repo/oss/suse/'
+      'oss': 'http://download.opensuse.org/tumbleweed/repo/oss/'
       'up': 'http://download.opensuse.org/update/tumbleweed/'
       'ceph': 'https://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_Tumbleweed/'
 #      'monitoring': 'https://download.opensuse.org/repositories/server:/monitoring/openSUSE_Tumbleweed/'
       'oA and monitoring': 'https://download.opensuse.org/repositories/filesystems:/openATTIC:/3.x/openSUSE_Tumbleweed/'
-      # workaround until salt-2017 is supported by deepsea
-      'salt-2016': 'http://download.opensuse.org/repositories/systemsmanagement:/saltstack:/products/openSUSE_Tumbleweed/'
+      'salt': 'http://download.opensuse.org/repositories/systemsmanagement:/saltstack:/products/openSUSE_Tumbleweed/'
     packages:
       all:
         - vim
-        - libcrypto42
-        - salt-minion-2016.11.04
+        - salt-minion
+        - ceph-common
       admin:
-        - salt-master-2016.11.04
+        - salt-master
         - ntp
         - deepsea
     files:
@@ -50,14 +49,12 @@ opensuse/openSUSE-Tumbleweed-x86_64:
         - salt-key -y -A  || exit 0
         - sleep 5
         # https://github.com/SUSE/DeepSea/issues/309
-        - salt '*' cmd.run 'echo "openSUSE 20170929 (x86_64)" >> /etc/SuSE-release' timeout=10
-        - chown -R salt:salt /srv/salt/ceph 
+        - salt '*' cmd.run 'echo "openSUSE 20181022 (x86_64)" >> /etc/SuSE-release' timeout=10
+        - chown -R salt:salt /srv/salt/ceph
         - chown -R salt:salt /srv/pillar/ceph
-        # https://github.com/SUSE/DeepSea/issues/840
-        - cd /; patch -p1 < /root/issue_840_workaround
       all:
-        - systemctl disable firewald
-        - systemctl stop firewald
+        - systemctl disable firewalld
+        - systemctl stop firewalld
         - systemctl restart salt-minion
         - systemctl enable salt-minion
 
@@ -129,7 +126,7 @@ opensuse/openSUSE-42.3-x86_64:
         - sleep 10
         - salt-key -y -A  || exit 0
         - sleep 5
-        - chown -R salt:salt /srv/salt/ceph 
+        - chown -R salt:salt /srv/salt/ceph
         - chown -R salt:salt /srv/pillar/ceph
       all:
         - systemctl disable SuSEfirewall2
@@ -201,7 +198,7 @@ SLE12-SP2-migration:
         - systemctl enable salt-master
         - sleep 20
         - salt-key -y -A  || exit 0
-        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph 
+        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
         - chmod 1777 /tmp
         - zypper -n in deepsea
         - salt-run state.orch ceph.stage.0
@@ -216,7 +213,7 @@ SLE12-SP2-migration:
         - systemctl start salt-master
         - systemctl enable salt-master
 
-          
+
 ########################################
 # SLE 12 SP3 SES5
 ########################################
@@ -248,7 +245,7 @@ SLE12-SP3-patch:
         - systemctl enable salt-master
         - sleep 20
         - salt-key -y -A  || exit 0
-        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph 
+        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
         - chmod 1777 /tmp
       all:
         - systemctl disable SuSEfirewall2
@@ -294,7 +291,7 @@ SUSE/SLE-12-SP3:
         - sleep 10
         - salt-key -y -A  || exit 0
         - sleep 5
-        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph 
+        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
         - chmod 1777 /tmp
       all:
         - systemctl restart salt-minion
@@ -329,7 +326,7 @@ SUSE/SLE-15-SP1:
         - systemctl enable salt-master
         - sleep 5
         - salt-key -y -A  || exit 0
-        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph 
+        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
       all:
         - systemctl disable SuSEfirewall2
         - systemctl stop SuSEfirewall2
@@ -405,7 +402,7 @@ SLE12-SP2:
         - systemctl enable salt-master
         - sleep 10
         - salt-key -y -A  || exit 0
-        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph 
+        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
         - chmod 1777 /tmp
       all:
         - systemctl restart salt-minion
@@ -446,11 +443,11 @@ SLE12-SP3-qa:
         - systemctl enable salt-master
         - sleep 10
         - salt-key -y -A  || exit 0
-        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph 
+        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
         - chmod 1777 /tmp
-        - zypper -n in deepsea 
+        - zypper -n in deepsea
         - zypper -n in /root/deepsea-qa*
-        - pushd /usr/lib/deepsea/qa; sh suites/basic/health-ok.sh; popd 
+        - pushd /usr/lib/deepsea/qa; sh suites/basic/health-ok.sh; popd
       all:
         - systemctl disable SuSEfirewall2
         - systemctl stop SuSEfirewall2
@@ -511,7 +508,7 @@ dataonmon:
     data1: 1536
     data2: 1536
     data3: 1536
-    data4: 1536 
+    data4: 1536
   disks:
     data1:
       hds: 5
@@ -572,7 +569,7 @@ default:
     data1: 1536
     data2: 1536
     data3: 1536
-    data4: 1536 
+    data4: 1536
     data5: 1536
   disks:
     data1:
@@ -1093,4 +1090,3 @@ economical:
       hds: 4
     data4:
       hds: 4
-
