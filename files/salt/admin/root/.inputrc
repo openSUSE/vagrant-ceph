@@ -1,0 +1,4 @@
+"\C-[OA": history-search-backward
+"\C-[[A": history-search-backward
+"\C-[OB": history-search-forward
+"\C-[[B": history-search-forward
