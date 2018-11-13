@@ -66,12 +66,14 @@ opensuse/openSUSE-15.0-x86_64:
     repos:
       '15.0': 'http://download.opensuse.org/distribution/leap/15.0/repo/oss/'
       '15.0 up': 'http://download.opensuse.org/update/leap/15.0/oss/'
-      'ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph:/mimic/openSUSE_Leap_15.0/'
-      'deepsea': 'https://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_Leap_15.0/'
+      #'ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph:/mimic/openSUSE_Leap_15.0/'
+      # Ceph - Latest
+      'ceph': 'https://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_Leap_15.0/'
     packages:
       all:
         - vim
         - salt-minion
+        - ceph-common
       admin:
         - salt-master
         - vim-data
@@ -104,14 +106,14 @@ opensuse/openSUSE-42.3-x86_64:
       'ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph:/luminous/openSUSE_Leap_42.3/'
 #      'monitoring': 'https://download.opensuse.org/repositories/server:/monitoring/openSUSE_Leap_42.3/'
       'oA and monitoring': 'https://download.opensuse.org/repositories/filesystems:/openATTIC:/3.x/openSUSE_Leap_42.3/'
-      # workaround until salt-2017 is supported by deepsea
-      '42.3 salt-2016': 'http://download.opensuse.org/repositories/systemsmanagement:/saltstack:/products/openSUSE_Leap_42.3/'
+      'salt': 'http://download.opensuse.org/repositories/systemsmanagement:/saltstack:/products/openSUSE_Leap_42.3/'
     packages:
       all:
         - vim
-        - salt-minion-2016.11.04
+        - salt-minion
+        - ceph-common
       admin:
-        - salt-master-2016.11.04
+        - salt-master
         - ntp
         - deepsea
     files:
@@ -129,8 +131,6 @@ opensuse/openSUSE-42.3-x86_64:
         - chown -R salt:salt /srv/salt/ceph
         - chown -R salt:salt /srv/pillar/ceph
       all:
-        - systemctl disable SuSEfirewall2
-        - systemctl stop SuSEfirewall2
         - systemctl restart salt-minion
         - systemctl enable salt-minion
 
