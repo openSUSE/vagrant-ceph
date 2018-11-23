@@ -77,6 +77,7 @@ opensuse/openSUSE-15.0-x86_64:
       admin:
         - salt-master
         - vim-data
+        - deepsea
       client1:
         - multipath-tools
       client2:
