@@ -45,7 +45,7 @@ opensuse/openSUSE-Tumbleweed-x86_64:
         - systemctl enable ntpd
         - systemctl start salt-master
         - systemctl enable salt-master
-        - sleep 10
+        - sleep 20
         - salt-key -y -A  || exit 0
         - sleep 5
         # https://github.com/SUSE/DeepSea/issues/309
@@ -89,7 +89,7 @@ opensuse/openSUSE-15.0-x86_64:
       admin:
         - systemctl start salt-master
         - systemctl enable salt-master
-        - sleep 5
+        - sleep 20
         - salt-key -y -A  || exit 0
         - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
       all:
@@ -126,7 +126,7 @@ opensuse/openSUSE-42.3-x86_64:
         - systemctl enable ntpd
         - systemctl start salt-master
         - systemctl enable salt-master
-        - sleep 10
+        - sleep 20
         - salt-key -y -A  || exit 0
         - sleep 5
         - chown -R salt:salt /srv/salt/ceph
@@ -159,7 +159,7 @@ opensuse/openSUSE-42.2-x86_64:
         - systemctl enable ntpd
         - systemctl start salt-master
         - systemctl enable salt-master
-        - sleep 10
+        - sleep 20
         - salt-key -y -A  || exit 0
       all:
         - systemctl disable SuSEfirewall2
@@ -289,7 +289,7 @@ SUSE/SLE-12-SP3:
         - systemctl enable ntpd
         - systemctl start salt-master
         - systemctl enable salt-master
-        - sleep 10
+        - sleep 20
         - salt-key -y -A  || exit 0
         - sleep 5
         - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
@@ -325,7 +325,7 @@ SUSE/SLE-15-SP1:
       admin:
         - systemctl start salt-master
         - systemctl enable salt-master
-        - sleep 5
+        - sleep 20
         - salt-key -y -A  || exit 0
         - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
       all:
@@ -401,7 +401,7 @@ SLE12-SP2:
         - systemctl enable ntpd
         - systemctl start salt-master
         - systemctl enable salt-master
-        - sleep 10
+        - sleep 20
         - salt-key -y -A  || exit 0
         - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
         - chmod 1777 /tmp
@@ -442,7 +442,7 @@ SLE12-SP3-qa:
         - systemctl enable ntpd
         - systemctl start salt-master
         - systemctl enable salt-master
-        - sleep 10
+        - sleep 20
         - salt-key -y -A  || exit 0
         - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
         - chmod 1777 /tmp
