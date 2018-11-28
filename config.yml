@@ -314,6 +314,7 @@ SUSE/SLE-15-SP1:
       admin:
         - salt-master
         - vim-data
+        - deepsea
       client1:
         - multipath-tools
       client2:
