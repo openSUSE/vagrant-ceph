@@ -26,6 +26,13 @@ Or use script in case you have openSUSE:
 # sudo ./openSUSE_vagrant_setup.sh
 ```
 
+#### Enable KSM (Kernel Samepage Merge)
+In order to reduce the total memory used to set a ceph cluster, one could enable
+the KSM by issuing the follow command as root:
+`echo 1 >/sys/kernel/mm/ksm/run`
+
+For more info check [KSM's page.](https://www.linux-kvm.org/page/KSM)
+
 #### Workaround 1
 fog-1.30.0 seems to remove support for libvirt.  To workaround this issue, run the following as well if needed
 
