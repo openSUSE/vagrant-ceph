@@ -263,10 +263,10 @@ SLE12-SP3-patch:
 SUSE/SLE-12-SP3:
   salt:
     repos:
-      'Storage': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP3:/Update:/Products:/SES5/images/repo/SUSE-Enterprise-Storage-5-POOL-x86_64-Media1/'
-      'Storage-update': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP3:/Update:/Products:/SES5:/Update/standard/'
-      'SP3': 'http://download.suse.de/ibs/SUSE:/SLE-12-SP3:/GA/images/repo/SLE-12-SP3-Server-POOL-x86_64-Media1/'
-      'SP3-update': 'http://download.suse.de/ibs/SUSE/Updates/SLE-SERVER/12-SP3/x86_64/update/'
+      'Storage': 'http://dist.suse.de/ibs/SUSE/Products/Storage/5/x86_64/product/'
+      'Storage-update': 'http://dist.suse.de/ibs/SUSE/Updates/Storage/5/x86_64/update/'
+      'SP3': 'http://dist.suse.de/ibs/SUSE/Products/SLE-SERVER/12-SP3/x86_64/product/'
+      'SP3-update': 'http://dist.suse.de/ibs/SUSE/Updates/SLE-SERVER/12-SP3/x86_64/update/'
     packages:
       all:
         - vim
@@ -305,8 +305,9 @@ SUSE/SLE-15-SP1:
   salt:
     repos:
       'Storage': 'http://download.suse.de/ibs/SUSE:/SLE-15-SP1:/Update:/Products:/SES6/images/repo/SUSE-Enterprise-Storage-6-POOL-x86_64-Media1/'
-      'basesystem': 'http://download.suse.de/install/SLP/SLE-15-SP1-Module-Basesystem-LATEST/x86_64/DVD1/'
-      'sles-applications': 'http://download.suse.de/install/SLP/SLE-15-SP1-Module-Server-Applications-LATEST/x86_64/DVD1/'
+      'basesystem': 'http://download.suse.de/ibs/SUSE:/SLE-15-SP1:/GA:/TEST/images/repo/SLE-15-SP1-Module-Basesystem-POOL-x86_64-Media1/'
+      'sle server': 'http://download.suse.de/ibs/SUSE:/SLE-15-SP1:/GA:/TEST/images/repo/SLE-15-SP1-Module-Server-Applications-POOL-x86_64-Media1/'
+      'sle dev_pool': 'http://download.suse.de/ibs/SUSE:/SLE-15-SP1:/GA:/TEST/images/repo/SLE-15-SP1-Module-Development-Tools-POOL-x86_64-Media1/'
     packages:
       all:
         - vim
