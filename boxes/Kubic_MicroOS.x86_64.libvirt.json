@@ -1,0 +1,15 @@
+{
+   "description" : "openSUSE Tumbleweed Kubic MicroOS vagrant box",
+   "name" : "opensuse/openSUSE-Tumbleweed-Kubic-MicroOS-cri-o",
+   "versions" : [
+      {
+         "providers" : [
+            {
+               "name" : "libvirt",
+               "url" : "https://download.opensuse.org/repositories/openSUSE:/Factory:/Images/images/openSUSE_Tumbleweed/openSUSE-Tumbleweed-Kubic.x86_64-15.0-MicroOS-cri-o-Vagrant-x86_64.vagrant.libvirt.box"
+            }
+         ],
+         "version" : "0.0.1"
+      }
+   ]
+}

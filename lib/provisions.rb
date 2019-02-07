@@ -28,7 +28,9 @@ module Vagrant
 
     # Runs all the commands in a single shell
     def add
-      @node.vm.provision 'shell', inline: @cmds.join('; ') 
+      unless @cmds.empty? then
+        @node.vm.provision 'shell', inline: @cmds.join('; ') 
+      end
     end
   end
 
@@ -45,7 +47,9 @@ module Vagrant
     end
 
     def add
-      @node.vm.provision 'shell', inline: @cmds.join('; ') 
+      unless @cmds.empty? then
+        @node.vm.provision 'shell', inline: @cmds.join('; ')
+      end
     end
   end
 
@@ -70,8 +74,10 @@ module Vagrant
 
     # Runs necessary zypper command, automatically trust repo
     def install_all
-      cmd = "zypper --gpg-auto-import-keys -n in #{@packages['all'].join(' ')}"
-      @node.vm.provision 'shell', inline: cmd
+      unless (@packages['all'].nil?) then
+        cmd = "zypper --gpg-auto-import-keys -n in #{@packages['all'].join(' ')}"
+        @node.vm.provision 'shell', inline: cmd
+      end
     end
 
     # Runs necessary zypper command, automatically trust repo
@@ -116,7 +122,7 @@ module Vagrant
     # Log into each machine and accept which generates the known_hosts
     def authorize
       @servers.each do |server|
-        cmd = "ssh -oStrictHostKeyChecking=no #{server} exit"
+        cmd = "ssh -oStrictHostKeyChecking=no -oConnectionAttempts=10 -oNumberOfPasswordPrompts=10 #{server} exit"
         @node.vm.provision 'shell', inline: cmd
       end
     end
@@ -223,7 +229,9 @@ module Vagrant
       [ 'all', @host].each do |group|
         unless (@commands[group].nil?) then
           @commands[group].each do |cmd|
-            @node.vm.provision 'shell', inline: cmd
+            unless cmd.nil? then
+              @node.vm.provision 'shell', inline: cmd
+            end
           end
         end
       end
