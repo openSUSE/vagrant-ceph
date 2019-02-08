@@ -59,6 +59,29 @@ opensuse/openSUSE-Tumbleweed-x86_64:
         - systemctl enable salt-minion
 
 ########################################
+# OpenSUSE Tumbleweed
+########################################
+opensuse/openSUSE-Tumbleweed-Kubic:
+  salt:
+    repos:
+    packages:
+      all:
+      admin:
+    files:
+      all: false
+      admin: false
+    commands:
+      admin:
+        - getent hosts admin-management | awk '{ print $1}' | xargs kubeadm init --cri-socket=/var/run/crio/crio.sock --pod-network-cidr=10.244.0.0/16 --token 56fa9a.705a6001db6a6756 --skip-token-print --apiserver-advertise-address 
+        - mkdir -p $HOME/.kube; cp -i /etc/kubernetes/admin.conf $HOME/.kube/config; chown $(id -u):$(id -g) $HOME/.kube/config
+        - kubectl apply -f https://0y.at/kubicflannel
+        - kubectl taint nodes admin node-role.kubernetes.io/master::NoSchedule-
+        - curl -LkSs https://api.github.com/repos/SUSE/rook/tarball/suse-master -o /home/vagrant/rook.tar.gz
+        - tar -xzf /home/vagrant/rook.tar.gz -C /home/vagrant
+      all:
+        - ( ( if [ "$HOSTNAME" != "admin" ]; then kubeadm join --token 56fa9a.705a6001db6a6756 --discovery-token-unsafe-skip-ca-verification admin-management:6443 >>/home/vagrant/join 2>&1; fi; ) & )
+
+########################################
 # OpenSUSE Leap 15
 ########################################
 opensuse/openSUSE-15.0-x86_64:

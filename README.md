@@ -69,10 +69,14 @@ Next, add the vagrant box.  Choose the box you wish to use from the boxes subdir
 `$ ls boxes/`
 
 <pre>
+Kubic_kubeadm.x86_64.libvirt.json
+Kubic_MicroOS.x86_64.libvirt.json
 openSUSE-13.2.x86_64-1.13.2.libvirt-Build21.39.json
 openSUSE-13.2.x86_64-1.13.2.virtualbox-Build21.39.json
+sle12-sp3.x86_64-0.0.1.libvirt.json
 SLE-12.x86_64-1.12.0.libvirt-Build6.25.json
 SLE-12.x86_64-1.12.0.virtualbox-Build6.25.json
+sle15sp1.x86_64-0.0.1.libvirt.json
 Tumbleweed.x86_64-1.13.2.libvirt-Build2.34.json
 Tumbleweed.x86_64-1.13.2.virtualbox-Build2.34.json
 </pre>
@@ -84,8 +88,8 @@ For instance, add the openSUSE box for libvirt with the following
 Edit the _Vagrantfile_ and set BOX, INSTALLATION and CONFIGURATION.  Use the following for an initial test.
 
 `BOX = 'openSUSE-13.2'` <br>
-`INSTALLATION = 'ceph-deploy'` <br>
-`CONFIGURATION = 'small'` <br>
+
+Or you could specify BOX as an environment `$ BOX="openSUSE-13.2" vagrant up` / `$ export BOX="openSUSE-13.2"`
 
 Start the environment.
 
@@ -148,6 +152,8 @@ For the sake of completeness and stating the obvious, the private ssh key is onl
 The ceph-deploy installation option does not automatically install ceph.  The environment is created to allow the running of ceph-deploy.  For automatic installation, compare the salt installation option. 
 
 The default root password is 'vagrant'.
+
+Kubic boxes have some hardcoded default names, so it could get kubeadm box for admin node and MicroOS for all other nodes. You can specify some `export BOX="opensuse/openSUSE-Tumbleweed-Kubic"` and it will expect `opensuse/openSUSE-Tumbleweed-Kubic-kubeadm-cri-o` and `opensuse/openSUSE-Tumbleweed-Kubic-MicroOS-cri-o` boxes to exist.
 
 ## CI
 There couple of Jenkins CI jobs currently running:
