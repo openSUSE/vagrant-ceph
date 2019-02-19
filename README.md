@@ -62,15 +62,25 @@ Then, rerun the plugin installation above.
 
 ## Adding Vagrant boxes
 
-Skip this section if you use standard boxes from [Vagrant Cloud](https://app.vagrantup.com/opensuse)
+There are couple of methods to add boxes.
 
-Next, add the vagrant box.  Choose the box you wish to use from the boxes subdirectory.
+### Adding box from the command line
+
+`$ vagrant box add --provider libvirt --name opensuse/Kubic-kubeadm-cri-o https://download.opensuse.org/repositories/devel:/kubic:/images/openSUSE_Tumbleweed/openSUSE-Tumbleweed-Kubic.x86_64-15.0-kubeadm-cri-o-Vagrant-x86_64-Build14.1.vagrant.libvirt.box`
+
+That will add the box from the link and name it as stated in `--name` parameter.
+
+### Boxes from the Vagrant Cloud
+
+Standard boxes from [Vagrant Cloud](https://app.vagrantup.com/opensuse) shouldn't be explicitly added. When you use it in `BOX` environment or Vagrant file, vagrant first search it in the cloud and downloads it. Example of standard box is `BOX="opensuse/openSUSE-15.0-x86_64" vagrant up`, that will be found and download automatically from the cloud.
+
+### Boxes from local files
+
+Choose the box you wish to use from the boxes subdirectory.
 
 `$ ls boxes/`
 
 <pre>
-Kubic_kubeadm.x86_64.libvirt.json
-Kubic_MicroOS.x86_64.libvirt.json
 openSUSE-13.2.x86_64-1.13.2.libvirt-Build21.39.json
 openSUSE-13.2.x86_64-1.13.2.virtualbox-Build21.39.json
 sle12-sp3.x86_64-0.0.1.libvirt.json
@@ -85,6 +95,8 @@ For instance, add the openSUSE box for libvirt with the following
 
 `$ vagrant box add boxes/openSUSE-13.2.x86_64-1.13.2.libvirt-Build21.39.json`
 
+### Use the box
+
 Edit the _Vagrantfile_ and set BOX, INSTALLATION and CONFIGURATION.  Use the following for an initial test.
 
 `BOX = 'openSUSE-13.2'` <br>
@@ -95,7 +107,7 @@ Start the environment.
 
 `$ vagrant up`
 
-If the admin node starts prior to the other nodes, vagrant will complain that the admin node failed.  (This has been inconsistent depending on an environment.)  Run the provisionining step to compete the setup.
+If the admin node starts prior to the other nodes, vagrant will complain that the admin node failed.  (This has been inconsistent depending on an environment.)  Run the provisioning step to compete the setup.
 
 `$ vagrant provision`
 
@@ -129,7 +141,7 @@ This repository diverged from it's origin in following features:
 files/<b>installation_mode</b>/<b>HOST</b> holds files that will be copied over to the <b>HOST</b>.
 If you deploy different kinds of Versions of SLES/SES you can create subdirectories that match the following pattern:
 
-"files/<b>installation_mode</b>/<b>BOX</b>_<b>CONFIGURATION</b>"
+`files/<b>installation_mode</b>/<b>BOX</b>_<b>CONFIGURATION</b>`
 
 I.e. "SLE12-SP3\_default"
 
@@ -152,8 +164,6 @@ For the sake of completeness and stating the obvious, the private ssh key is onl
 The ceph-deploy installation option does not automatically install ceph.  The environment is created to allow the running of ceph-deploy.  For automatic installation, compare the salt installation option. 
 
 The default root password is 'vagrant'.
-
-Kubic boxes have some hardcoded default names, so it could get kubeadm box for admin node and MicroOS for all other nodes. You can specify some `export BOX="opensuse/openSUSE-Tumbleweed-Kubic"` and it will expect `opensuse/openSUSE-Tumbleweed-Kubic-kubeadm-cri-o` and `opensuse/openSUSE-Tumbleweed-Kubic-MicroOS-cri-o` boxes to exist.
 
 ## CI
 There couple of Jenkins CI jobs currently running:

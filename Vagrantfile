@@ -117,10 +117,6 @@ Vagrant.configure("2") do |vconfig|
 
     vconfig.vm.define vm_name do |node|
 
-      if BOX.include?('Kubic')
-        node.vm.box = 'opensuse/openSUSE-Tumbleweed-Kubic-MicroOS-cri-o'
-      end
-
       common_settings(node, config, name)
 
       node.vm.provider :libvirt do |l|
@@ -142,10 +138,6 @@ Vagrant.configure("2") do |vconfig|
   vm_name = PREFIX + "admin"
 
   vconfig.vm.define vm_name do |node|
-
-      if BOX.include?('Kubic')
-        node.vm.box = 'opensuse/openSUSE-Tumbleweed-Kubic-kubeadm-cri-o'
-      end
 
     common_settings(node, config, name)
 

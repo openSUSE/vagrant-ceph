@@ -61,7 +61,7 @@ opensuse/openSUSE-Tumbleweed-x86_64:
 ########################################
 # OpenSUSE Tumbleweed
 ########################################
-opensuse/openSUSE-Tumbleweed-Kubic:
+opensuse/Kubic-kubeadm-cri-o:
   salt:
     repos:
     packages:
