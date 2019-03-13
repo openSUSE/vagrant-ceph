@@ -34,6 +34,8 @@ the KSM by issuing the follow command as root:
 For more info check [KSM's page.](https://www.linux-kvm.org/page/KSM)
 
 #### Workaround 1
+On most systems, this workaround isn't required. Only apply it if you see that libvirt isn't supported:
+
 fog-1.30.0 seems to remove support for libvirt.  To workaround this issue, run the following as well if needed
 
 `$ vagrant plugin uninstall fog`
