@@ -101,6 +101,7 @@ opensuse/openSUSE-15.0-x86_64:
         - salt-master
         - vim-data
         - deepsea
+        - deepsea-cli
       client1:
         - multipath-tools
       client2:
