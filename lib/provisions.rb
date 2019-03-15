@@ -15,9 +15,9 @@ module Vagrant
       @node = node
       @cmds = []
       unless repos.nil? then
-        repos.keys.each do |repo|
+        repos.each_with_index do |(repo,url), index|
           # Use shell short circuit to determine if repo already exists
-          @cmds << "zypper lr \'#{repo}\' | grep -sq ^Name || zypper ar -f \'#{repos[repo]}\' \'#{repo}\'"
+          @cmds << "zypper lr \'#{repo}\' | grep -sq ^Name || zypper ar -f -p #{index} \'#{url}\' \'#{repo}\'"
         end
       end
     end
