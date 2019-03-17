@@ -17,7 +17,7 @@ module Vagrant
       unless repos.nil? then
         repos.each_with_index do |(repo,url), index|
           # Use shell short circuit to determine if repo already exists
-          @cmds << "zypper lr \'#{repo}\' | grep -sq ^Name || zypper ar -f -p #{index} \'#{url}\' \'#{repo}\'"
+          @cmds << "zypper lr \'#{repo}\' | grep -sq ^Name || zypper ar -f -p \'#{index.next}\' \'#{url}\' \'#{repo}\'"
         end
       end
     end
