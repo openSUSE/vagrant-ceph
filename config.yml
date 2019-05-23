@@ -78,6 +78,8 @@ opensuse/Kubic-kubeadm-cri-o:
         - kubectl taint nodes admin node-role.kubernetes.io/master::NoSchedule-
         - curl -LkSs https://api.github.com/repos/SUSE/rook/tarball/suse-master -o /home/vagrant/rook.tar.gz
         - tar -xzf /home/vagrant/rook.tar.gz -C /home/vagrant
+        - cd /home/vagrant/SUSE-rook*/; sed -i 's=image:..*=image:\ registry.opensuse.org/filesystems/ceph/images/rook/ceph:latest=g' ./cluster/examples/kubernetes/ceph/operator.yaml
+        - cd /home/vagrant/SUSE-rook*/; sed -i 's=image:..*=image:\ registry.opensuse.org/filesystems/ceph/images/ceph:latest=g' ./cluster/examples/kubernetes/ceph/cluster.yaml
       all:
         - ( ( if [ "$HOSTNAME" != "admin" ]; then kubeadm join --token 56fa9a.705a6001db6a6756 --discovery-token-unsafe-skip-ca-verification admin-management:6443 >>/home/vagrant/join 2>&1; fi; ) & )
 
@@ -341,6 +343,7 @@ SUSE/SLE-15-SP1:
         - salt-master
         - vim-data
         - deepsea
+        - deepsea-cli
       client1:
         - multipath-tools
       client2:
