@@ -105,6 +105,18 @@ Edit the _Vagrantfile_ and set BOX, INSTALLATION and CONFIGURATION.  Use the fol
 
 Or you could specify BOX as an environment `$ BOX="openSUSE-13.2" vagrant up` / `$ export BOX="openSUSE-13.2"`
 
+Before you can start the environment you need to double check if you can ssh into localhost
+
+`$ ssh root@localhost` 
+
+If that isn't possible please check your /etc/ssh/sshd_config file and change the following option:
+
+`$ PermitRootLogin yes`
+
+Afterwards copy your pub-key by entering
+
+`$ ssh-copy-id root@localhost` 
+
 Start the environment.
 
 `$ vagrant up`
