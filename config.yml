@@ -84,6 +84,42 @@ opensuse/Kubic-kubeadm-cri-o:
         - ( ( if [ "$HOSTNAME" != "admin" ]; then kubeadm join --token 56fa9a.705a6001db6a6756 --discovery-token-unsafe-skip-ca-verification admin-management:6443 >>/home/vagrant/join 2>&1; fi; ) & )
 
 ########################################
+# openSUSE Leap 15.1
+########################################
+sub0/leap151:
+  salt:
+    repos:
+      '15.1': 'http://download.opensuse.org/distribution/leap/15.1/repo/oss/'
+      '15.1 up': 'http://download.opensuse.org/update/leap/15.1/oss/'
+      'ceph': 'https://download.opensuse.org/repositories/filesystems:/ceph:/nautilus/openSUSE_Leap_15.1/'
+    packages:
+      all:
+        - vim
+        - salt-minion
+        - ceph-common
+      admin:
+        - salt-master
+        - deepsea
+        - deepsea-cli
+      client1:
+        - multipath-tools
+      client2:
+        - multipath-tools
+    files:
+      all: false
+      admin: merge
+    commands:
+      admin:
+        - systemctl start salt-master
+        - systemctl enable salt-master
+        - sleep 20
+        - salt-key -y -A  || exit 0
+        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
+      all:
+        - systemctl restart salt-minion
+        - systemctl enable salt-minion
+
+########################################
 # OpenSUSE Leap 15
 ########################################
 opensuse/openSUSE-15.0-x86_64:
