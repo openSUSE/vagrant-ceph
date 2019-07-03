@@ -507,7 +507,7 @@ SLE12-SP3-qa:
 # This requires 5G RAM and ~32G disk space.  Initial vagrant up is ~28 minutes
 # on a quad core.
 dataonmon:
-  description: "admin, 3 monitors, 5 data nodes with journals"
+  description: "admin, 3 monitors on 3 data nodes, 4 data nodes overall with journals"
   nodes:
     admin:
       management: 192.168.1.254
@@ -531,9 +531,6 @@ dataonmon:
       cluster: 172.16.2.24
   memory:
     admin: 2048
-    mon1: 2048
-    mon2: 2048
-    mon3: 2048
     data1: 1536
     data2: 1536
     data3: 1536
