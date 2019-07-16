@@ -29,7 +29,6 @@ BOX = ENV.has_key?('BOX') ? ENV['BOX'] : 'opensuse/openSUSE-42.3-x86_64'
 #BOX = 'opensuse/openSUSE-42.3-x86_64'
 #BOX = 'opensuse/openSUSE-15.0-x86_64'
 
-
 # Set INSTALLATION to one of 'ceph-deploy', 'salt'
 INSTALLATION = 'salt'
 
@@ -100,7 +99,6 @@ def provisioning(hosts, node, config, name)
       commands = Vagrant::Commands.new(node, name, 
                                        config[BOX][INSTALLATION]['commands'])
       commands.run
-
 end
 
 Vagrant.configure("2") do |vconfig|
