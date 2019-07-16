@@ -191,4 +191,4 @@ There couple of Jenkins CI jobs currently running:
 
 There is no reporting back to the PR but status could be found on Jenkins: http://storage-ci.suse.de:8080/job/vagrant/ .
 
-Sources for Jenkins jobs are here: https://github.com/SUSE/sesci/blob/master/jenkins/jjb/vagrant-ceph.yaml .
+Sources for Jenkins jobs are here: https://github.com/SUSE/sesci/blob/master/jjb/vagrant-ceph.yaml
