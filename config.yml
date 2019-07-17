@@ -120,45 +120,6 @@ sub0/leap151:
         - systemctl enable salt-minion
 
 ########################################
-# OpenSUSE Leap 15
-########################################
-opensuse/openSUSE-15.0-x86_64:
-  salt:
-    repos:
-      '15.0': 'http://download.opensuse.org/distribution/leap/15.0/repo/oss/'
-      '15.0 up': 'http://download.opensuse.org/update/leap/15.0/oss/'
-      #'ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph:/mimic/openSUSE_Leap_15.0/'
-      # Ceph - Latest
-      'ceph': 'https://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_Leap_15.0/'
-    packages:
-      all:
-        - vim
-        - salt-minion
-        - ceph-common
-      admin:
-        - salt-master
-        - vim-data
-        - deepsea
-        - deepsea-cli
-      client1:
-        - multipath-tools
-      client2:
-        - multipath-tools
-    files:
-      all: false
-      admin: merge
-    commands:
-      admin:
-        - systemctl start salt-master
-        - systemctl enable salt-master
-        - sleep 20
-        - salt-key -y -A  || exit 0
-        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
-      all:
-        - systemctl restart salt-minion
-        - systemctl enable salt-minion
-
-########################################
 # OpenSUSE Leap 42.3
 ########################################
 opensuse/openSUSE-42.3-x86_64:
@@ -275,7 +236,6 @@ SLE12-SP2-migration:
       calmari:
         - systemctl start salt-master
         - systemctl enable salt-master
-
 
 ########################################
 # SLE 12 SP3 SES5
