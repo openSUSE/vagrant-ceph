@@ -82,8 +82,6 @@ Choose the box you wish to use from the boxes subdirectory.
 `$ ls boxes/`
 
 <pre>
-openSUSE-13.2.x86_64-1.13.2.libvirt-Build21.39.json
-openSUSE-13.2.x86_64-1.13.2.virtualbox-Build21.39.json
 sle12-sp3.x86_64-0.0.1.libvirt.json
 SLE-12.x86_64-1.12.0.libvirt-Build6.25.json
 SLE-12.x86_64-1.12.0.virtualbox-Build6.25.json
@@ -92,17 +90,17 @@ Tumbleweed.x86_64-1.13.2.libvirt-Build2.34.json
 Tumbleweed.x86_64-1.13.2.virtualbox-Build2.34.json
 </pre>
 
-For instance, add the openSUSE box for libvirt with the following
+For instance, add the SLE 15 SP1 box for libvirt, with the following command:
 
-`$ vagrant box add boxes/openSUSE-13.2.x86_64-1.13.2.libvirt-Build21.39.json`
+`vagrant box add boxes/sle15sp1.x86_64-0.0.1.libvirt.json`
 
 ### Use the box
 
-Edit the _Vagrantfile_ and set BOX, INSTALLATION and CONFIGURATION.  Use the following for an initial test.
+Edit `Vagrantfile` and set BOX, INSTALLATION and CONFIGURATION.  Use the following for an initial test.
 
-`BOX = 'openSUSE-13.2'` <br>
+`BOX = 'SUSE/SLE-15-SP1'` <br>
 
-Or you could specify BOX as an environment `$ BOX="openSUSE-13.2" vagrant up` / `$ export BOX="openSUSE-13.2"`
+Or you could specify BOX as an environment: `$ BOX="SUSE/SLE-15-SP1" vagrant up` / `$ export BOX="SUSE/SLE-15-SP1"`
 
 Before you can start the environment you need to double check if you can ssh into localhost
 
