@@ -4,8 +4,8 @@ Create a vagrant configuration to support multiple ceph cluster topologies.  Ide
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://github.com/openSUSE/vagrant-ceph/blob/master/LICENSE)
 
  Box and Base system | openSUSE 42.3
---- | --- | ---
-**opensuse/openSUSE-42.3-x86_64** | [![Build Status](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-42.3-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64/badge/icon)](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-42.3-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64/)
+--- | --- |
+**opensuse/openSUSE-42.3-x86_64** | [![Build Status](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-42.3-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64/badge/icon)](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-42.3-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64/) |
 
 ## Usage
 Review the config.yml.  All addresses are on private networks.  Each commented section lists the requirements for a configuration and approximate initialization time.
@@ -67,9 +67,11 @@ There are couple of methods to add boxes.
 
 ### Adding box from the command line
 
-`$ vagrant box add --provider libvirt --name opensuse/Kubic-kubeadm-cri-o https://download.opensuse.org/repositories/devel:/kubic:/images/openSUSE_Tumbleweed/openSUSE-Tumbleweed-Kubic.x86_64-15.0-kubeadm-cri-o-Vagrant-x86_64-Build14.1.vagrant.libvirt.box`
+Suppose we want to add a Kubic image. A Vagrant box for such an image is available from the [openSUSE build service](https://build.opensuse.org/package/binaries/openSUSE:Factory/openSUSE-MicroOS:Kubic-kubeadm-Vagrant/images). Say for instance that the box we want is `openSUSE-MicroOS.x86_64-16.0.0-Kubic-kubeadm-Vagrant-Build1.134.vagrant.libvirt.box` and that we are about to save it into `~/Downloads`. As soon as the download is complete and we optionally verify the file we just got, we add the Vagrant box like this:
 
-That will add the box from the link and name it as stated in `--name` parameter.
+`$ vagrant box add --provider libvirt --name opensuse/Kubic-kubeadm-cri-o ~/Downloads/openSUSE-MicroOS.x86_64-16.0.0-Kubic-kubeadm-Vagrant-Build1.134.vagrant.libvirt.box`
+
+By the way, more info on how to use Kubic images with vagrant-ceph is available in the [openSUSE:Ceph Wiki](https://en.opensuse.org/openSUSE:Ceph#Using_Rook_in_Vagrant_cluster).
 
 ### Boxes from the Vagrant Cloud
 
@@ -90,9 +92,9 @@ Tumbleweed.x86_64-1.13.2.libvirt-Build2.34.json
 Tumbleweed.x86_64-1.13.2.virtualbox-Build2.34.json
 </pre>
 
-For instance, add the SLE 15 SP1 box for libvirt, with the following command:
+For instance, add the SLE 15 SP1 box for libvirt with the following command:
 
-`vagrant box add boxes/sle15sp1.x86_64-0.0.1.libvirt.json`
+`$ vagrant box add boxes/sle15sp1.x86_64-0.0.1.libvirt.json`
 
 ### Use the box
 
@@ -100,7 +102,13 @@ Edit `Vagrantfile` and set BOX, INSTALLATION and CONFIGURATION.  Use the followi
 
 `BOX = 'SUSE/SLE-15-SP1'` <br>
 
-Or you could specify BOX as an environment: `$ BOX="SUSE/SLE-15-SP1" vagrant up` / `$ export BOX="SUSE/SLE-15-SP1"`
+Or you could specify BOX as an environment like this
+
+`$ BOX="SUSE/SLE-15-SP1" vagrant up`
+
+...or this:
+
+`$ export BOX="SUSE/SLE-15-SP1"`
 
 Before you can start the environment you need to double check if you can ssh into localhost
 
