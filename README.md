@@ -3,10 +3,9 @@ Create a vagrant configuration to support multiple ceph cluster topologies.  Ide
 
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://github.com/openSUSE/vagrant-ceph/blob/master/LICENSE)
 
- Box and Base system | openSUSE 42.3 | openSUSE 15.0 
+ Box and Base system | openSUSE 42.3
 --- | --- | ---
-**opensuse/openSUSE-42.3-x86_64** | [![Build Status](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-42.3-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64/badge/icon)](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-42.3-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64/) | [![Build Status](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-42.3-x86_64,TARGET_IMAGE=teuthology-opensuse-15.0-x86_64/badge/icon)](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-42.3-x86_64,TARGET_IMAGE=teuthology-opensuse-15.0-x86_64/)
-**opensuse/openSUSE-15.0-x86_64** | [![Build Status](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-15.0-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64/badge/icon)](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-15.0-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64/) | [![Build Status](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-15.0-x86_64,TARGET_IMAGE=teuthology-opensuse-15.0-x86_64/badge/icon)](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-15.0-x86_64,TARGET_IMAGE=teuthology-opensuse-15.0-x86_64/) 
+**opensuse/openSUSE-42.3-x86_64** | [![Build Status](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-42.3-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64/badge/icon)](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-42.3-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64/)
 
 ## Usage
 Review the config.yml.  All addresses are on private networks.  Each commented section lists the requirements for a configuration and approximate initialization time.
@@ -74,8 +73,8 @@ That will add the box from the link and name it as stated in `--name` parameter.
 
 ### Boxes from the Vagrant Cloud
 
-Standard boxes from [Vagrant Cloud](https://app.vagrantup.com/opensuse) shouldn't be explicitly added. When you use it in `BOX` environment or Vagrant file, vagrant first search it in the cloud and downloads it. Example of standard box is `BOX="opensuse/openSUSE-15.0-x86_64" vagrant up`, that will be found and download automatically from the cloud.
-
+Standard (Vagrant) boxes from the [openSUSE project in the Vagrant Cloud](https://app.vagrantup.com/opensuse) should not be added manually. When you assign a standard box in the `BOX` environment variable or you directly specify it in the `Vagrantfile`, then `vagrant` automatically searches for the box in the Vagrant Cloud. Provided the box exists, it is downloaded and added to your local list of Vagrant boxes. An example of a standard box is this: [opensuse/openSUSE-Tumbleweed-Vagrant.x86_64](https://app.vagrantup.com/opensuse/boxes/openSUSE-Tumbleweed-Vagrant.x86_64). Should you choose to use it, all you have to do is type `BOX="opensuse/openSUSE-Tumbleweed-Vagrant.x86_64" vagrant up`.
+ 
 ### Boxes from local files
 
 Choose the box you wish to use from the boxes subdirectory.
@@ -83,8 +82,6 @@ Choose the box you wish to use from the boxes subdirectory.
 `$ ls boxes/`
 
 <pre>
-openSUSE-13.2.x86_64-1.13.2.libvirt-Build21.39.json
-openSUSE-13.2.x86_64-1.13.2.virtualbox-Build21.39.json
 sle12-sp3.x86_64-0.0.1.libvirt.json
 SLE-12.x86_64-1.12.0.libvirt-Build6.25.json
 SLE-12.x86_64-1.12.0.virtualbox-Build6.25.json
@@ -93,17 +90,17 @@ Tumbleweed.x86_64-1.13.2.libvirt-Build2.34.json
 Tumbleweed.x86_64-1.13.2.virtualbox-Build2.34.json
 </pre>
 
-For instance, add the openSUSE box for libvirt with the following
+For instance, add the SLE 15 SP1 box for libvirt, with the following command:
 
-`$ vagrant box add boxes/openSUSE-13.2.x86_64-1.13.2.libvirt-Build21.39.json`
+`vagrant box add boxes/sle15sp1.x86_64-0.0.1.libvirt.json`
 
 ### Use the box
 
-Edit the _Vagrantfile_ and set BOX, INSTALLATION and CONFIGURATION.  Use the following for an initial test.
+Edit `Vagrantfile` and set BOX, INSTALLATION and CONFIGURATION.  Use the following for an initial test.
 
-`BOX = 'openSUSE-13.2'` <br>
+`BOX = 'SUSE/SLE-15-SP1'` <br>
 
-Or you could specify BOX as an environment `$ BOX="openSUSE-13.2" vagrant up` / `$ export BOX="openSUSE-13.2"`
+Or you could specify BOX as an environment: `$ BOX="SUSE/SLE-15-SP1" vagrant up` / `$ export BOX="SUSE/SLE-15-SP1"`
 
 Before you can start the environment you need to double check if you can ssh into localhost
 
