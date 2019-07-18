@@ -67,9 +67,9 @@ There are couple of methods to add boxes.
 
 ### Adding box from the command line
 
-Suppose we want to add a Kubic image. A Vagrant box for such an image is available from the [openSUSE build service](https://build.opensuse.org/package/binaries/openSUSE:Factory/openSUSE-MicroOS:Kubic-kubeadm-Vagrant/images). Say for instance that the box we want is `openSUSE-MicroOS.x86_64-16.0.0-Kubic-kubeadm-Vagrant-Build1.134.vagrant.libvirt.box` and that we are about to save it into `~/Downloads`. As soon as the download is complete and we optionally verify the file we just got, we add the Vagrant box like this:
+Suppose we want to add a Kubic image. A suitable Vagrant box for such an image is available in the [openSUSE download server](http://download.opensuse.org/tumbleweed/appliances). Specifically, the file we want is `openSUSE-MicroOS.x86_64-Kubic-kubeadm-Vagrant.box`, so we can directly add the box to our local list of Vagrant boxes by issuing a single command:
 
-`$ vagrant box add --provider libvirt --name opensuse/Kubic-kubeadm-cri-o ~/Downloads/openSUSE-MicroOS.x86_64-16.0.0-Kubic-kubeadm-Vagrant-Build1.134.vagrant.libvirt.box`
+`$ vagrant box add --provider libvirt --name opensuse/Kubic-kubeadm-cri-o http://download.opensuse.org/tumbleweed/appliances/openSUSE-MicroOS.x86_64-Kubic-kubeadm-Vagrant.box`
 
 By the way, more info on how to use Kubic images with vagrant-ceph is available in the [openSUSE:Ceph Wiki](https://en.opensuse.org/openSUSE:Ceph#Using_Rook_in_Vagrant_cluster).
 
