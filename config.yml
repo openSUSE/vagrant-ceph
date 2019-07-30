@@ -59,9 +59,10 @@ opensuse/openSUSE-Tumbleweed-x86_64:
         - systemctl enable salt-minion
 
 ########################################
-# OpenSUSE Tumbleweed
+# OpenSUSE Kubic
+# vagrant box add --provider libvirt --name opensuse/MicroOS-Kubic-kubeadm http://download.opensuse.org/tumbleweed/appliances/openSUSE-MicroOS.x86_64-Kubic-kubeadm-Vagrant.box
 ########################################
-opensuse/Kubic-kubeadm-cri-o:
+opensuse/MicroOS-Kubic-kubeadm:
   salt:
     repos:
     packages:
@@ -72,14 +73,10 @@ opensuse/Kubic-kubeadm-cri-o:
       admin: false
     commands:
       admin:
-        - getent hosts admin-management | awk '{ print $1}' | xargs kubeadm init --cri-socket=/var/run/crio/crio.sock --pod-network-cidr=10.244.0.0/16 --token 56fa9a.705a6001db6a6756 --skip-token-print --apiserver-advertise-address 
+        - getent hosts admin-management | awk '{ print $1}' | xargs kubeadm init --pod-network-cidr=10.244.0.0/16 --token 56fa9a.705a6001db6a6756 --skip-token-print --apiserver-advertise-address 
         - mkdir -p $HOME/.kube; cp -i /etc/kubernetes/admin.conf $HOME/.kube/config; chown $(id -u):$(id -g) $HOME/.kube/config
-        - kubectl apply -f https://0y.at/kubicflannel
-        - kubectl taint nodes admin node-role.kubernetes.io/master::NoSchedule-
-        - curl -LkSs https://api.github.com/repos/SUSE/rook/tarball/suse-master -o /home/vagrant/rook.tar.gz
-        - tar -xzf /home/vagrant/rook.tar.gz -C /home/vagrant
-        - cd /home/vagrant/SUSE-rook*/; sed -i 's=image:..*=image:\ registry.opensuse.org/filesystems/ceph/images/rook/ceph:latest=g' ./cluster/examples/kubernetes/ceph/operator.yaml
-        - cd /home/vagrant/SUSE-rook*/; sed -i 's=image:..*=image:\ registry.opensuse.org/filesystems/ceph/images/ceph:latest=g' ./cluster/examples/kubernetes/ceph/cluster.yaml
+        - kubectl apply -f /usr/share/k8s-yaml/cilium/cilium.yaml
+        - kubectl taint nodes admin node-role.kubernetes.io/master:NoSchedule-
       all:
         - ( ( if [ "$HOSTNAME" != "admin" ]; then kubeadm join --token 56fa9a.705a6001db6a6756 --discovery-token-unsafe-skip-ca-verification admin-management:6443 >>/home/vagrant/join 2>&1; fi; ) & )
 
