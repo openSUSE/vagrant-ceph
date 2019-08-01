@@ -15,9 +15,9 @@ module Vagrant
       @node = node
       @cmds = []
       unless repos.nil? then
-        repos.keys.each do |repo|
+        repos.each_with_index do |(repo,url), index|
           # Use shell short circuit to determine if repo already exists
-          @cmds << "zypper lr \'#{repo}\' | grep -sq ^Name || zypper ar -f \'#{repos[repo]}\' \'#{repo}\'"
+          @cmds << "zypper lr \'#{repo}\' | grep -sq ^Name || zypper ar -f -p \'#{index.next}\' \'#{url}\' \'#{repo}\'"
         end
       end
     end
@@ -75,7 +75,7 @@ module Vagrant
     # Runs necessary zypper command, automatically trust repo
     def install_all
       unless (@packages['all'].nil?) then
-        cmd = "zypper --gpg-auto-import-keys -n in #{@packages['all'].join(' ')}"
+        cmd = "zypper --gpg-auto-import-keys --non-interactive install --force --no-recommends #{@packages['all'].join(' ')}"
         @node.vm.provision 'shell', inline: cmd
       end
     end
@@ -83,7 +83,7 @@ module Vagrant
     # Runs necessary zypper command, automatically trust repo
     def install_host
       unless (@packages[@host].nil?) then
-        cmd = "zypper --gpg-auto-import-keys -n in #{@packages[@host].join(' ')}"
+        cmd = "zypper --gpg-auto-import-keys --non-interactive install --force --no-recommends #{@packages[@host].join(' ')}"
         @node.vm.provision 'shell', inline: cmd
       end
     end
