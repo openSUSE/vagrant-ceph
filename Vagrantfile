@@ -10,7 +10,8 @@ require_relative 'lib/settings.rb'
 require_relative 'lib/hosts.rb'
 require_relative 'lib/provisions.rb'
 
-config_file = 'config.yml'
+config_dir = File.expand_path File.dirname(__FILE__)
+config_file = File.join(config_dir, 'config.yml')
 config = YAML.load_file(config_file)
 
 # Check that the user has an ssh key
