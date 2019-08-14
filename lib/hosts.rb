@@ -1,3 +1,4 @@
+require 'tempfile'
 
 # Namespace for related helper routines
 module Vagrant
@@ -16,18 +17,18 @@ module Vagrant
       @selected = selected
       @domain = domain
       @aliases = aliases
-      # overwrite it, always.
-      # when configuration is changed, a wrong hosts file is transmitted
-      File.open("hosts", "w") do |file|
-        static_header(file)
-        entries = reorganize
-        entries.keys.each do |section|
-          entries[section].each do |entry|
-            file.puts entry
-          end
-          file.puts
+      @tmpfile = Tempfile.new("vagrant-ceph-etc-hosts")
+      @tmpfile.chmod(0644)
+      static_header(@tmpfile)
+      entries = reorganize
+      entries.keys.each do |section|
+        entries[section].each do |entry|
+          @tmpfile.puts entry
         end
+        @tmpfile.puts
       end
+      @tmpfile.fsync
+      @tmpfile.close
     end
 
     # Produces the header portion of the hosts file
@@ -79,7 +80,7 @@ module Vagrant
     # done in two steps since the copy is unprivileged.
     def update(node)
       tmp_hosts = "/home/vagrant/hosts"
-      node.vm.provision 'file', source: "hosts", destination: "#{tmp_hosts}"
+      node.vm.provision 'file', source: @tmpfile.path, destination: "#{tmp_hosts}"
       node.vm.provision 'shell', inline: "mv #{tmp_hosts} /etc/hosts"
     end
 
