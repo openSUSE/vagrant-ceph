@@ -6,49 +6,22 @@
 
 dist_id_file=/etc/os-release
 
-leap_name="openSUSE Leap"
-leap_accepted_ver="15.1"
-
-tumbleweed_name="openSUSE Tumbleweed"
+is_leap="openSUSE Leap 15.1"
+is_tumbleweed="openSUSE Tumbleweed"
 
 zypper_inst_cmd="/usr/bin/zypper -q -n in"
 
 # ----------------------------------------------------------------------
-# left_part_of():
-#   Returns the left part of a string, in relation to given substring
+# Terminate on command error
 # ----------------------------------------------------------------------
 
-left_part_of() {
-  input_string="$1"
-  the_mark="$2"
-  left_part="$(echo "$input_string" | awk -F "$the_mark" '{ print $1 }')"
-  echo "$left_part"
-}
-
-# ----------------------------------------------------------------------
-# right_part_of():
-#   Returns the right part of a string, in relation to given substring
-# ----------------------------------------------------------------------
-
-right_part_of() {
-  input_string="$1"
-  the_mark="$2"
-  right_part="$(echo "$input_string" | awk -F "$the_mark" '{ print $2 }')"
-  echo "$right_part"
-}
-
-# ----------------------------------------------------------------------
-# in_between():
-#   Returns the part of a string which is between two given substrings
-# ----------------------------------------------------------------------
-
-in_between() {
-  input_string="$1"
-  left_mark="$2"
-  right_mark="$3"
-  right_part="$(right_part_of "$input_string" "$left_mark")"
-  middle_part="$(left_part_of "$right_part" "$right_mark")"
-  echo "$middle_part"
+terminate_on_error() {
+  cmd_name="$1"
+  exit_code="$2"
+  if [ "$exit_code" != "0" ]; then
+    echo "***** Something went wrong, $cmd_name returned exit code $exit_code"
+    exit 2
+  fi
 }
 
 # ----------------------------------------------------------------------
@@ -67,49 +40,37 @@ if [ ! -f "$dist_id_file" ]; then
   exit 1
 fi
 
-dist_name=$(in_between "$(grep -e "^NAME=" "$dist_id_file")" 'NAME="' '"')
+pretty_name="$(\
+  grep -e "^PRETTY_NAME=" "$dist_id_file"\
+  | awk -F 'PRETTY_NAME="' '{ print $2 }'\
+  | awk -F '"' '{ print $1 }'\
+  )"
 
-case $dist_name in
+case $pretty_name in
 
-  "$leap_name")
+  "$is_leap")
 
-    echo "===== Detected $dist_name, checking version number"
-
-    dist_ver=$(in_between "$(grep -e "^VERSION_ID=" "$dist_id_file")" 'VERSION_ID="' '"')
-
-    if [ "$dist_ver" != "$leap_accepted_ver" ]; then
-      echo "===== Sorry, but for the time being I can only work with $dist_name version $leap_accepted_ver"
-      exit 1
-    fi
-
-    echo "===== Version number is $leap_accepted_ver -- good!"
+    echo "===== Detected $pretty_name, will not install old Vagrant package from repositories"
 
     if [ ! -f "/usr/bin/wget" ]; then
       echo
-      echo "===== wget is missing, installing corresponding package now"
+      echo "===== Required package wget is missing, installing it now"
       $zypper_inst_cmd wget
-      zypper_ec=$?
-      if [ $zypper_ec -ne 0 ]; then
-        echo "===== Something went wrong (zypper exit code: $zypper_ec)"
-        exit 2
-      fi
+      terminate_on_error "zypper" "$?"
     fi
 
-    latest=$(in_between \
-      "$(wget https://releases.hashicorp.com/vagrant -q -O - | grep '/vagrant/' | head -1)" \
-      '<a href="/vagrant/' \
-      '/">')
+    latest="$(\
+      wget https://releases.hashicorp.com/vagrant -q -O - | grep '/vagrant/' | head -1\
+      | awk -F '<a href="/vagrant/' '{ print $2 }'\
+      | awk -F '/">' '{ print $1 }'\
+      )"
     vagrant_url="https://releases.hashicorp.com/vagrant/""$latest""/vagrant_""$latest""_x86_64.rpm"
 
     echo
-    echo "===== Installing RPM package of Vagrant, directly from $vagrant_url"
+    echo "===== Installing latest RPM package of Vagrant, directly from $vagrant_url"
 
     $zypper_inst_cmd --allow-unsigned-rpm "$vagrant_url"
-    zypper_ec=$?
-    if [ $zypper_ec -ne 0 ]; then
-      echo "===== Something went wrong (zypper exit code: $zypper_ec)"
-      exit 2
-    fi
+    terminate_on_error "zypper" "$?"
 
     echo "===== Applying workaround for https://github.com/hashicorp/vagrant/issues/10019"
 
@@ -120,50 +81,34 @@ case $dist_name in
 
     $zypper_inst_cmd gcc gcc-c++ make ruby-devel \
       libvirt libvirt-devel libvirt-daemon-qemu qemu-kvm
-    zypper_ec=$?
-    if [ $zypper_ec -ne 0 ]; then
-      echo "===== Something went wrong (zypper exit code: $zypper_ec)"
-      exit 2
-    fi
+    terminate_on_error "zypper" "$?"
 
     echo
     echo "===== Installing Ruby gems for vagrant-libvirt"
 
     gem install ffi unf_ext ruby-libvirt
-    gem_inst_ec=$?
-    if [ $gem_inst_ec -ne 0 ]; then
-      echo "===== Something went wrong (gem exit code: $gem_inst_ec)"
-      exit 2
-    fi
+    terminate_on_error "gem" "$?"
 
     echo
     echo "===== Installing plugin vagrant-libvirt using vagrant"
 
     vagrant plugin install vagrant-libvirt
-    vagrant_ec=$?
-    if [ $vagrant_ec -ne 0 ]; then
-      echo "===== Something went wrong (vagrant exit code: $vagrant_ec)"
-      exit 2
-    fi
+    terminate_on_error "vagrant" "$?"
 
   ;;
 
-  "$tumbleweed_name")
+  "$is_tumbleweed")
 
-    echo "===== Detected $dist_name, so moving on to installing packages vagrant & vagrant-libvirt"
+    echo "===== Detected $pretty_name, going to install reasonably recent packages from repositories"
 
     $zypper_inst_cmd vagrant vagrant-libvirt
-    zypper_ec=$?
-    if [ $zypper_ec -ne 0 ]; then
-      echo "===== Something went wrong (zypper exit code: $zypper_ec)"
-      exit 2
-    fi
+    terminate_on_error "zypper" "$?"
 
   ;;
 
   *)
 
-    echo "===== This doesn't look like a Leap system, nor like a Tumbleweed system"
+    echo "===== Hm, this doesn't look like $is_leap, nor like $is_tumbleweed :/"
     exit 1
 
   ;;
