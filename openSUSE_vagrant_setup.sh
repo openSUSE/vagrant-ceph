@@ -15,13 +15,12 @@ zypper_inst_cmd="/usr/bin/zypper -q -n in"
 # Terminate on command error
 # ----------------------------------------------------------------------
 
+trap 'terminate_on_error' ERR
+
 terminate_on_error() {
-  cmd_name="$1"
-  exit_code="$2"
-  if [ "$exit_code" != "0" ]; then
-    echo "***** Something went wrong, $cmd_name returned exit code $exit_code"
-    exit 2
-  fi
+  exit_code="$?"
+  echo "***** Something went wrong, $BASH_COMMAND returned exit code $exit_code"
+  exit 1
 }
 
 # ----------------------------------------------------------------------
@@ -37,7 +36,7 @@ terminate_on_error() {
 
 if [ ! -f "$dist_id_file" ]; then
   echo "===== File $dist_id_file does not exist"
-  exit 1
+  exit 2
 fi
 
 pretty_name="$(\
@@ -56,7 +55,6 @@ case $pretty_name in
       echo
       echo "===== Required package wget is missing, installing it now"
       $zypper_inst_cmd wget
-      terminate_on_error "zypper" "$?"
     fi
 
     latest="$(\
@@ -70,30 +68,28 @@ case $pretty_name in
     echo "===== Installing latest RPM package of Vagrant, directly from $vagrant_url"
 
     $zypper_inst_cmd --allow-unsigned-rpm "$vagrant_url"
-    terminate_on_error "zypper" "$?"
 
     echo "===== Applying workaround for https://github.com/hashicorp/vagrant/issues/10019"
 
-    mv /opt/vagrant/embedded/lib/libreadline.so.7{,.disabled} 2> /dev/null
+    mv /opt/vagrant/embedded/lib/libreadline.so.7{,.disabled} 2> /dev/null | true
 
     echo
     echo "===== Installing dependencies for building vagrant-libvirt"
 
     $zypper_inst_cmd gcc gcc-c++ make ruby-devel \
       libvirt libvirt-devel libvirt-daemon-qemu qemu-kvm
-    terminate_on_error "zypper" "$?"
 
     echo
     echo "===== Installing Ruby gems for vagrant-libvirt"
 
-    gem install ffi unf_ext ruby-libvirt
-    terminate_on_error "gem" "$?"
+    gem install ffi
+    gem install unf_ext
+    gem install ruby-libvirt
 
     echo
     echo "===== Installing plugin vagrant-libvirt using vagrant"
 
     vagrant plugin install vagrant-libvirt
-    terminate_on_error "vagrant" "$?"
 
   ;;
 
@@ -102,14 +98,13 @@ case $pretty_name in
     echo "===== Detected $pretty_name, going to install reasonably recent packages from repositories"
 
     $zypper_inst_cmd vagrant vagrant-libvirt
-    terminate_on_error "zypper" "$?"
 
   ;;
 
   *)
 
     echo "===== Hm, this doesn't look like $is_leap, nor like $is_tumbleweed :/"
-    exit 1
+    exit 2
 
   ;;
 
