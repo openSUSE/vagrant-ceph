@@ -25,6 +25,11 @@ Or use script in case you have openSUSE:
 # sudo ./openSUSE_vagrant_setup.sh
 ```
 
+#### libvirtd on a remote machine
+If `libvirtd` does not run on the same machine, the connection uri to connect to `libvirtd`
+can be tweaked by editing the `config.yml` file. The relevant parameters are can be
+found in the [vagrant libvirt provider options docs](https://github.com/vagrant-libvirt/vagrant-libvirt#provider-options).
+
 #### Enable KSM (Kernel Samepage Merge)
 In order to reduce the total memory used to set a ceph cluster, one could enable
 the KSM by issuing the follow command as root:

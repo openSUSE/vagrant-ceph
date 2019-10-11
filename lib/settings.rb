@@ -16,13 +16,14 @@ def common_settings(node, config, name)
 end
 
 def libvirt_settings(provider, config, name)
-        provider.host = 'localhost'
-        provider.username = 'root'
-
+        # Use host/username/connect_via_ssh if libvirtd runs on a different machine
+        # see https://github.com/vagrant-libvirt/vagrant-libvirt#provider-options
+        #provider.host = 'localhost'
+        #provider.username = 'root'
+        #provider.connect_via_ssh = true
 
         # Use DSA key if available, otherwise, defaults to RSA
         provider.id_ssh_key_file = 'id_dsa' if File.exists?("#{ENV['HOME']}/.ssh/id_dsa")
-        provider.connect_via_ssh = true
 
         # Libvirt pool and prefix value
         provider.storage_pool_name = 'default'
