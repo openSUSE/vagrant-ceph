@@ -316,13 +316,13 @@ SUSE/SLE-12-SP3:
         - systemctl enable salt-minion
 
 ########################################
-# SLE 15 SP1 SES6
+# SLE 15 SP1 SES7
 ########################################
 SUSE/SLE-15-SP1:
   salt:
     repos:
-      'Storage up': 'http://download.suse.de/ibs/SUSE/Updates/Storage/6/x86_64/update/'
-      'Storage': 'http://download.suse.de/ibs/SUSE/Products/Storage/6/x86_64/product/'
+      'Storage Devel Internal': 'http://download.suse.de/ibs/Devel:/Storage:/7.0/images/repo/SUSE-Enterprise-Storage-7-POOL-Internal-x86_64-Build3.16-Media/'
+      'Storage Devel': 'http://download.suse.de/ibs/Devel:/Storage:/7.0/images/repo/SUSE-Enterprise-Storage-7-POOL-x86_64-Build3.29-Media1/'
       'update': 'http://download.suse.de/ibs/SUSE/Updates/SLE-Module-Basesystem/15-SP1/x86_64/update/'
       'basesystem': 'http://download.suse.de/ibs/SUSE/Products/SLE-Module-Basesystem/15-SP1/x86_64/product/'
       'sle server app up': 'http://download.suse.de/ibs/SUSE/Updates/SLE-Module-Server-Applications/15-SP1/x86_64/update/'

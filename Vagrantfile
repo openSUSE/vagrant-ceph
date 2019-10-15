@@ -18,7 +18,7 @@ config = YAML.load_file(config_file)
 Vagrant::Hosts::check_for_ssh_keys
 
 ### take BOX from the enviroment ###
-BOX = ENV.has_key?('BOX') ? ENV['BOX'] : 'opensuse/openSUSE-42.3-x86_64'
+BOX = ENV.has_key?('BOX') ? ENV['BOX'] : 'SUSE/SLE-15-SP1'
 
 # Set BOX to one of 'Tumbleweed', 'SLE-12'
 #BOX = 'opensuse/openSUSE-42.2-x86_64'
@@ -45,7 +45,7 @@ raise "Configuration #{CONFIGURATION} missing from config.yml" unless config[CON
 # (e.g. vagrant-ceph is default, vsm is another git clone with PREFIX='v'
 # hostnames will be 'vadmin', 'vmon1', etc.  Both sets use same address range
 # and cannot run simultaneously.  Each set will consume disk space. )
-PREFIX = ''
+PREFIX = 'ses7-'
 
 # Generates a hosts file
 if (INSTALLATION == 'salt') then
