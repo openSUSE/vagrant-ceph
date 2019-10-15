@@ -329,6 +329,8 @@ SUSE/SLE-15-SP1:
       'sle server app': 'http://download.suse.de/ibs/SUSE/Products/SLE-Module-Server-Applications/15-SP1/x86_64/product/'
       'sle dev_tool up': 'http://download.suse.de/ibs/SUSE/Updates/SLE-Module-Development-Tools/15-SP1/x86_64/update/'
       'sle dev_pool': 'http://download.suse.de/ibs/SUSE/Products/SLE-Module-Development-Tools/15-SP1/x86_64/product/'
+      'sle containers up': 'http://download.suse.de/ibs/SUSE/Updates/SLE-Module-Containers/15-SP1/x86_64/update/'
+      'sle containers': 'http://download.suse.de/ibs/SUSE/Products/SLE-Module-Containers/15-SP1/x86_64/product/'
     packages:
       all:
         - vim
