@@ -11,13 +11,22 @@ module Vagrant
     #
     #   node - vagrant provider
     #   repos - hash of repo names and urls
+    #
+    # repo URLs can either be a string (in which case it's taken to be
+    # the repo URL), or a hash, with members 'url' and 'priority', in
+    # case you need to force a repo to have a specific priority
     def initialize(node, repos)
       @node = node
       @cmds = []
       unless repos.nil? then
-        repos.each_with_index do |(repo,url), index|
+        repos.each do |(repo,url)|
+          priority = 0
+          if url.is_a?(Hash) then
+            priority = url['priority'] || 0
+            url = url['url']
+          end
           # Use shell short circuit to determine if repo already exists
-          @cmds << "zypper lr \'#{repo}\' | grep -sq ^Name || zypper ar -f -p \'#{index.next}\' \'#{url}\' \'#{repo}\'"
+          @cmds << "zypper lr \'#{repo}\' | grep -sq ^Name || zypper ar -f -p \'#{priority}\' \'#{url}\' \'#{repo}\'"
         end
       end
     end
