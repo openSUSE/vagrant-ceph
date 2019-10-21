@@ -21,7 +21,6 @@ Vagrant::Hosts::check_for_ssh_keys
 BOX = ENV.has_key?('BOX') ? ENV['BOX'] : 'virt-appl/openSUSE-Leap-15.1'
 
 # Set BOX to one of 'Tumbleweed', 'SLE-12'
-#BOX = 'opensuse/openSUSE-42.2-x86_64'
 #BOX = 'SLE12-SP2-migration'
 #BOX = 'SLE12-SP3-qa'
 #BOX = 'SUSE/SLE-12-SP3'
