@@ -1,7 +1,5 @@
 # -*- mode: ruby -*- # vi: set ft=ruby :
 
-ENV['VAGRANT_NO_PARALLEL'] = 'yes'
-
 require 'yaml'
 require 'pp'
 
@@ -35,8 +33,8 @@ BOX = ENV.has_key?('BOX') ? ENV['BOX'] : 'opensuse/openSUSE-42.3-x86_64'
 INSTALLATION = 'salt'
 
 # Set CONFIGURATION to one of 'default', 'small', 'iscsi' or 'economical'
-CONFIGURATION = 'default'
-#CONFIGURATION = 'tiny'
+#CONFIGURATION = 'default'
+CONFIGURATION = 'tiny'
 #CONFIGURATION = 'dataonmon'
 
 raise "Box #{BOX} missing from config.yml" unless config[BOX]
