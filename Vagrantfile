@@ -26,7 +26,7 @@ BOX = ENV.has_key?('BOX') ? ENV['BOX'] : 'opensuse/openSUSE-42.3-x86_64'
 #BOX = 'SLE12-SP3-qa'
 #BOX = 'SUSE/SLE-12-SP3'
 #BOX = 'SUSE/SLE-15-SP1'
-#BOX = 'opensuse/openSUSE-Tumbleweed-x86_64'
+#BOX = 'opensuse/Tumbleweed.x86_64'
 #BOX = 'opensuse/openSUSE-42.3-x86_64'
 
 # Set INSTALLATION to one of 'ceph-deploy', 'salt'

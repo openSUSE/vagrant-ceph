@@ -18,7 +18,7 @@
 ########################################
 # OpenSUSE Tumbleweed
 ########################################
-opensuse/openSUSE-Tumbleweed-x86_64:
+opensuse/Tumbleweed.x86_64:
   salt:
     repos:
       'oss': 'http://download.opensuse.org/tumbleweed/repo/oss/'
@@ -48,13 +48,12 @@ opensuse/openSUSE-Tumbleweed-x86_64:
         - sleep 20
         - salt-key -y -A  || exit 0
         - sleep 5
-        # https://github.com/SUSE/DeepSea/issues/309
-        - salt '*' cmd.run 'echo "openSUSE 20181022 (x86_64)" >> /etc/SuSE-release' timeout=10
         - chown -R salt:salt /srv/salt/ceph
         - chown -R salt:salt /srv/pillar/ceph
       all:
-        - systemctl disable firewalld
-        - systemctl stop firewalld
+        # firewalld might not be installed
+        - systemctl disable firewalld || true
+        - systemctl stop firewalld || true
         - systemctl restart salt-minion
         - systemctl enable salt-minion
 
