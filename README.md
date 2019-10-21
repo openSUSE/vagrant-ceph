@@ -63,7 +63,7 @@ Then, rerun the plugin installation above.
 
 ## Adding Vagrant boxes
 
-There are couple of methods to add boxes.
+There are a couple of methods to add boxes.
 
 ### Adding box from the command line
 
@@ -72,6 +72,26 @@ Suppose we want to add a Kubic image. A suitable Vagrant box for such an image i
 `$ vagrant box add --provider libvirt --name opensuse/MicroOS-Kubic-kubeadm http://download.opensuse.org/tumbleweed/appliances/openSUSE-MicroOS.x86_64-Kubic-kubeadm-Vagrant.box`
 
 By the way, more info on how to use Kubic images with vagrant-ceph is available in the [openSUSE:Ceph Wiki](https://en.opensuse.org/openSUSE:Ceph#Using_Rook_in_Vagrant_cluster).
+
+Following are two more examples for adding Vagrant boxes for openSUSE Leap 15.1 and openSUSE Tumbleweed, from the openSUSE download server:
+
+* __openSUSE Leap 15.1__
+
+`vagrant box add --provider libvirt --name virt-appl/openSUSE-Leap-15.1 https://download.opensuse.org/repositories/Virtualization:/Appliances:/Images:/openSUSE-Leap-15.1/images/Leap-15.1.x86_64-libvirt.box`
+
+* __openSUSE Tumbleweed__
+
+`vagrant box add --provider libvirt --name virt-appl/Tumbleweed https://download.opensuse.org/repositories/Virtualization:/Appliances:/Images:/openSUSE-Tumbleweed/openSUSE_Tumbleweed/Tumbleweed.x86_64-libvirt.box` 
+
+By successfully executing both of those commands we end up with two local Vagrant boxes, one for openSUSE Leap 15.1 and the other for openSUSE Tumbleweed:
+
+  vagrant box list
+  virt-appl/Tumbleweed         (libvirt, 0)
+  virt-appl/openSUSE-Leap-15.1 (libvirt, 0)
+
+To build a Leap 15.1-based cluster, all we have to do is type the following:
+
+`BOX="virt-appl/openSUSE-Leap-15.1" vagrant up`
 
 ### Boxes from the Vagrant Cloud
 
