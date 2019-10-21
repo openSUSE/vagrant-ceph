@@ -18,7 +18,7 @@ config = YAML.load_file(config_file)
 Vagrant::Hosts::check_for_ssh_keys
 
 ### take BOX from the enviroment ###
-BOX = ENV.has_key?('BOX') ? ENV['BOX'] : 'opensuse/openSUSE-42.3-x86_64'
+BOX = ENV.has_key?('BOX') ? ENV['BOX'] : 'sub0/leap151'
 
 # Set BOX to one of 'Tumbleweed', 'SLE-12'
 #BOX = 'SLE12-SP2-migration'
@@ -26,7 +26,6 @@ BOX = ENV.has_key?('BOX') ? ENV['BOX'] : 'opensuse/openSUSE-42.3-x86_64'
 #BOX = 'SUSE/SLE-12-SP3'
 #BOX = 'SUSE/SLE-15-SP1'
 #BOX = 'opensuse/Tumbleweed.x86_64'
-#BOX = 'opensuse/openSUSE-42.3-x86_64'
 
 # Set INSTALLATION to one of 'ceph-deploy', 'salt'
 INSTALLATION = 'salt'

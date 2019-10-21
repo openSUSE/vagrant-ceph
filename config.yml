@@ -116,45 +116,6 @@ sub0/leap151:
         - systemctl enable salt-minion
 
 ########################################
-# OpenSUSE Leap 42.3
-########################################
-opensuse/openSUSE-42.3-x86_64:
-  salt:
-    repos:
-      'ceph':
-        'url': 'http://download.opensuse.org/repositories/filesystems:/ceph:/luminous/openSUSE_Leap_42.3/'
-        'priority': 1
-      '42.3': 'http://download.opensuse.org/distribution/leap/42.3/repo/oss/suse/'
-      '42.3 up': 'http://download.opensuse.org/update/leap/42.3/oss/'
-      'oA and monitoring': 'https://download.opensuse.org/repositories/filesystems:/openATTIC:/3.x/openSUSE_Leap_42.3/'
-    packages:
-      all:
-        - vim
-        - salt-minion
-        - ceph-common
-      admin:
-        - salt-master
-        - ntp
-        - deepsea
-    files:
-      all: false
-      admin: merge
-    commands:
-      admin:
-        - systemctl start ntpd
-        - systemctl enable ntpd
-        - systemctl start salt-master
-        - systemctl enable salt-master
-        - sleep 20
-        - salt-key -y -A  || exit 0
-        - sleep 5
-        - chown -R salt:salt /srv/salt/ceph
-        - chown -R salt:salt /srv/pillar/ceph
-      all:
-        - systemctl restart salt-minion
-        - systemctl enable salt-minion
-
-########################################
 # SLE 12 SP2 SES4 migration
 ########################################
 SLE12-SP2-migration:
