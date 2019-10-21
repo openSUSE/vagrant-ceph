@@ -3,9 +3,9 @@ Create a vagrant configuration to support multiple ceph cluster topologies.  Ide
 
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://github.com/openSUSE/vagrant-ceph/blob/master/LICENSE)
 
- Box and Base system | openSUSE 42.3
+ Box and Base system | openSUSE 15.1
 --- | --- |
-**opensuse/openSUSE-42.3-x86_64** | [![Build Status](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-42.3-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64/badge/icon)](http://ceph-ci.suse.de:8080/job/vagrant-matrix/BOX=opensuse%2FopenSUSE-42.3-x86_64,TARGET_IMAGE=teuthology-opensuse-42.3-x86_64/) |
+**sub0/leap151** | [![Build Status](https://ceph-ci.suse.de/job/vagrant-matrix/BOX=sub0%2Fleap151,TARGET_IMAGE=teuthology-opensuse-15.1-x86_64,WORKER_LABEL=storage-compute/badge/icon)](https://ceph-ci.suse.de/job/vagrant-matrix/BOX=sub0%2Fleap151,TARGET_IMAGE=teuthology-opensuse-15.1-x86_64,WORKER_LABEL=storage-compute) |
 
 ## Usage
 Review the config.yml.  All addresses are on private networks.  Each commented section lists the requirements for a configuration and approximate initialization time.
