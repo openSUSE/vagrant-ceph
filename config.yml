@@ -17,9 +17,8 @@
 
 ########################################
 # openSUSE Tumbleweed
-# vagrant box add --provider libvirt --name virt-appl/Tumbleweed https://download.opensuse.org/repositories/Virtualization:/Appliances:/Images:/openSUSE-Tumbleweed/openSUSE_Tumbleweed/Tumbleweed.x86_64-libvirt.box
 ########################################
-virt-appl/Tumbleweed:
+opensuse/openSUSE-Tumbleweed-x86_64:
   salt:
     repos:
       'oss': 'http://download.opensuse.org/tumbleweed/repo/oss/'
