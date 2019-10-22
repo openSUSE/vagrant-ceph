@@ -16,7 +16,7 @@
 ########################################
 
 ########################################
-# OpenSUSE Tumbleweed
+# openSUSE Tumbleweed
 ########################################
 opensuse/openSUSE-Tumbleweed-x86_64:
   salt:
@@ -49,12 +49,12 @@ opensuse/openSUSE-Tumbleweed-x86_64:
         - salt-key -y -A  || exit 0
         - sleep 5
         # https://github.com/SUSE/DeepSea/issues/309
-        - salt '*' cmd.run 'echo "openSUSE 20181022 (x86_64)" >> /etc/SuSE-release' timeout=10
+        #- salt '*' cmd.run 'echo "openSUSE 20181022 (x86_64)" >> /etc/SuSE-release' timeout=10
         - chown -R salt:salt /srv/salt/ceph
         - chown -R salt:salt /srv/pillar/ceph
       all:
-        - systemctl disable firewalld
-        - systemctl stop firewalld
+        #- systemctl disable firewalld
+        #- systemctl stop firewalld
         - systemctl restart salt-minion
         - systemctl enable salt-minion
 
@@ -82,8 +82,9 @@ opensuse/MicroOS-Kubic-kubeadm:
 
 ########################################
 # openSUSE Leap 15.1
+# vagrant box add --provider libvirt --name virt-appl/openSUSE-Leap-15.1 https://download.opensuse.org/repositories/Virtualization:/Appliances:/Images:/openSUSE-Leap-15.1/images/Leap-15.1.x86_64-libvirt.box
 ########################################
-sub0/leap151:
+virt-appl/openSUSE-Leap-15.1:
   salt:
     repos:
       'ceph': 'https://download.opensuse.org/repositories/filesystems:/ceph:/nautilus/openSUSE_Leap_15.1/'

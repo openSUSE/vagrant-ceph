@@ -63,7 +63,7 @@ Then, rerun the plugin installation above.
 
 ## Adding Vagrant boxes
 
-There are couple of methods to add boxes.
+There are a couple of methods to add boxes.
 
 ### Adding box from the command line
 
@@ -72,6 +72,19 @@ Suppose we want to add a Kubic image. A suitable Vagrant box for such an image i
 `$ vagrant box add --provider libvirt --name opensuse/MicroOS-Kubic-kubeadm http://download.opensuse.org/tumbleweed/appliances/openSUSE-MicroOS.x86_64-Kubic-kubeadm-Vagrant.box`
 
 By the way, more info on how to use Kubic images with vagrant-ceph is available in the [openSUSE:Ceph Wiki](https://en.opensuse.org/openSUSE:Ceph#Using_Rook_in_Vagrant_cluster).
+
+Following is another example of adding a Vagrant box for openSUSE Leap 15.1, from the [openSUSE Virtualization Appliances repo](https://download.opensuse.org/repositories/Virtualization:/Appliances:/Images:/openSUSE-Leap-15.1/images):
+
+`vagrant box add --provider libvirt --name virt-appl/openSUSE-Leap-15.1 https://download.opensuse.org/repositories/Virtualization:/Appliances:/Images:/openSUSE-Leap-15.1/images/Leap-15.1.x86_64-libvirt.box`
+
+By successfully executing this command we end up with a local Vagrant box for openSUSE Leap 15.1:
+
+  vagrant box list
+  virt-appl/openSUSE-Leap-15.1 (libvirt, 0)
+
+Then, to build a Leap 15.1-based cluster all we have to do is type the following:
+
+`BOX="virt-appl/openSUSE-Leap-15.1" vagrant up`
 
 ### Boxes from the Vagrant Cloud
 
