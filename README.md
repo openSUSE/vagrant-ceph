@@ -79,8 +79,11 @@ Following is another example of adding a Vagrant box for openSUSE Leap 15.1, fro
 
 By successfully executing this command we end up with a local Vagrant box for openSUSE Leap 15.1:
 
-  vagrant box list
-  virt-appl/openSUSE-Leap-15.1 (libvirt, 0)
+`$ vagrant box list`
+
+<pre>
+virt-appl/openSUSE-Leap-15.1 (libvirt, 0)
+</pre>
 
 Then, to build a Leap 15.1-based cluster all we have to do is type the following:
 
