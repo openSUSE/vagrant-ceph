@@ -320,6 +320,7 @@ SUSE/SLE-12-SP3:
 
 ########################################
 # SLE 15 SP1 SES6
+# vagrant box add --provider libvirt --name SUSE/SLE-15-SP1 http://download.suse.de/ibs/Devel:/Storage:/6.0/vagrant/sle15sp1.x86_64.box 
 ########################################
 SUSE/SLE-15-SP1:
   salt:

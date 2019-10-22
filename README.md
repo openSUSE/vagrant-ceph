@@ -103,26 +103,21 @@ Choose the box you wish to use from the boxes subdirectory.
 sle12-sp3.x86_64-0.0.1.libvirt.json
 SLE-12.x86_64-1.12.0.libvirt-Build6.25.json
 SLE-12.x86_64-1.12.0.virtualbox-Build6.25.json
-sle15sp1.x86_64-0.0.1.libvirt.json
 Tumbleweed.x86_64-1.13.2.libvirt-Build2.34.json
 Tumbleweed.x86_64-1.13.2.virtualbox-Build2.34.json
 </pre>
 
-For instance, add the SLE 15 SP1 box for libvirt with the following command:
+For instance, add the SLE 12 SP3 box for libvirt with the following command:
 
-`$ vagrant box add boxes/sle15sp1.x86_64-0.0.1.libvirt.json`
+`$ vagrant box add boxes/sle12-sp3.x86_64-0.0.1.libvirt.json`
 
 ### Use the box
 
-Edit `Vagrantfile` and set BOX, INSTALLATION and CONFIGURATION.  Use the following for an initial test.
-
-`BOX = 'SUSE/SLE-15-SP1'` <br>
-
-Or you could specify BOX as an environment like this
+Edit `Vagrantfile` and set BOX, INSTALLATION and CONFIGURATION. Set `BOX = 'SUSE/SLE-15-SP1'` for an initial test. Alternatively, you may specify a Vagrant box via an environment variable like this...
 
 `$ BOX="SUSE/SLE-15-SP1" vagrant up`
 
-...or this:
+...or like this:
 
 `$ export BOX="SUSE/SLE-15-SP1"`
 
