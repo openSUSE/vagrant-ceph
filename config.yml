@@ -18,7 +18,7 @@
 ########################################
 # openSUSE Tumbleweed
 ########################################
-opensuse/openSUSE-Tumbleweed-x86_64:
+opensuse/openSUSE-Tumbleweed-Vagrant.x86_64:
   salt:
     repos:
       'oss': 'http://download.opensuse.org/tumbleweed/repo/oss/'
