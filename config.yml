@@ -18,7 +18,7 @@
 ########################################
 # openSUSE Tumbleweed
 ########################################
-opensuse/openSUSE-Tumbleweed-Vagrant.x86_64:
+opensuse/Tumbleweed.x86_64:
   salt:
     repos:
       'oss': 'http://download.opensuse.org/tumbleweed/repo/oss/'
@@ -114,77 +114,6 @@ virt-appl/openSUSE-Leap-15.1:
         - salt-key -y -A  || exit 0
         - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
       all:
-        - systemctl restart salt-minion
-        - systemctl enable salt-minion
-
-########################################
-# OpenSUSE Leap 42.3
-########################################
-opensuse/openSUSE-42.3-x86_64:
-  salt:
-    repos:
-      'ceph':
-        'url': 'http://download.opensuse.org/repositories/filesystems:/ceph:/luminous/openSUSE_Leap_42.3/'
-        'priority': 1
-      '42.3': 'http://download.opensuse.org/distribution/leap/42.3/repo/oss/suse/'
-      '42.3 up': 'http://download.opensuse.org/update/leap/42.3/oss/'
-      'oA and monitoring': 'https://download.opensuse.org/repositories/filesystems:/openATTIC:/3.x/openSUSE_Leap_42.3/'
-    packages:
-      all:
-        - vim
-        - salt-minion
-        - ceph-common
-      admin:
-        - salt-master
-        - ntp
-        - deepsea
-    files:
-      all: false
-      admin: merge
-    commands:
-      admin:
-        - systemctl start ntpd
-        - systemctl enable ntpd
-        - systemctl start salt-master
-        - systemctl enable salt-master
-        - sleep 20
-        - salt-key -y -A  || exit 0
-        - sleep 5
-        - chown -R salt:salt /srv/salt/ceph
-        - chown -R salt:salt /srv/pillar/ceph
-      all:
-        - systemctl restart salt-minion
-        - systemctl enable salt-minion
-
-########################################
-# OpenSUSE Leap 42.2
-########################################
-opensuse/openSUSE-42.2-x86_64:
-  salt:
-    repos:
-      'ceph': 'http://download.opensuse.org/repositories/filesystems:/ceph/openSUSE_Leap_42.3/'
-      '42.2': 'http://download.opensuse.org/distribution/leap/42.2/repo/oss/suse/'
-    packages:
-      all:
-        - vim
-        - salt-minion
-      admin:
-        - salt-master
-        - ntp
-    files:
-      all: false
-      admin: true
-    commands:
-      admin:
-        - systemctl start ntpd
-        - systemctl enable ntpd
-        - systemctl start salt-master
-        - systemctl enable salt-master
-        - sleep 20
-        - salt-key -y -A  || exit 0
-      all:
-        - systemctl disable SuSEfirewall2
-        - systemctl stop SuSEfirewall2
         - systemctl restart salt-minion
         - systemctl enable salt-minion
 
