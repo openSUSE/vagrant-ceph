@@ -43,6 +43,8 @@ def libvirt_settings(provider, config, name)
           end
         end
 
+        provider.video_vram = 2048
+
         # Set cpus to 2, allow specific configurations
         provider.cpus =  2
         unless (config[CONFIGURATION]['cpu'].nil?) then
