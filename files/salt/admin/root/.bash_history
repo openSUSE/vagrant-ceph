@@ -20,7 +20,7 @@ journalctl -u salt-minion
 journalctl -u salt-master
 salt-key -L
 salt-key -A
-salt-run state.orch ceph.stage.0; salt-run state.orch ceph.stage.0; salt-run state.orch ceph.stage.1; salt-run state.orch ceph.stage.2
+salt-run state.orch ceph.stage.0; salt-run state.orch ceph.stage.1; salt-run state.orch ceph.stage.2; salt-run state.orch ceph.stage.3
 salt '*' cmd.run reboot
 salt-run disengage.safety;salt-run state.orch ceph.purge
 salt-run disengage.safety
@@ -32,5 +32,5 @@ deepsea stage run ceph.stage.2
 deepsea stage run ceph.stage.3
 deepsea stage run ceph.stage.4
 deepsea stage run ceph.stage.5
-deepsea stage run ceph.stage.0; deepsea stage run ceph.stage.0; deepsea stage run ceph.stage.1; deepsea stage run ceph.stage.2
+deepsea stage run ceph.stage.0; deepsea stage run ceph.stage.1; deepsea stage run ceph.stage.2; deepsea stage run ceph.stage.3
 
