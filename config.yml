@@ -248,6 +248,52 @@ SUSE/SLE-12-SP3:
         - systemctl enable salt-minion
 
 ########################################
+# SLE 15 SP2 SES7
+# vagrant box add --provider libvirt --name SUSE/SLE-15-SP2 http://download.suse.de/ibs/Devel:/Storage:/7.0/vagrant/sle15sp2.x86_64.box
+########################################
+SUSE/SLE-15-SP2:
+  salt:
+    repos:
+      # TODO: enable those when code is in the SUSE namespace
+      # 'Storage up': 'http://download.suse.de/ibs/SUSE/Updates/Storage/7/x86_64/update/'
+      # 'Storage': 'http://download.suse.de/ibs/SUSE/Products/Storage/7/x86_64/product/'
+      'Storage Devel Internal': 'http://download.suse.de/ibs/Devel:/Storage:/7.0/images/repo/SUSE-Enterprise-Storage-7-POOL-Internal-x86_64-Media/'
+      'Storage Devel': 'http://download.suse.de/ibs/Devel:/Storage:/7.0/images/repo/SUSE-Enterprise-Storage-7-POOL-x86_64-Media1/'
+      'update': 'http://download.suse.de/ibs/SUSE/Updates/SLE-Module-Basesystem/15-SP2/x86_64/update/'
+      'basesystem': 'http://download.suse.de/ibs/SUSE/Products/SLE-Module-Basesystem/15-SP2/x86_64/product/'
+      'sle server app up': 'http://download.suse.de/ibs/SUSE/Updates/SLE-Module-Server-Applications/15-SP2/x86_64/update/'
+      'sle server app': 'http://download.suse.de/ibs/SUSE/Products/SLE-Module-Server-Applications/15-SP2/x86_64/product/'
+      'sle dev_tool up': 'http://download.suse.de/ibs/SUSE/Updates/SLE-Module-Development-Tools/15-SP2/x86_64/update/'
+      'sle dev_pool': 'http://download.suse.de/ibs/SUSE/Products/SLE-Module-Development-Tools/15-SP2/x86_64/product/'
+    packages:
+      all:
+        - vim
+        - salt-minion
+        - iptables
+      admin:
+        - salt-master
+        - vim-data
+        - deepsea
+        - deepsea-cli
+      client1:
+        - multipath-tools
+      client2:
+        - multipath-tools
+    files:
+      all: false
+      admin: merge
+    commands:
+      admin:
+        - systemctl start salt-master
+        - systemctl enable salt-master
+        - sleep 20
+        - salt-key -y -A  || exit 0
+        - chown -R salt:salt /srv/pillar/ceph /srv/salt/ceph
+      all:
+        - systemctl restart salt-minion
+        - systemctl enable salt-minion
+
+########################################
 # SLE 15 SP1 SES6
 # vagrant box add --provider libvirt --name SUSE/SLE-15-SP1 http://download.suse.de/ibs/Devel:/Storage:/6.0/vagrant/sle15sp1.x86_64.box 
 ########################################
