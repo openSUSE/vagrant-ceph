@@ -25,6 +25,7 @@ BOX = ENV.has_key?('BOX') ? ENV['BOX'] : 'virt-appl/openSUSE-Leap-15.1'
 #BOX = 'SLE12-SP3-qa'
 #BOX = 'SUSE/SLE-12-SP3'
 #BOX = 'SUSE/SLE-15-SP1'
+#BOX = 'SUSE/SLE-15-SP2'
 #BOX = 'opensuse/Tumbleweed.x86_64'
 
 # Set INSTALLATION to one of 'ceph-deploy', 'salt'
