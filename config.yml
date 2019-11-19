@@ -249,7 +249,7 @@ SUSE/SLE-12-SP3:
 
 ########################################
 # SLE 15 SP2 SES7
-# vagrant box add --provider libvirt --name SUSE/SLE-15-SP2 http://download.suse.de/ibs/Devel:/Storage:/7.0/vagrant/sle15sp2.x86_64.box
+# vagrant box add --provider libvirt --name SUSE/SLE-15-SP2 http://download.suse.de/ibs/Virtualization:/Vagrant:/SLE-15-SP2/images/SLES15-SP2-Vagrant.x86_64-libvirt.box
 ########################################
 SUSE/SLE-15-SP2:
   salt:
