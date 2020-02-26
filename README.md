@@ -1,4 +1,12 @@
 # vagrant-ceph
+
+---
+
+NOTE: There is [sesdev](https://github.com/SUSE/sesdev) which is also a vagrant based
+tool to deploy SES/Ceph.
+
+---
+
 Create a vagrant configuration to support multiple ceph cluster topologies.  Ideal for development or exploration of Ceph.
 
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://github.com/openSUSE/vagrant-ceph/blob/master/LICENSE)
