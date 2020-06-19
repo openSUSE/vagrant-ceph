@@ -11,11 +11,6 @@ Create a vagrant configuration to support multiple ceph cluster topologies.  Ide
 
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://github.com/openSUSE/vagrant-ceph/blob/master/LICENSE)
 
- Vagrant box & Base system | Results
---- | --- |
-virt-appl/openSUSE-Leap-15.1 | [![Build Status](https://ceph-ci.suse.de/job/vagrant-matrix/BOX=virt-appl%2FopenSUSE-Leap-15.1,TARGET_IMAGE=teuthology-opensuse-15.1-x86_64,WORKER_LABEL=storage-compute/badge/icon)](https://ceph-ci.suse.de/job/vagrant-matrix/BOX=virt-appl%2FopenSUSE-Leap-15.1,TARGET_IMAGE=teuthology-opensuse-15.1-x86_64,WORKER_LABEL=storage-compute) |
-opensuse/Tumbleweed.x86_64 | [![Build Status](https://ceph-ci.suse.de/job/vagrant-matrix/BOX=opensuse%2FTumbleweed.x86_64,TARGET_IMAGE=teuthology-opensuse-15.1-x86_64,WORKER_LABEL=storage-compute/badge/icon)](https://ceph-ci.suse.de/job/vagrant-matrix/BOX=opensuse%2FTumbleweed.x86_64,TARGET_IMAGE=teuthology-opensuse-15.1-x86_64,WORKER_LABEL=storage-compute) |
-
 ## Usage
 Review the config.yml.  All addresses are on private networks.  Each commented section lists the requirements for a configuration and approximate initialization time.
 
@@ -203,12 +198,3 @@ For the sake of completeness and stating the obvious, the private ssh key is onl
 The ceph-deploy installation option does not automatically install ceph.  The environment is created to allow the running of ceph-deploy.  For automatic installation, compare the salt installation option. 
 
 The default root password is 'vagrant'.
-
-## CI
-There are currently a couple of Jenkins jobs that will run:
-* Once per day
-* For every push into repo
-
-There is no reporting back to the PR, but status can be found on [Jenkins](http://storage-ci.suse.de:8080/job/vagrant/)
-
-Sources for the Jenkins jobs are located [here](https://github.com/SUSE/sesci/blob/master/jjb/vagrant-ceph.yaml)
