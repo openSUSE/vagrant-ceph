@@ -31,9 +31,12 @@ BOX = ENV.has_key?('BOX') ? ENV['BOX'] : 'virt-appl/openSUSE-Leap-15.1'
 # Set INSTALLATION to one of 'ceph-deploy', 'salt'
 INSTALLATION = 'salt'
 
+### read CONFIGURATION from enviroment ###
+CONFIGURATION = ENV.has_key?('CONFIGURATION') ? ENV['CONFIGURATION'] : 'tiny'
+
 # Set CONFIGURATION to one of 'default', 'small', 'iscsi' or 'economical'
 #CONFIGURATION = 'default'
-CONFIGURATION = 'tiny'
+#CONFIGURATION = 'tiny'
 #CONFIGURATION = 'dataonmon'
 
 raise "Box #{BOX} missing from config.yml" unless config[BOX]

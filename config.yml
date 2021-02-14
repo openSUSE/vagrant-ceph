@@ -1090,3 +1090,62 @@ economical:
       hds: 4
     data4:
       hds: 4
+qam_ses6:
+  description: "1 x Admin, 3 x MON/OSD, 1 x MDS/OSD, 1 x Ganesha/OSD, 1 x iGW/OSD, 1 x RGW"
+  nodes:
+    admin:
+      management: 192.168.1.254
+      public:  172.16.1.254
+      cluster: 172.16.2.254
+    data1:
+      management: 192.168.1.101
+      public:  172.16.1.101
+      cluster: 172.16.2.101
+    data2:
+      management: 192.168.1.102
+      public:  172.16.1.102
+      cluster: 172.16.2.102
+    data3:
+      management: 192.168.1.103
+      public:  172.16.1.103
+      cluster: 172.16.2.103
+    data4:
+      management: 192.168.1.104
+      public:  172.16.1.104
+      cluster: 172.16.2.104
+    data5:
+      management: 192.168.1.105
+      public:  172.16.1.105
+      cluster: 172.16.2.105
+    data6:
+      management: 192.168.1.106
+      public:  172.16.1.106
+      cluster: 172.16.2.106
+    rgw:
+      management: 192.168.1.201
+      public:  172.16.1.201
+      cluster: 172.16.2.201
+  memory:
+    admin: 1536
+    data1: 1536
+    data2: 1536
+    data3: 1536
+    data4: 1536
+    data5: 1536
+    data6: 1536
+    rgw: 1536
+  disks:
+    data1:
+      hds: 5
+    data2:
+      hds: 5
+    data3:
+      hds: 5
+    data4:
+      hds: 5
+    data5:
+      hds: 5
+    data6:
+      hds: 5
+    rgw:
+      hds: 5
